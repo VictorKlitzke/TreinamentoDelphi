@@ -1,26 +1,8 @@
-﻿[btnLogar]
-Coordinates=159,144,65,58
-
-[btnCadastrar]
-Coordinates=10,212,89,58
-
-[BtnCofig]
-Coordinates=297,144,64,58
-
-[Label1]
-Coordinates=109,212,53,58
-
-[btnFechar]
-Coordinates=10,144,72,58
-
-[DataModule1.DataSource]
+﻿[DataModule1.DataSource]
 Coordinates=593,1,162,36
 
 [Fcadastro.dtsCadastro]
 Coordinates=12,154,145,36
-
-[Image1]
-Coordinates=92,144,57,58
 
 [FConfig.FDQuery1]
 Coordinates=245,10,122,80
@@ -42,5 +24,5 @@ Coordinates=407,1,140,36
 Coordinates=10,10,148,124
 
 []
-Coordinates=593,133,125,36
+Coordinates=10,144,72,58
 

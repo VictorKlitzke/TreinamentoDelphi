@@ -1,9 +1,10 @@
 object FConfig: TFConfig
   Left = 0
   Top = 0
+  BorderStyle = bsNone
   Caption = 'Config'
-  ClientHeight = 532
-  ClientWidth = 495
+  ClientHeight = 571
+  ClientWidth = 511
   Color = clCream
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +12,7 @@ object FConfig: TFConfig
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  WindowState = wsMaximized
   PixelsPerInch = 96
   TextHeight = 13
   object BtnUsuario: TLabel

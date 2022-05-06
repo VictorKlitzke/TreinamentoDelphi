@@ -3,38 +3,48 @@ unit Login;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,Cadastro, Vcl.ExtCtrls,Config,conexaoDados,
+  Winapi.Windows, Winapi.Messages,
+  System.SysUtils, System.Variants, System.Classes, System.UITypes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,Cadastro, Vcl.ExtCtrls,
+  Config,conexaoDados,
   dxGDIPlusClasses, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, cxContainer, cxEdit, dxSkinsCore,
-  dxSkinsDefaultPainters, cxTextEdit, cxDBEdit, Tarefa;
+  dxSkinsDefaultPainters, cxTextEdit, cxDBEdit, Tarefa, Vcl.Menus, cxButtons;
 
 type
   TFlogin = class(TForm)
-    btnLogar: TButton;
-    btnCadastrar: TButton;
-    Label1: TLabel;
-    btnFechar: TButton;
-    BtnCofig: TButton;
-    Image1: TImage;
     QryLogin: TFDQuery;
     Label2: TLabel;
     Label3: TLabel;
-    edUsuario: TEdit;
-    edSenha: TEdit;
+    edUsuario: TcxTextEdit;
+    edSenha: TcxTextEdit;
+    Image1: TImage;
+    btnLogin: TcxButton;
+    btnCadastrar: TcxButton;
+    btnClose: TcxButton;
+    QryLoginID: TIntegerField;
+    QryLoginUSUARIO: TWideStringField;
+    QryLoginSENHA: TWideStringField;
+    QryLoginNOME: TWideStringField;
     procedure btnCadastrarClick(Sender: TObject);
-    procedure btnFecharClick(Sender: TObject);
-    procedure BtnCofigClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
-    procedure btnLogarClick(Sender: TObject);
+    procedure btnLoginClick(Sender: TObject);
+    procedure btnCloseClick(Sender: TObject);
+    procedure edUsuarioPropertiesValidate(Sender: TObject;
+      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+    procedure edSenhaPropertiesValidate(Sender: TObject;
+      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+    procedure edSenhaKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
+    function getUsuario: Integer;
+    function getNome: string;
     { Private declarations }
   public
-    { Public declarations }
+    property Usuario: Integer read getUsuario;
+    property Nome: string read getNome;
   end;
 
 var
@@ -50,66 +60,92 @@ implementation
 
 procedure TFlogin.btnCadastrarClick(Sender: TObject);
 begin
-
   Fcadastro := TFcadastro.Create(self);
   Fcadastro.ShowModal;
   Fcadastro.Free;
-
 end;
 
-procedure TFlogin.BtnCofigClick(Sender: TObject);
+procedure TFlogin.btnCloseClick(Sender: TObject);
 begin
-  FConfig := TFConfig.Create(self);
-  FConfig.ShowModal;
-  FConfig.Free;
+  if MessageDlg(
+    'Deseja realmente sair?',
+    mtConfirmation,
+    mbYesNo,
+    1
+  ) = mrYes then
+    ModalResult := mrCancel;
 end;
 
-procedure TFlogin.btnFecharClick(Sender: TObject);
-begin
-  Close;
-end;
-
-procedure TFlogin.btnLogarClick(Sender: TObject);
-
+procedure TFlogin.btnLoginClick(Sender: TObject);
 var
-
-usuario: String;
-senha: String;
-S : String;
-
+  LMensagem: string;
 begin
+  LMensagem := 'Usuário ou senha incorretos.';
 
-  usuario := edUsuario.Text;
-  senha := edSenha.Text;
-  QryLogin.SQL.Clear;
-  S:= 'SELECT SENHA FROM TB_USUARIOS ' +
-   ' WHERE USUARIO = :USUARIO ';
-  QryLogin.SQL.Text := S;
-  QryLogin.ParamByName('USUARIO').AsString := usuario;
+  edUsuario.ValidateEdit();
+  edSenha.ValidateEdit();
 
+  QryLogin.Close;
+  QryLogin.ParamByName('USUARIO').AsString := edUsuario.Text;
   QryLogin.Open;
 
-  if (senha = VarToStr(QryLogin.FieldByName('SENHA').Value)) then
+  // USUARIO NÃO ENCONTRADO
+  if QryLogin.RecordCount = 0 then
   begin
-    ShowMessage('Logado');
-    FTarefa := TFTarefa.Create(self);
-    FTarefa.ShowModal;
-    FTarefa.Free;
+    MessageDlg(LMensagem, mtError, [mbOK], 0);
     Exit;
   end;
 
-  ShowMessage('Erro Ao Logar');
+  // SENHA INCORRETA
+  if edSenha.Text <> QryLogin.FieldByName('SENHA').AsString then
+  begin
+    MessageDlg(LMensagem, mtError, [mbOK], 0);
+    Exit;
+  end;
 
+  ModalResult := mrOk;
 end;
 
-procedure TFlogin.FormCreate(Sender: TObject);
+procedure TFlogin.edSenhaKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
-  DM := TDataModule1.Create(self);
+  if Key = VK_RETURN then
+  begin
+    if edSenha.Text <> '' then
+      btnLogin.Click;
+  end;
 end;
 
-procedure TFlogin.FormDestroy(Sender: TObject);
+procedure TFlogin.edSenhaPropertiesValidate(
+  Sender: TObject;
+  var DisplayValue: Variant;
+  var ErrorText: TCaption;
+  var Error: Boolean
+);
 begin
-  DM.Free;
+  Error := DisplayValue = '';
+  ErrorText := 'A senha é obrigatória';
+end;
+
+procedure TFlogin.edUsuarioPropertiesValidate(
+  Sender: TObject;
+  var DisplayValue: Variant;
+  var ErrorText: TCaption;
+  var Error: Boolean
+);
+begin
+  Error := DisplayValue = '';
+  ErrorText := 'O usuário é obrigatório';
+end;
+
+function TFlogin.getNome: string;
+begin
+  Result := QryLogin.FieldByName('NOME').AsString;
+end;
+
+function TFlogin.getUsuario: Integer;
+begin
+  Result := QryLogin.FieldByName('ID').AsInteger;
 end;
 
 end.
