@@ -11,32 +11,31 @@ uses
   FireDAC.Comp.Client, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, cxContainer, cxEdit, dxSkinsCore,
   dxSkinsDefaultPainters, cxDBEdit, cxTextEdit, cxMaskEdit, cxSpinEdit,
-  Vcl.ExtCtrls, dxGDIPlusClasses;
+  Vcl.ExtCtrls, dxGDIPlusClasses, Vcl.Menus, cxButtons;
 
 type
   TFcadastro = class(TForm)
-    Label2: TLabel;
-    btnCadastrar: TButton;
     QryCadastro: TFDQuery;
     dtsCadastro: TDataSource;
-    Img: TImage;
-    QryCadastroNOME: TWideStringField;
-    QryCadastroUSUARIO: TWideStringField;
-    QryCadastroSENHA: TWideStringField;
-    Label1: TLabel;
-    edNome: TcxDBTextEdit;
-    Label3: TLabel;
-    edUsuario: TcxDBTextEdit;
-    Label4: TLabel;
-    edsenha: TcxDBTextEdit;
-    Button1: TButton;
     QryLogin: TFDQuery;
     QryLoginUSUARIO: TWideStringField;
     QryLoginSENHA: TWideStringField;
-    procedure btnFecharClick(Sender: TObject);
-    procedure btnCadastrarClick(Sender: TObject);
+    btncadastrar: TcxButton;
+    btnClose: TcxButton;
+    Image1: TImage;
+    BtnUsuario: TcxDBTextEdit;
+    Label3: TLabel;
+    BtnSenha: TcxDBTextEdit;
+    QryCadastroUSUARIO: TWideStringField;
+    QryCadastroSENHA: TWideStringField;
+    Label2: TLabel;
+    QryCadastroNOME: TWideStringField;
+    Label4: TLabel;
+    BtnNome: TcxDBTextEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure btncadastrarClick(Sender: TObject);
+    procedure btnCloseClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -50,45 +49,44 @@ implementation
 
 {$R *.dfm}
 
-procedure TFcadastro.btnCadastrarClick(Sender: TObject);
+procedure TFcadastro.btncadastrarClick(Sender: TObject);
 
 var
-
-usuario: String;
-
+  usuario : String;
+  LMensagem : string;
 begin
 
-
   try
-
-    QryCadastro.Post; // VAI CRIAR O USUARIO
+    QryCadastro.Post; // CRIAR USUARIO
 
   except
 
   begin
-
-    ShowMessage('Erro ao fazer Cadastro');
-    Exit; //  COMANDO REALIZADO PARA NÃO CHEGAR NO PROXIMO COMANDO
-
+    ShowMessage('Erro ao fazer Cadastro!');
+    Exit;
   end;
 
   end;
-
-  ShowMessage('Cadastro efetuado com Sucesso!');
-
+  ShowMessage('Cadastro realizado com sucesso');
 end;
 
-procedure TFcadastro.btnFecharClick(Sender: TObject);
+procedure TFcadastro.btnCloseClick(Sender: TObject);
+
 begin
-  Close
+
+  if MessageDlg(
+       'Deseja realmente sair',
+       mtConfirmation,
+       mbYesNo,
+       1
+  ) = mrYes then
+    ModalResult := mrCancel;
 end;
 
 procedure TFcadastro.FormCreate(Sender: TObject);
 begin
   QryCadastro.Open;
-
   QryCadastro.Insert; // VAI INICIAR MODE INSERÇÃO O CADASTRO NO BANCO DE DADOS
-
 end;
 
 procedure TFcadastro.FormDestroy(Sender: TObject);

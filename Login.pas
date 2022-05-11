@@ -38,6 +38,8 @@ type
       var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
     procedure edSenhaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     function getUsuario: Integer;
     function getNome: string;
@@ -49,7 +51,7 @@ type
 
 var
   Flogin: TFlogin;
-  Fcadastro: TFcadastro;
+  FCadastro: TFCadastro;
   FConfig: TFConfig;
   FTarefa: TFTarefa;
   DM: TDataModule1;
@@ -60,9 +62,9 @@ implementation
 
 procedure TFlogin.btnCadastrarClick(Sender: TObject);
 begin
-  Fcadastro := TFcadastro.Create(self);
-  Fcadastro.ShowModal;
-  Fcadastro.Free;
+ FCadastro := TFCadastro.Create(self);
+ FCadastro.ShowModal;
+ FCadastro.Free;
 end;
 
 procedure TFlogin.btnCloseClick(Sender: TObject);
@@ -136,6 +138,17 @@ procedure TFlogin.edUsuarioPropertiesValidate(
 begin
   Error := DisplayValue = '';
   ErrorText := 'O usuário é obrigatório';
+end;
+
+procedure TFlogin.FormCreate(Sender: TObject);
+begin
+  DM := TDataModule1.Create(self);
+  DM.Free;
+end;
+
+procedure TFlogin.FormDestroy(Sender: TObject);
+begin
+  DM.Free;
 end;
 
 function TFlogin.getNome: string;
