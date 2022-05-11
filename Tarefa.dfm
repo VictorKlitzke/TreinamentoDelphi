@@ -3,8 +3,8 @@ object FTarefa: TFTarefa
   Top = 0
   BorderStyle = bsNone
   Caption = 'Tarefas'
-  ClientHeight = 642
-  ClientWidth = 555
+  ClientHeight = 541
+  ClientWidth = 402
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,15 +13,65 @@ object FTarefa: TFTarefa
   Font.Style = []
   OldCreateOrder = False
   WindowState = wsMaximized
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
+  object cxGrid1: TcxGrid
     Left = 0
     Top = 0
-    Width = 555
-    Height = 13
-    Align = alTop
-    Caption = 'Gest'#227'o de Tarefas'
-    ExplicitWidth = 89
+    Width = 402
+    Height = 541
+    Align = alClient
+    TabOrder = 0
+    object cxGrid1DBTableView1: TcxGridDBTableView
+      Navigator.Buttons.CustomButtons = <>
+      DataController.DataSource = DataSource1
+      DataController.Summary.DefaultGroupSummaryItems = <>
+      DataController.Summary.FooterSummaryItems = <>
+      DataController.Summary.SummaryGroups = <>
+      OptionsView.GroupByBox = False
+      object cxGrid1DBTableView1TAREFA: TcxGridDBColumn
+        DataBinding.FieldName = 'TAREFA'
+        Width = 148
+      end
+      object cxGrid1DBTableView1DESCRICAO: TcxGridDBColumn
+        DataBinding.FieldName = 'DESCRICAO'
+        Width = 1174
+      end
+      object cxGrid1DBTableView1STATUS: TcxGridDBColumn
+        DataBinding.FieldName = 'STATUS'
+      end
+    end
+    object cxGrid1Level1: TcxGridLevel
+      GridView = cxGrid1DBTableView1
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = QryTarefas
+    Left = 344
+    Top = 64
+  end
+  object QryTarefas: TFDQuery
+    Connection = DataModule1.Connection
+    SQL.Strings = (
+      'SELECT'
+      '  TF.ID_USUARIO,'
+      '  TF.TAREFA,'
+      '  TF.DESCRICAO,'
+      '  TF.STATUS,'
+      '  TU.USUARIO'
+      'FROM TB_TAREFAS TF'
+      'join TB_USUARIOS TU ON TF.ID_USUARIO = TU.ID'
+      'where'
+      'TU.ID = :USUARIO')
+    Left = 344
+    Top = 120
+    ParamData = <
+      item
+        Name = 'USUARIO'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
   end
 end

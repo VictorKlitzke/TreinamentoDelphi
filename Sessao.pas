@@ -10,6 +10,7 @@ type
 
   private
     FUsuario: Integer;
+    FID: Integer;
     FData: TDateTime;
     FNome: string;
     function getUsuario: Boolean;
@@ -20,6 +21,7 @@ type
 
     property Conectado: Boolean read getUsuario;
     property Usuario: Integer read FUsuario write FUsuario;
+    property ID: Integer read FID write FID;
     property Nome: string read FNome write FNome;
     property Data: TDateTime read FData write FData;
 

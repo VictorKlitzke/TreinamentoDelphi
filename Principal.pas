@@ -27,9 +27,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
   private
-    FSessao: TSessao;
   public
-    { Public declarations }
+        FSessao: TSessao;
   end;
 
 var

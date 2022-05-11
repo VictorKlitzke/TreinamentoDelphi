@@ -2387,7 +2387,7 @@ object FPrincipal: TFPrincipal
       Left = 969
       Top = 0
       Width = 8
-      Height = 50
+      Height = 40
       Align = alRight
       Alignment = taCenter
       Font.Charset = ANSI_CHARSET
@@ -2396,8 +2396,6 @@ object FPrincipal: TFPrincipal
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitLeft = 728
-      ExplicitHeight = 40
     end
     object btnSair: TcxButton
       Left = 977
@@ -2445,7 +2443,6 @@ object FPrincipal: TFPrincipal
       SpeedButtonOptions.Flat = True
       TabOrder = 0
       OnClick = btnSairClick
-      ExplicitLeft = 888
     end
   end
   object pnMenu: TPanel
@@ -2456,7 +2453,6 @@ object FPrincipal: TFPrincipal
     Align = alLeft
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitHeight = 395
     object btnTarefas: TcxButton
       Left = 0
       Top = 0
@@ -2595,9 +2591,5 @@ object FPrincipal: TFPrincipal
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitLeft = 191
-    ExplicitTop = 47
-    ExplicitWidth = 761
-    ExplicitHeight = 395
   end
 end
