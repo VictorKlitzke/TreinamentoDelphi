@@ -13,6 +13,8 @@ object Flogin: TFlogin
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object Label2: TLabel
@@ -2414,6 +2416,7 @@ object Flogin: TFlogin
     Top = 159
     ParentFont = False
     Properties.EchoMode = eemPassword
+    Properties.PasswordChar = '*'
     Properties.ValidationOptions = [evoRaiseException, evoShowErrorIcon]
     Properties.OnValidate = edSenhaPropertiesValidate
     Style.Font.Charset = ANSI_CHARSET
