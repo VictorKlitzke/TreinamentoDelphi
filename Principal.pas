@@ -20,6 +20,7 @@ type
     btnTarefas: TcxButton;
     btnUsuarios: TcxButton;
     lblUsuario: TLabel;
+    btnAdd: TcxButton;
     procedure btnSairClick(Sender: TObject);
     procedure btnTarefasClick(Sender: TObject);
     procedure btnUsuariosClick(Sender: TObject);

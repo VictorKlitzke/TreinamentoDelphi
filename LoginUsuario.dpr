@@ -8,7 +8,8 @@ uses
   Cadastro in 'Cadastro.pas' {Fcadastro},
   Tarefa in 'Tarefa.pas' {FTarefa},
   Principal in 'Principal.pas' {FPrincipal},
-  Sessao in 'Sessao.pas';
+  Sessao in 'Sessao.pas',
+  Addtask in 'Addtask.pas' {Form1};
 
 {$R *.res}
 
@@ -19,6 +20,7 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDataModule1, DataModule1);
   Application.CreateForm(TFPrincipal, FPrincipal);
+  Application.CreateForm(TForm1, Form1);
   FPrincipal.Show;
   Application.Run;
 end.
