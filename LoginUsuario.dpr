@@ -8,7 +8,8 @@ uses
   Cadastro in 'Cadastro.pas' {Fcadastro},
   Tarefa in 'Tarefa.pas' {FTarefa},
   Principal in 'Principal.pas' {FPrincipal},
-  Sessao in 'Sessao.pas', System.SysUtils;
+  Sessao in 'Sessao.pas',
+  Addtask in 'Addtask.pas' {Form1};
 
 {$R *.res}
 

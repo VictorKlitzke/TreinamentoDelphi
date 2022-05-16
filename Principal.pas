@@ -34,7 +34,7 @@ type
     btnSair: TcxButton;
     btnUsuarios: TcxButton;
     lblUsuario: TLabel;
-    cxButton1: TcxButton;
+    btnAdd: TcxButton;
     procedure btnSairClick(Sender: TObject);
     procedure btnUsuariosClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -61,7 +61,7 @@ uses
 procedure TFPrincipal.btnSairClick(Sender: TObject);
 begin
   if MessageDlg(
-    'Você tem certeza que deseja sair?',
+    'VocÃª tem certeza que deseja sair?',
     mtConfirmation,
     mbYesNo,
     0
