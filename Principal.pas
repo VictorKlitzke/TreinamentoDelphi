@@ -1,4 +1,4 @@
-unit Principal;
+﻿unit Principal;
 
 interface
 
@@ -34,14 +34,13 @@ type
     btnSair: TcxButton;
     btnUsuarios: TcxButton;
     lblUsuario: TLabel;
-    btnAdd: TcxButton;
     procedure btnSairClick(Sender: TObject);
     procedure btnUsuariosClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure cxButton1Click(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-
+    procedure FormShow(Sender: TObject);
+    procedure btnTarefasClick(Sender: TObject);
   private
 
   public
@@ -71,8 +70,19 @@ begin
   end;
 end;
 
+procedure TFPrincipal.btnTarefasClick(Sender: TObject);
+begin
+  if Assigned(FConfig) then FreeAndNil(FConfig);
+  if not Assigned(FTarefa) then
+    Application.CreateForm(TFTarefa, FTarefa);
+
+  FTarefa.Parent := pnContent;
+  FTarefa.Show;
+end;
+
 procedure TFPrincipal.btnUsuariosClick(Sender: TObject);
 begin
+  if Assigned(FTarefa) then FreeAndNil(FTarefa);
   if not Assigned(FConfig) then
     Application.CreateForm(TFConfig, FConfig);
 
@@ -80,14 +90,6 @@ begin
   FConfig.Show;
 end;
 
-procedure TFPrincipal.cxButton1Click(Sender: TObject);
-begin
-  if not Assigned(FTarefa) then
-    Application.CreateForm(TFTarefa, FTarefa);
-
-  FTarefa.Parent := pnContent;
-  FTarefa.Show;
-end;
 
 procedure TFPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -105,6 +107,11 @@ procedure TFPrincipal.FormKeyDown(Sender: TObject; var Key: Word;
 begin
   if (Key = VK_ESCAPE) then
       if MessageDlg('Deseja realmente sair', mtConfirmation , mbYesNo , 0) = mrYes then Close;
+end;
+
+procedure TFPrincipal.FormShow(Sender: TObject);
+begin
+  lblUsuario.Caption := FSessao.Nome;
 end;
 
 end.

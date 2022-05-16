@@ -50,39 +50,32 @@ type
   TFTarefa = class(TForm)
     DataSource1: TDataSource;
     QryTarefas: TFDQuery;
-    btnAdd: TcxButton;
     cxGrid1: TcxGrid;
     cxGrid1DBTableView1: TcxGridDBTableView;
     cxGrid1DBTableView1TAREFA: TcxGridDBColumn;
     cxGrid1DBTableView1DESCRICAO: TcxGridDBColumn;
     cxGrid1DBTableView1STATUS: TcxGridDBColumn;
     cxGrid1Level1: TcxGridLevel;
+    Panel1: TPanel;
     procedure FormShow(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
 
   end;
 
+
 var
   FTarefa: TFTarefa;
 
 implementation
 
-{$R *.dfm}
-
 uses ConexaoDados, Sessao, Principal;
 
-procedure TFTarefa.FormCreate(Sender: TObject);
-begin
-FTarefa.Top :=  Trunc((ClientHeight/2) - (FTarefa.Height/2));
-FTarefa.Left:= Trunc((ClientWidth/2) - (FTarefa.Width/2));
-end;
+{$R *.dfm}
 
 procedure TFTarefa.FormShow(Sender: TObject);
 begin
-
 QryTarefas.Close;
 QryTarefas.ParamByName('USUARIO').AsInteger := FPrincipal.FSessao.Usuario;
 QryTarefas.Open;
