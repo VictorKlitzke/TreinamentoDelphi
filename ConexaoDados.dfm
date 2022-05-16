@@ -10,6 +10,7 @@ object DataModule1: TDataModule1
       'Password=masterkey'
       'User_Name=SYSDBA'
       'DriverID=FB')
+    Connected = True
     LoginPrompt = False
     Transaction = Transaction
     Left = 224

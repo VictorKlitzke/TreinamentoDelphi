@@ -15,6 +15,8 @@ object Fcadastro: TFcadastro
   Position = poDesktopCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnKeyDown = FormKeyDown
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
@@ -2373,10 +2375,10 @@ object Fcadastro: TFcadastro
   object Label3: TLabel
     Left = 96
     Top = 232
-    Width = 48
+    Width = 35
     Height = 13
     Caption = 'SENHA'
-    FocusControl = BtnSenha
+    FocusControl = edSenha
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -11
@@ -2390,7 +2392,7 @@ object Fcadastro: TFcadastro
     Width = 48
     Height = 13
     Caption = 'USUARIO'
-    FocusControl = BtnUsuario
+    FocusControl = edUsuario
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -11
@@ -2404,7 +2406,7 @@ object Fcadastro: TFcadastro
     Width = 33
     Height = 13
     Caption = 'NOME'
-    FocusControl = BtnNome
+    FocusControl = edNome
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -11
@@ -2446,7 +2448,7 @@ object Fcadastro: TFcadastro
       00000049454E44AE426082}
     SpeedButtonOptions.CanBeFocused = False
     SpeedButtonOptions.Flat = True
-    TabOrder = 0
+    TabOrder = 3
     OnClick = btnCadastrarClick
   end
   object btnClose: TcxButton
@@ -2471,41 +2473,50 @@ object Fcadastro: TFcadastro
       3A32312B30303A3030B115B8850000000049454E44AE426082}
     SpeedButtonOptions.CanBeFocused = False
     SpeedButtonOptions.Flat = True
-    TabOrder = 1
+    TabOrder = 4
     OnClick = btnCloseClick
   end
-  object BtnUsuario: TcxDBTextEdit
+  object edUsuario: TcxDBTextEdit
     Left = 96
     Top = 208
     DataBinding.DataField = 'USUARIO'
     DataBinding.DataSource = dtsCadastro
-    TabOrder = 2
+    TabOrder = 1
     Width = 217
   end
-  object BtnSenha: TcxDBTextEdit
+  object edSenha: TcxDBTextEdit
     Left = 96
     Top = 251
     DataBinding.DataField = 'SENHA'
     DataBinding.DataSource = dtsCadastro
+    Properties.EchoMode = eemPassword
     Properties.PasswordChar = '*'
-    TabOrder = 3
+    TabOrder = 2
+    OnKeyDown = edSenhaKeyDown
     Width = 217
   end
-  object BtnNome: TcxDBTextEdit
+  object edNome: TcxDBTextEdit
     Left = 96
     Top = 162
     DataBinding.DataField = 'NOME'
     DataBinding.DataSource = dtsCadastro
-    TabOrder = 4
+    TabOrder = 0
     Width = 217
   end
   object QryCadastro: TFDQuery
+    BeforePost = QryCadastroBeforePost
     Connection = DataModule1.Connection
     Transaction = DataModule1.Transaction
     SQL.Strings = (
       'SELECT NOME , USUARIO , SENHA FROM TB_USUARIOS TU')
     Left = 8
     Top = 64
+    object QryCadastroNOME: TWideStringField
+      FieldName = 'NOME'
+      Origin = 'NOME'
+      Required = True
+      Size = 50
+    end
     object QryCadastroUSUARIO: TWideStringField
       FieldName = 'USUARIO'
       Origin = 'USUARIO'
@@ -2516,13 +2527,7 @@ object Fcadastro: TFcadastro
       FieldName = 'SENHA'
       Origin = 'SENHA'
       Required = True
-      Size = 30
-    end
-    object QryCadastroNOME: TWideStringField
-      FieldName = 'NOME'
-      Origin = 'NOME'
-      Required = True
-      Size = 50
+      Size = 128
     end
   end
   object dtsCadastro: TDataSource
@@ -2547,7 +2552,7 @@ object Fcadastro: TFcadastro
       FieldName = 'SENHA'
       Origin = 'SENHA'
       Required = True
-      Size = 30
+      Size = 128
     end
   end
 end

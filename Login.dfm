@@ -14,7 +14,7 @@ object Flogin: TFlogin
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
   object Label2: TLabel
@@ -2543,7 +2543,7 @@ object Flogin: TFlogin
       FieldName = 'SENHA'
       Origin = 'SENHA'
       Required = True
-      Size = 30
+      Size = 128
     end
     object QryLoginNOME: TWideStringField
       FieldName = 'NOME'

@@ -3,37 +3,74 @@ unit Config;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs,Vcl.StdCtrls,cxGraphics,cxControls,
-  cxLookAndFeels, cxLookAndFeelPainters,cxContainer,cxEdit,dxSkinsCore,
-  dxSkinsDefaultPainters,cxTextEdit,cxDBEdit,conexaoDados, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
-  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxStyles, cxCustomData,
-  cxFilter, cxData, cxDataStorage, cxNavigator, dxDateRanges, cxDBData,
-  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGridLevel,
-  cxClasses, cxGridCustomView, cxGrid, Vcl.ExtCtrls, Vcl.ComCtrls, cxMaskEdit,
-  cxButtonEdit;
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls,cxGraphics,
+  cxControls,
+  cxLookAndFeels,
+  cxLookAndFeelPainters,
+  cxContainer,
+  cxEdit,
+  dxSkinsCore,
+  dxSkinsDefaultPainters,
+  cxTextEdit,
+  cxDBEdit,
+  conexaoDados,
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS,
+  FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt,
+  Data.DB,
+  FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client,
+  cxStyles,
+  cxCustomData,
+  cxFilter,
+  cxData,
+  cxDataStorage,
+  cxNavigator,
+  dxDateRanges,
+  cxDBData,
+  cxGridCustomTableView,
+  cxGridTableView,
+  cxGridDBTableView,
+  cxGridLevel,
+  cxClasses,
+  cxGridCustomView,
+  cxGrid,
+  Vcl.ExtCtrls,
+  Vcl.ComCtrls,
+  cxMaskEdit,
+  cxButtonEdit,
+  Vcl.Menus,
+  cxButtons;
 
 type
   TFConfig = class(TForm)
-    QryConfig: TFDQuery;
-    DtsConfig: TDataSource;
-    QryConfigNOME: TWideStringField;
-    DTSUsuarios: TDataSource;
-    StatusBar1: TStatusBar;
     PainellUser: TPanel;
     BtnUsuario: TLabel;
     Label1: TLabel;
-    Buscar: TEdit;
+    editBuscar: TEdit;
     edUsers: TcxGrid;
     edUsersDBTableView1: TcxGridDBTableView;
-    edUsersDBTableView1NOME: TcxGridDBColumn;
     edUsersLevel1: TcxGridLevel;
-    edExcluir: TcxButtonEdit;
-    procedure BuscarChange(Sender: TObject);
+    BtnExcluir: TcxButton;
+    Qryusuarios: TFDQuery;
+    DtsUsuarios: TDataSource;
+    QryusuariosUSUARIO: TWideStringField;
+    edUsersDBTableView1USUARIO: TcxGridDBColumn;
+    procedure editBuscarChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure cxButtonEdit1PropertiesChange(Sender: TObject);
+    procedure BtnExcluirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -48,51 +85,51 @@ implementation
 
 {$R *.dfm}
 
-procedure TFConfig.BuscarChange(Sender: TObject);
+procedure TFConfig.editBuscarChange(Sender: TObject);
 
 begin
 
-with QryConfig do
-    begin
-
-          //BUSCANDO USUARIOS JÁ EXISTENTE
-          Close;
-          Sql.Clear;
-          SQL.Add('SELECT * FROM TB_USUARIOS WHERE NOME =:NOME');
-          ParamByName('NOME').AsString := Buscar.Text;
-          Open;
-
-    end;
-
+with Qryusuarios do
+  begin
+    //BUSCANDO USUARIOS JÁ EXISTENTE
+    Close;
+    Sql.Clear;
+    SQL.Add('SELECT * FROM TB_USUARIOS WHERE UPPER(USUARIO) = UPPER(:USUARIO)');
+    ParamByName('USUARIO').AsString := editBuscar.Text;
+    Open;
+  end;
 end;
 
-procedure TFConfig.cxButtonEdit1PropertiesChange(Sender: TObject);
+procedure TFConfig.BtnExcluirClick(Sender: TObject);
 
 var
   LMensagem : string;
 begin
-
-    with DtsConfig do
+  with DtsUsuarios do
+  begin
+    if editBuscar.Text = '' then
     begin
-      DataSet.Delete;
-    end;
-
+      ShowMessage('Nenhum usuário selecionado');
+    end
+    else
+    begin
+      if DataSet.RecordCount = 0 then
       begin
-        if MessageDlg('Deseja realmente excluir esse usuário',
-             mtConfirmation,
-             mbYesNo,
-             0
-          ) = mrYes then
-            ModalResult := mrCancel;
-
-          if QryConfig.RecordCount = 0 then
-             begin
-               MessageDlg(LMensagem, mtError, [mbOK], 0);
-               Exit;
-             end;
-              ModalResult := mrOk;
+        ShowMessage('Usuário inexistente');
+      end
+      else
+      begin
+        if MessageDlg('Deseja realmente excluir esse usuário', mtConfirmation, mbYesNo, 1) = mrYes then
+        begin
+          DataSet.Delete;
+          ShowMessage('Usuário excluido com sucesso');
+          Dataset.Fields.Clear;
+          ModalResult := mrCancel;
+        end;
       end;
-        ShowMessage('Usuário excluido com sucesso');
+    end;
+    DataSet.Fields.Clear;
+  end;
 end;
 
 procedure TFConfig.FormShow(Sender: TObject);

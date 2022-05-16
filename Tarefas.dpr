@@ -1,4 +1,4 @@
-program LoginUsuario;
+program Tarefas;
 
 uses
   Vcl.Forms,
@@ -8,7 +8,7 @@ uses
   Cadastro in 'Cadastro.pas' {Fcadastro},
   Tarefa in 'Tarefa.pas' {FTarefa},
   Principal in 'Principal.pas' {FPrincipal},
-  Sessao in 'Sessao.pas', System.SysUtils;
+  Sessao in 'Sessao.pas';
 
 {$R *.res}
 
@@ -19,19 +19,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDataModule1, DataModule1);
   Application.CreateForm(TFPrincipal, FPrincipal);
-  Application.CreateForm(TFLogin, FLogin);
-
-  Flogin.ShowModal;
-
-  if Flogin.ModalResult = mrCancel then
-  begin
-    FPrincipal.FSessao.DisposeOf;
-    FreeAndNil(FLogin);
-    FreeAndNil(FPrincipal);
-    Application.Terminate;
-  end else
-  begin
-    FPrincipal.FSessao.Conectar(Flogin.Usuario, Flogin.Nome);
-    Application.Run;
-  end;
+  FPrincipal.Show;
+  Application.Run;
 end.
