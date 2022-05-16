@@ -3,6 +3,7 @@ program LoginUsuario;
 uses
   Vcl.Forms,
   Vcl.Controls,
+  System.SysUtils,
   Login in 'Login.pas' {Flogin},
   ConexaoDados in 'ConexaoDados.pas' {DataModule1: TDataModule},
   Cadastro in 'Cadastro.pas' {Fcadastro},
