@@ -61,10 +61,15 @@ __history/
 __recovery/
 *.~*
 
+# Database
+*.fdb
+
 # Castalia statistics file (since XE7 Castalia is distributed with Delphi)
 *.stat
 
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
+node_modules/
+package-lock.json
 
 # End of https://www.toptal.com/developers/gitignore/api/delphi

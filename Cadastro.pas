@@ -3,40 +3,74 @@ unit Cadastro;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,conexaoDados,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, cxGraphics, cxControls, cxLookAndFeels,
-  cxLookAndFeelPainters, cxContainer, cxEdit, dxSkinsCore,
-  dxSkinsDefaultPainters, cxDBEdit, cxTextEdit, cxMaskEdit, cxSpinEdit,
-  Vcl.ExtCtrls, dxGDIPlusClasses;
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.StdCtrls,
+  conexaoDados,
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Param,
+  FireDAC.Stan.Error,
+  FireDAC.DatS,
+  FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf,
+  FireDAC.Stan.Async,
+  FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client,
+  cxGraphics, cxControls,
+  cxLookAndFeels,
+  cxLookAndFeelPainters,
+  cxContainer,
+  cxEdit,
+  dxSkinsCore,
+  dxSkinsDefaultPainters,
+  cxDBEdit,
+  cxTextEdit,
+  cxMaskEdit,
+  cxSpinEdit,
+  Vcl.ExtCtrls,
+  dxGDIPlusClasses,
+  Vcl.Menus,
+  cxButtons,
+  bcrypt;
 
 type
   TFcadastro = class(TForm)
-    Label2: TLabel;
-    btnCadastrar: TButton;
     QryCadastro: TFDQuery;
     dtsCadastro: TDataSource;
-    Img: TImage;
+    QryLogin: TFDQuery;
+    btncadastrar: TcxButton;
+    btnClose: TcxButton;
+    Image1: TImage;
+    edUsuario: TcxDBTextEdit;
+    Label3: TLabel;
+    edSenha: TcxDBTextEdit;
+    Label2: TLabel;
+    Label4: TLabel;
+    edNome: TcxDBTextEdit;
+    QryLoginUSUARIO: TWideStringField;
+    QryLoginSENHA: TWideStringField;
     QryCadastroNOME: TWideStringField;
     QryCadastroUSUARIO: TWideStringField;
     QryCadastroSENHA: TWideStringField;
-    Label1: TLabel;
-    edNome: TcxDBTextEdit;
-    Label3: TLabel;
-    edUsuario: TcxDBTextEdit;
-    Label4: TLabel;
-    edsenha: TcxDBTextEdit;
-    Button1: TButton;
-    QryLogin: TFDQuery;
-    QryLoginUSUARIO: TWideStringField;
-    QryLoginSENHA: TWideStringField;
-    procedure btnFecharClick(Sender: TObject);
-    procedure btnCadastrarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure btncadastrarClick(Sender: TObject);
+    procedure btnCloseClick(Sender: TObject);
+    procedure QryCadastroBeforePost(DataSet: TDataSet);
+    procedure edSenhaKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+
   private
     { Private declarations }
   public
@@ -50,50 +84,74 @@ implementation
 
 {$R *.dfm}
 
-procedure TFcadastro.btnCadastrarClick(Sender: TObject);
+procedure TFcadastro.btncadastrarClick(Sender: TObject);
 
 var
-
-usuario: String;
-
+  usuario : String;
+  LMensagem : string;
 begin
-
-
   try
-
-    QryCadastro.Post; // VAI CRIAR O USUARIO
-
+    QryCadastro.Post; // CRIAR USUARIO
   except
-
   begin
-
-    ShowMessage('Erro ao fazer Cadastro');
-    Exit; //  COMANDO REALIZADO PARA NÃO CHEGAR NO PROXIMO COMANDO
-
+    ShowMessage('Erro ao fazer Cadastro!');
+    Exit;
   end;
-
   end;
-
-  ShowMessage('Cadastro efetuado com Sucesso!');
+  ShowMessage('Cadastro realizado com sucesso');
 
 end;
 
-procedure TFcadastro.btnFecharClick(Sender: TObject);
+procedure TFcadastro.btnCloseClick(Sender: TObject);
 begin
-  Close
+  if MessageDlg(
+       'Deseja realmente sair',
+       mtConfirmation,
+       mbYesNo,
+       1
+  ) = mrYes then ModalResult := mrCancel;
+end;
+
+procedure TFcadastro.edSenhaKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = VK_RETURN then
+    begin
+      if edSenha.Text <> '' then
+          BtnCadastrar.Click;
+    end;
 end;
 
 procedure TFcadastro.FormCreate(Sender: TObject);
 begin
   QryCadastro.Open;
-
   QryCadastro.Insert; // VAI INICIAR MODE INSERÇÃO O CADASTRO NO BANCO DE DADOS
-
+  KeyPreview := true;
 end;
 
 procedure TFcadastro.FormDestroy(Sender: TObject);
 begin
   QryCadastro.Close;
+end;
+
+procedure TFcadastro.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = VK_ESCAPE then
+      if MessageDlg('Deseja realmente sair' , mtConfirmation , mbYesNo , 0) = mrYes then
+          Close;
+end;
+
+procedure TFcadastro.FormShow(Sender: TObject);
+begin
+edNome.SetFocus;
+end;
+
+procedure TFcadastro.QryCadastroBeforePost(DataSet: TDataSet);
+begin
+  DataSet.FieldByName('SENHA').Value := TBCrypt.GenerateHash(DataSet.FieldByName('SENHA').AsString);
+  DataSet.Fields.Clear;
+  ModalResult := mrCancel;
 end;
 
 end.

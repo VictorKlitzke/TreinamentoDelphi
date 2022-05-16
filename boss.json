@@ -1,0 +1,11 @@
+{
+	"name": "Tarefas",
+	"description": "Sistema de Tarefas em Delphi 10.3",
+	"version": "V1",
+	"homepage": "",
+	"mainsrc": ".",
+	"projects": [],
+	"dependencies": {
+		"https://github.com/viniciussanchez/bcrypt": "^1.0.7"
+	}
+}

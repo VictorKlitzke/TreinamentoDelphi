@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<meta charset='utf-8'>
+<title>BOSS Log</title>
+<link rel='stylesheet' href='../resources/style.css' />
+<nav>
+	<header>
+		<h1>BOSS</h1>
+		Version 2.3.2
+	</header>
+	<div class='button' data-section='summary'>Summary</div><br />
+	<footer>
+		<div class='button' data-section='browserBox' id='supportButtonShow'>Log Feature Support</div>
+		<div class='button' id='filtersButtonToggle'>Filters<span id='arrow'></span></div>
+	</footer>
+</nav>
+<noscript>The BOSS Log requires Javascript to be enabled in order to function.</noscript>
+<section id='summary'>
+	<ul>
+<li class='error'>Critical Error: No game detected!<br />Check the Troubleshooting section of the ReadMe for more information and possible solutions.<br />Utility will end now.	</ul>
+</section>
+<section id='browserBox'>
+	<p>Support for the BOSS Log's more advanced features varies. Here's what your browser supports:
+	<h3>Functionality</h3>
+	<table>
+		<tbody>
+			<tr>
+				<td id='pluginSubmitSupport'>
+				<td>In-Log Plugin Submission
+				<td>Allows unrecognised plugins to be anonymously submitted to the BOSS team directly from the BOSS Log.
+			<tr>
+				<td id='memorySupport'>
+				<td>Settings Memory
+				<td>Allows the BOSS Log to automatically restore the filter configuration last used whenever the BOSS Log is opened.
+			<tr>
+				<td id='placeholderSupport'>
+				<td>Input Placeholders
+			<tr>
+				<td id='validationSupport'>
+				<td>Form Validation
+	</table>
+</section>
+<aside>
+	<label><input type='checkbox' id='hideVersionNumbers' data-class='version'/>Hide Version Numbers</label>
+	<label><input type='checkbox' id='hideActiveLabel' data-class='active'/>Hide 'Active' Label</label>
+	<label><input type='checkbox' id='hideChecksums' data-class='crc'/>Hide Checksums</label>
+	<label><input type='checkbox' id='hideNotes'/>Hide Notes</label>
+	<label><input type='checkbox' id='hideBashTags'/>Hide Bash Tag Suggestions</label>
+	<label><input type='checkbox' id='hideRequirements'/>Hide Requirements</label>
+	<label><input type='checkbox' id='hideIncompatibilities'/>Hide Incompatibilities</label>
+	<label><input type='checkbox' id='hideDoNotCleanMessages'/>Hide 'Do Not Clean' Messages</label>
+	<label><input type='checkbox' id='hideAllPluginMessages'/>Hide All Plugin Messages</label>
+	<label><input type='checkbox' id='hideInactivePlugins'/>Hide Inactive Plugins</label>
+	<label><input type='checkbox' id='hideMessagelessPlugins'/>Hide Messageless Plugins</label>
+	<footer>
+			<span id='hiddenPluginNo'>0</span> of 0 recognised plugins hidden.
+			<span id='hiddenMessageNo'>0</span> of 0 messages hidden.
+	</footer>
+</aside>
+<div id='overlay'>
+	<div id='submitBox'>
+		<h2>Submit Plugin</h2>
+		<p><span id='pluginLabel'>Plugin:</span><span id='plugin'></span>
+		<form>
+			<label>Download Location:<br /><input type='url' placeholder='A link to the plugin&#x27;s download location.' id='link'></label>
+			<label>Additional Notes:<br /><textarea id='notes' placeholder='Any additional information, such as recommended Bash Tags, load order suggestions, ITM/UDR counts and dirty CRCs, can be supplied here. If no download link is available, this information is crucial.'></textarea></label>
+			<div id='output'></div>
+			<p class='last'><button>Submit</button>
+			<button type='reset'>Close</button>
+		</form>
+	</div>
+</div>
+<script>
+	var gameName = '';
+	var txt1 = 'Checking for existing submission...';
+	var txt2 = 'Matching submission already exists.';
+	var txt3 = 'Plugin already submitted. Submission updated with new comment.';
+	var txt4 = 'Plugin submitted!';
+	var txt5 = 'Plugin submission failed! Authorisation failure. Please report this to the BOSS team.';
+	var txt6 = 'Plugin submission failed! GitHub API rate limit exceeded. Please try again after %1%.';
+	var txt7 = 'Plugin submission failed!';
+	var txt8 = 'Web storage quota for this document has been exceeded.Please empty your browser\'s cache. Note that this will delete all locally stored data.';
+	var txt9 = 'Please supply at least a link or some notes.';
+	var txt10 = 'Do not clean.';
+</script>
+<script src='../resources/promise-1.0.0.min.js'></script>
+<script src='../resources/octokit.js'></script>
+<script>
+	var gh = new Octokit({token: "7fba618fea5573ee600f00c22f5015cb3ce9bf5a"});
+</script>
+<script src='../resources/script.js'></script>
