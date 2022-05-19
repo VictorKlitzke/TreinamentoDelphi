@@ -1,4 +1,4 @@
-object FConfig: TFConfig
+object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
   Left = 0
   Top = 0
   BorderStyle = bsNone

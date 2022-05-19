@@ -71,5 +71,7 @@ __recovery/
 modules/
 node_modules/
 package-lock.json
+bin/
+dcus/
 
 # End of https://www.toptal.com/developers/gitignore/api/delphi

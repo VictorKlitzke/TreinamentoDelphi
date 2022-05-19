@@ -1,4 +1,4 @@
-unit Tarefa;
+unit TD.Views.Task.Listagem;
 
 interface
 
@@ -47,7 +47,7 @@ uses
   FireDAC.Comp.Client, Vcl.Menus, cxButtons;
 
 type
-  TFTarefa = class(TForm)
+  TTDViewsTaskListagem = class(TForm)
     DataSource1: TDataSource;
     QryTarefas: TFDQuery;
     cxGrid1: TcxGrid;
@@ -66,19 +66,19 @@ type
 
 
 var
-  FTarefa: TFTarefa;
+  TDViewsTaskListagem: TTDViewsTaskListagem;
 
 implementation
 
-uses ConexaoDados, Sessao, Principal;
+uses ConexaoDados, TD.Controllers.Sessao, TD.Views.Principal;
 
 {$R *.dfm}
 
-procedure TFTarefa.FormShow(Sender: TObject);
+procedure TTDViewsTaskListagem.FormShow(Sender: TObject);
 begin
-QryTarefas.Close;
-QryTarefas.ParamByName('USUARIO').AsInteger := FPrincipal.FSessao.Usuario;
-QryTarefas.Open;
+//  QryTarefas.Close;
+//  QryTarefas.ParamByName('USUARIO').AsInteger := TDViewsPrincipal.FSessao.Usuario;
+//  QryTarefas.Open;
 end;
 
 end.

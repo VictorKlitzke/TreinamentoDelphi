@@ -1,4 +1,4 @@
-unit Config;
+unit TD.Views.Usuario.Listagem;
 
 interface
 
@@ -8,6 +8,7 @@ uses
   System.SysUtils,
   System.Variants,
   System.Classes,
+  System.UITypes,
   Vcl.Graphics,
   Vcl.Controls,
   Vcl.Forms, Vcl.Dialogs,
@@ -55,7 +56,7 @@ uses
   cxButtons;
 
 type
-  TFConfig = class(TForm)
+  TTDViewsUsuarioListagem = class(TForm)
     PainellUser: TPanel;
     BtnUsuario: TLabel;
     Label1: TLabel;
@@ -78,14 +79,14 @@ type
   end;
 
 var
-  FConfig: TFConfig;
+  TDViewsUsuarioListagem: TTDViewsUsuarioListagem;
   DM: TDataModule1;
 
 implementation
 
 {$R *.dfm}
 
-procedure TFConfig.editBuscarChange(Sender: TObject);
+procedure TTDViewsUsuarioListagem.editBuscarChange(Sender: TObject);
 
 begin
 
@@ -100,10 +101,7 @@ with Qryusuarios do
   end;
 end;
 
-procedure TFConfig.BtnExcluirClick(Sender: TObject);
-
-var
-  LMensagem : string;
+procedure TTDViewsUsuarioListagem.BtnExcluirClick(Sender: TObject);
 begin
   with DtsUsuarios do
   begin
@@ -132,7 +130,7 @@ begin
   end;
 end;
 
-procedure TFConfig.FormShow(Sender: TObject);
+procedure TTDViewsUsuarioListagem.FormShow(Sender: TObject);
 begin
 
 PainellUser.Top :=  Trunc((ClientHeight/2) - (PainellUser.Height/2));

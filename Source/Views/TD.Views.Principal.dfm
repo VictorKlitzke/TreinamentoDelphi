@@ -1,4 +1,4 @@
-object FPrincipal: TFPrincipal
+object TDViewsPrincipal: TTDViewsPrincipal
   Left = 0
   Top = 0
   BorderStyle = bsNone
@@ -14,10 +14,8 @@ object FPrincipal: TFPrincipal
   OldCreateOrder = False
   Position = poDefault
   WindowState = wsMaximized
-  OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pnHeader: TPanel
@@ -2521,8 +2519,6 @@ object FPrincipal: TFPrincipal
       SpeedButtonOptions.Flat = True
       TabOrder = 1
       OnClick = btnUsuariosClick
-      ExplicitLeft = 24
-      ExplicitTop = 302
     end
     object btnTarefas: TcxButton
       Left = 0
@@ -2601,7 +2597,5 @@ object FPrincipal: TFPrincipal
     Ctl3D = True
     ParentCtl3D = False
     TabOrder = 2
-    ExplicitLeft = 66
-    ExplicitTop = 47
   end
 end

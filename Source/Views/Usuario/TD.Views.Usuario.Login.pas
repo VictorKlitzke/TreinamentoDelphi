@@ -1,4 +1,4 @@
-unit Login;
+unit TD.Views.Usuario.Login;
 
 interface
 
@@ -14,9 +14,10 @@ uses
   Vcl.Forms,
   Vcl.Dialogs,
   Vcl.StdCtrls,
-  Cadastro,
+  TD.Views.Usuario.Adicionar,
   Vcl.ExtCtrls,
-  Config,conexaoDados,
+  TD.Views.Usuario.Listagem,
+  conexaoDados,
   dxGDIPlusClasses,
   FireDAC.Stan.Intf,
   FireDAC.Stan.Option,
@@ -42,10 +43,10 @@ uses
   Vcl.Menus,
   cxButtons,
   cxTextEdit,
-  Tarefa;
+  TD.Views.Task.Listagem;
 
 type
-  TFlogin = class(TForm)
+  TTDViewsUsuarioLogin = class(TForm)
     QryLogin: TFDQuery;
     Label2: TLabel;
     Label3: TLabel;
@@ -80,30 +81,30 @@ type
   end;
 
 var
-  Flogin: TFlogin;
-  FCadastro: TFCadastro;
-  FConfig: TFConfig;
-  FTarefa: TFTarefa;
+  TDViewsUsuarioLogin: TTDViewsUsuarioLogin;
+  FCadastro: TTDViewsUsuarioAdicionar;
+  FConfig: TTDViewsTaskListagem;
+  FTarefa: TTDViewsTaskListagem;
   DM: TDataModule1;
 
 implementation
 
 {$R *.dfm}
 
-procedure TFlogin.btnCadastrarClick(Sender: TObject);
+procedure TTDViewsUsuarioLogin.btnCadastrarClick(Sender: TObject);
 begin
- FCadastro := TFCadastro.Create(self);
+ FCadastro := TTDViewsUsuarioAdicionar.Create(self);
  FCadastro.ShowModal;
  FCadastro.Free;
 end;
 
-procedure TFlogin.btnCloseClick(Sender: TObject);
+procedure TTDViewsUsuarioLogin.btnCloseClick(Sender: TObject);
 begin
   if MessageDlg('Deseja realmente sair?', mtConfirmation, mbYesNo, 1) = mrYes then
     Close;
 end;
 
-procedure TFlogin.btnLoginClick(Sender: TObject);
+procedure TTDViewsUsuarioLogin.btnLoginClick(Sender: TObject);
 var
   LMensagem: string;
   Hash: Boolean;
@@ -132,7 +133,7 @@ begin
     ModalResult := mrOk;
 end;
 
-procedure TFlogin.edSenhaKeyDown(Sender: TObject; var Key: Word;
+procedure TTDViewsUsuarioLogin.edSenhaKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_RETURN then
@@ -142,7 +143,7 @@ begin
   end;
 end;
 
-procedure TFlogin.edSenhaPropertiesValidate(Sender: TObject;
+procedure TTDViewsUsuarioLogin.edSenhaPropertiesValidate(Sender: TObject;
   var DisplayValue: Variant;
   var ErrorText: TCaption;
   var Error: Boolean
@@ -152,7 +153,7 @@ begin
   ErrorText := 'A senha é obrigatória';
 end;
 
-procedure TFlogin.edUsuarioPropertiesValidate(
+procedure TTDViewsUsuarioLogin.edUsuarioPropertiesValidate(
   Sender: TObject;
   var DisplayValue: Variant;
   var ErrorText: TCaption;
@@ -163,12 +164,12 @@ begin
   ErrorText := 'O usuário é obrigatório';
 end;
 
-procedure TFlogin.FormCreate(Sender: TObject);
+procedure TTDViewsUsuarioLogin.FormCreate(Sender: TObject);
 begin
   KeyPreview := true;
 end;
 
-procedure TFlogin.FormKeyDown(Sender: TObject; var Key: Word;
+procedure TTDViewsUsuarioLogin.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
     if (Key = VK_ESCAPE) then
@@ -176,12 +177,12 @@ begin
         if MessageDlg('Deseja realmente sair', mtConfirmation , mbYesNo , 0) = mrYes then Close;
 end;
 
-function TFlogin.getNome: string;
+function TTDViewsUsuarioLogin.getNome: string;
 begin
   Result := QryLogin.FieldByName('NOME').AsString;
 end;
 
-function TFlogin.getUsuario: Integer;
+function TTDViewsUsuarioLogin.getUsuario: Integer;
 begin
   Result := QryLogin.FieldByName('ID').AsInteger;
 end;
