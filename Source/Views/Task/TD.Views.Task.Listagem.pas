@@ -76,9 +76,9 @@ uses ConexaoDados, TD.Controllers.Sessao, TD.Views.Principal;
 
 procedure TTDViewsTaskListagem.FormShow(Sender: TObject);
 begin
-QryTarefas.Close;
-QryTarefas.ParamByName('USUARIO').AsInteger := TDViewsPrincipal.FSessao.Usuario;
-QryTarefas.Open;
+//  QryTarefas.Close;
+//  QryTarefas.ParamByName('USUARIO').AsInteger := TDViewsPrincipal.FSessao.Usuario;
+//  QryTarefas.Open;
 end;
 
 end.

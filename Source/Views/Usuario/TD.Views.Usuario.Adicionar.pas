@@ -41,39 +41,25 @@ uses
   dxGDIPlusClasses,
   Vcl.Menus,
   cxButtons,
-  bcrypt;
+  bcrypt,
+  TD.Views.Base;
 
 type
-  TTDViewsUsuarioAdicionar = class(TForm)
-    QryCadastro: TFDQuery;
-    dtsCadastro: TDataSource;
-    QryLogin: TFDQuery;
+  TTDViewsUsuarioAdicionar = class(TTDViewsBase)
     btncadastrar: TcxButton;
     btnClose: TcxButton;
     Image1: TImage;
-    edUsuario: TcxDBTextEdit;
     Label3: TLabel;
-    edSenha: TcxDBTextEdit;
     Label2: TLabel;
     Label4: TLabel;
-    edNome: TcxDBTextEdit;
-    QryLoginUSUARIO: TWideStringField;
-    QryLoginSENHA: TWideStringField;
-    QryCadastroNOME: TWideStringField;
-    QryCadastroUSUARIO: TWideStringField;
-    QryCadastroSENHA: TWideStringField;
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
-    procedure btncadastrarClick(Sender: TObject);
+    edNome: TcxTextEdit;
+    edLogin: TcxTextEdit;
+    edSenha: TcxTextEdit;
     procedure btnCloseClick(Sender: TObject);
-    procedure QryCadastroBeforePost(DataSet: TDataSet);
-    procedure edSenhaKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
-    procedure FormShow(Sender: TObject);
-    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-
+    procedure btncadastrarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
-    { Private declarations }
+    procedure validarLogin(Sender: TObject; var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
   public
     { Public declarations }
   end;
@@ -83,72 +69,76 @@ var
 
 implementation
 
+uses
+  TD.Factories.Usuario;
+
 {$R *.dfm}
 
 procedure TTDViewsUsuarioAdicionar.btncadastrarClick(Sender: TObject);
 begin
-  try
-    QryCadastro.Post; // CRIAR USUARIO
-  except
-  begin
-    ShowMessage('Erro ao fazer Cadastro!');
-    Exit;
-  end;
-  end;
-  ShowMessage('Cadastro realizado com sucesso');
+  inherited;
+  edNome.ValidateEdit();
+  edLogin.ValidateEdit();
+  edSenha.ValidateEdit();
 
+  try
+    TFactoryUsuario
+      .New
+      .Adicionar(
+        edNome.Text,
+        edLogin.Text,
+        edSenha.Text
+      );
+
+    MessageDlg('Parabéns. Você é o novo integrante do sistema de tarefas do CarVit', mtInformation, [mbOK], 0);
+    Close;
+  except
+    on e: Exception do
+    begin
+      MessageDlg('Ops! Falha ao salvar o usuário.' + #13 + e.Message, mtWarning, [mbOK], 0);
+      edNome.SetFocus;
+    end;
+  end;
 end;
 
 procedure TTDViewsUsuarioAdicionar.btnCloseClick(Sender: TObject);
 begin
   if MessageDlg(
-       'Deseja realmente sair',
-       mtConfirmation,
-       mbYesNo,
-       1
+    'Deseja realmente sair',
+    mtConfirmation,
+    mbYesNo,
+    1
   ) = mrYes then ModalResult := mrCancel;
-end;
-
-procedure TTDViewsUsuarioAdicionar.edSenhaKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-begin
-  if key = VK_RETURN then
-    begin
-      if edSenha.Text <> '' then
-          BtnCadastrar.Click;
-    end;
 end;
 
 procedure TTDViewsUsuarioAdicionar.FormCreate(Sender: TObject);
 begin
-  QryCadastro.Open;
-  QryCadastro.Insert; // VAI INICIAR MODE INSERÇÃO O CADASTRO NO BANCO DE DADOS
-  KeyPreview := true;
+  inherited;
+  edLogin.Properties.OnValidate := validarLogin;
 end;
 
-procedure TTDViewsUsuarioAdicionar.FormDestroy(Sender: TObject);
+procedure TTDViewsUsuarioAdicionar.validarLogin(
+  Sender: TObject;
+  var DisplayValue: Variant;
+  var ErrorText: TCaption;
+  var Error: Boolean
+);
+var
+  LTemUsuario: Boolean;
 begin
-  QryCadastro.Close;
-end;
+  inherited;
 
-procedure TTDViewsUsuarioAdicionar.FormKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-begin
-  if key = VK_ESCAPE then
-      if MessageDlg('Deseja realmente sair' , mtConfirmation , mbYesNo , 0) = mrYes then
-          Close;
-end;
+  LTemUsuario := TFactoryUsuario.New.Existe(edLogin.Text);
 
-procedure TTDViewsUsuarioAdicionar.FormShow(Sender: TObject);
-begin
-edNome.SetFocus;
-end;
+  if LTemUsuario then
+  begin
+    Error := True;
+    ErrorText := 'Já existe um usuário com esse login. Tenta outro';
+    Exit;
+  end;
 
-procedure TTDViewsUsuarioAdicionar.QryCadastroBeforePost(DataSet: TDataSet);
-begin
-  DataSet.FieldByName('SENHA').Value := TBCrypt.GenerateHash(DataSet.FieldByName('SENHA').AsString);
-  DataSet.Fields.Clear;
-  ModalResult := mrCancel;
+  Error := DisplayValue = '';
+  ErrorText := 'O campo é obrigatório';
 end;
 
 end.

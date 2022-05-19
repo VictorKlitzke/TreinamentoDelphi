@@ -23,7 +23,8 @@ uses
   Vcl.StdCtrls,
   cxButtons,
   dxGDIPlusClasses,
-  TD.Controllers.Sessao;
+  TD.Controllers.Sessao,
+  TD.Services.Conexao;
 
 type
   TTDViewsPrincipal = class(TForm)
@@ -37,14 +38,12 @@ type
     procedure btnSairClick(Sender: TObject);
     procedure btnUsuariosClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure FormShow(Sender: TObject);
     procedure btnTarefasClick(Sender: TObject);
   private
-
+    FConexao: iServiceConexao;
   public
-        FSessao: TSessao;
+
   end;
 
 var
@@ -91,15 +90,21 @@ begin
 end;
 
 
-procedure TTDViewsPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  FSessao.DisposeOf;
-end;
-
 procedure TTDViewsPrincipal.FormCreate(Sender: TObject);
 begin
-  FSessao := TSessao.Create;
-  keyPreView := true;
+  KeyPreview := true;
+
+  try
+  FConexao := TServiceConexao
+    .New
+    .Conectar;
+  except
+    on e: TConexaoError do
+    begin
+      MessageDlg(e.Message, mtError, [mbOK], 0);
+      Application.Terminate;
+    end;
+  end;
 end;
 
 procedure TTDViewsPrincipal.FormKeyDown(Sender: TObject; var Key: Word;
@@ -107,11 +112,6 @@ procedure TTDViewsPrincipal.FormKeyDown(Sender: TObject; var Key: Word;
 begin
   if (Key = VK_ESCAPE) then
       if MessageDlg('Deseja realmente sair', mtConfirmation , mbYesNo , 0) = mrYes then Close;
-end;
-
-procedure TTDViewsPrincipal.FormShow(Sender: TObject);
-begin
-  lblUsuario.Caption := FSessao.Nome;
 end;
 
 end.

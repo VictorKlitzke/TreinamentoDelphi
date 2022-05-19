@@ -1,22 +1,12 @@
-object TDViewsUsuarioAdicionar: TTDViewsUsuarioAdicionar
-  Left = 0
-  Top = 0
+inherited TDViewsUsuarioAdicionar: TTDViewsUsuarioAdicionar
   BorderStyle = bsNone
   Caption = 'Cadastro'
   ClientHeight = 349
   ClientWidth = 411
   Color = 9590329
   Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Segoe UI'
-  Font.Style = []
-  OldCreateOrder = False
-  Position = poDesktopCenter
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
-  OnKeyDown = FormKeyDown
-  OnShow = FormShow
+  ExplicitWidth = 411
+  ExplicitHeight = 349
   PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
@@ -2378,7 +2368,6 @@ object TDViewsUsuarioAdicionar: TTDViewsUsuarioAdicionar
     Width = 35
     Height = 13
     Caption = 'SENHA'
-    FocusControl = edSenha
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -11
@@ -2392,7 +2381,6 @@ object TDViewsUsuarioAdicionar: TTDViewsUsuarioAdicionar
     Width = 48
     Height = 13
     Caption = 'USUARIO'
-    FocusControl = edUsuario
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -11
@@ -2406,7 +2394,6 @@ object TDViewsUsuarioAdicionar: TTDViewsUsuarioAdicionar
     Width = 33
     Height = 13
     Caption = 'NOME'
-    FocusControl = edNome
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -11
@@ -2448,8 +2435,8 @@ object TDViewsUsuarioAdicionar: TTDViewsUsuarioAdicionar
       00000049454E44AE426082}
     SpeedButtonOptions.CanBeFocused = False
     SpeedButtonOptions.Flat = True
-    TabOrder = 3
-    OnClick = btnCadastrarClick
+    TabOrder = 0
+    OnClick = btncadastrarClick
   end
   object btnClose: TcxButton
     Left = 376
@@ -2473,86 +2460,35 @@ object TDViewsUsuarioAdicionar: TTDViewsUsuarioAdicionar
       3A32312B30303A3030B115B8850000000049454E44AE426082}
     SpeedButtonOptions.CanBeFocused = False
     SpeedButtonOptions.Flat = True
-    TabOrder = 4
+    TabOrder = 1
     OnClick = btnCloseClick
   end
-  object edUsuario: TcxDBTextEdit
-    Left = 96
-    Top = 208
-    DataBinding.DataField = 'USUARIO'
-    DataBinding.DataSource = dtsCadastro
-    TabOrder = 1
-    Width = 217
-  end
-  object edSenha: TcxDBTextEdit
-    Left = 96
-    Top = 251
-    DataBinding.DataField = 'SENHA'
-    DataBinding.DataSource = dtsCadastro
-    Properties.EchoMode = eemPassword
-    Properties.PasswordChar = '*'
-    TabOrder = 2
-    OnKeyDown = edSenhaKeyDown
-    Width = 217
-  end
-  object edNome: TcxDBTextEdit
+  object edNome: TcxTextEdit
+    Tag = 1
     Left = 96
     Top = 162
-    DataBinding.DataField = 'NOME'
-    DataBinding.DataSource = dtsCadastro
-    TabOrder = 0
+    Properties.ValidateOnEnter = True
+    Properties.ValidationOptions = [evoRaiseException, evoShowErrorIcon]
+    TabOrder = 2
     Width = 217
   end
-  object QryCadastro: TFDQuery
-    BeforePost = QryCadastroBeforePost
-    Connection = DataModule1.Connection
-    Transaction = DataModule1.Transaction
-    SQL.Strings = (
-      'SELECT NOME , USUARIO , SENHA FROM TB_USUARIOS TU')
-    Left = 8
-    Top = 64
-    object QryCadastroNOME: TWideStringField
-      FieldName = 'NOME'
-      Origin = 'NOME'
-      Required = True
-      Size = 50
-    end
-    object QryCadastroUSUARIO: TWideStringField
-      FieldName = 'USUARIO'
-      Origin = 'USUARIO'
-      Required = True
-      Size = 100
-    end
-    object QryCadastroSENHA: TWideStringField
-      FieldName = 'SENHA'
-      Origin = 'SENHA'
-      Required = True
-      Size = 128
-    end
+  object edLogin: TcxTextEdit
+    Tag = 1
+    Left = 96
+    Top = 208
+    Properties.ValidateOnEnter = True
+    Properties.ValidationOptions = [evoRaiseException, evoShowErrorIcon]
+    TabOrder = 3
+    Width = 217
   end
-  object dtsCadastro: TDataSource
-    DataSet = QryCadastro
-    Left = 8
-    Top = 8
-  end
-  object QryLogin: TFDQuery
-    Connection = DataModule1.Connection
-    Transaction = DataModule1.Transaction
-    SQL.Strings = (
-      'select usuario, senha from tb_usuarios')
-    Left = 8
-    Top = 112
-    object QryLoginUSUARIO: TWideStringField
-      FieldName = 'USUARIO'
-      Origin = 'USUARIO'
-      Required = True
-      Size = 100
-    end
-    object QryLoginSENHA: TWideStringField
-      FieldName = 'SENHA'
-      Origin = 'SENHA'
-      Required = True
-      Size = 128
-    end
+  object edSenha: TcxTextEdit
+    Tag = 1
+    Left = 96
+    Top = 251
+    Properties.EchoMode = eemPassword
+    Properties.ValidateOnEnter = True
+    Properties.ValidationOptions = [evoRaiseException, evoShowErrorIcon]
+    TabOrder = 4
+    Width = 217
   end
 end

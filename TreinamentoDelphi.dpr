@@ -12,7 +12,8 @@ uses
   TD.Controllers.Sessao in 'Source\Controllers\TD.Controllers.Sessao.pas',
   TD.Views.Task.Adicionar in 'Source\Views\Task\TD.Views.Task.Adicionar.pas' {TDViewsTaskAdicionar},
   TD.Services.Conexao in 'Source\Services\TD.Services.Conexao.pas',
-  TD.Views.Usuario.Listagem in 'Source\Views\Usuario\TD.Views.Usuario.Listagem.pas' {TDViewsUsuarioListagem};
+  TD.Views.Usuario.Listagem in 'Source\Views\Usuario\TD.Views.Usuario.Listagem.pas' {TDViewsUsuarioListagem},
+  TD.Services.Query in 'Source\Services\TD.Services.Query.pas';
 
 {$R *.res}
 
@@ -28,13 +29,13 @@ begin
 
   if TDViewsUsuarioLogin.ModalResult = mrCancel then
   begin
-    TDViewsPrincipal.FSessao.DisposeOf;
+//    TDViewsPrincipal.FSessao.DisposeOf;
     FreeAndNil(TDViewsUsuarioLogin);
     FreeAndNil(TDViewsPrincipal);
     Application.Terminate;
   end else
   begin
-    TDViewsPrincipal.FSessao.Conectar(TDViewsUsuarioLogin.Usuario, TDViewsUsuarioLogin.Nome);
+//    TDViewsPrincipal.FSessao.Conectar(TDViewsUsuarioLogin.Usuario, TDViewsUsuarioLogin.Nome);
     Application.Run;
   end;
 end.

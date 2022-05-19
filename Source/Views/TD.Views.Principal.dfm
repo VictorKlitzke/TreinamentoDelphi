@@ -14,10 +14,8 @@ object TDViewsPrincipal: TTDViewsPrincipal
   OldCreateOrder = False
   Position = poDefault
   WindowState = wsMaximized
-  OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pnHeader: TPanel
