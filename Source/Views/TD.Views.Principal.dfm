@@ -1,4 +1,4 @@
-object FPrincipal: TFPrincipal
+object TDViewsPrincipal: TTDViewsPrincipal
   Left = 0
   Top = 0
   BorderStyle = bsNone
@@ -2521,8 +2521,6 @@ object FPrincipal: TFPrincipal
       SpeedButtonOptions.Flat = True
       TabOrder = 1
       OnClick = btnUsuariosClick
-      ExplicitLeft = 24
-      ExplicitTop = 302
     end
     object btnTarefas: TcxButton
       Left = 0
@@ -2601,7 +2599,5 @@ object FPrincipal: TFPrincipal
     Ctl3D = True
     ParentCtl3D = False
     TabOrder = 2
-    ExplicitLeft = 66
-    ExplicitTop = 47
   end
 end

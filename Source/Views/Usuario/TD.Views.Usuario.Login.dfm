@@ -1,4 +1,4 @@
-object Flogin: TFlogin
+object TDViewsUsuarioLogin: TTDViewsUsuarioLogin
   Left = 0
   Top = 0
   BorderStyle = bsNone

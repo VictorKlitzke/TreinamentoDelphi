@@ -1,4 +1,4 @@
-object FTarefa: TFTarefa
+object TDViewsTaskListagem: TTDViewsTaskListagem
   Left = 0
   Top = 0
   BorderStyle = bsNone
@@ -24,7 +24,6 @@ object FTarefa: TFTarefa
     Align = alClient
     TabOrder = 0
     LevelTabs.Slants.Positions = [spLeft, spRight]
-    ExplicitHeight = 718
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSource1

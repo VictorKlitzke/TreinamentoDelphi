@@ -1,4 +1,4 @@
-﻿unit Principal;
+﻿unit TD.Views.Principal;
 
 interface
 
@@ -23,10 +23,10 @@ uses
   Vcl.StdCtrls,
   cxButtons,
   dxGDIPlusClasses,
-  Sessao;
+  TD.Controllers.Sessao;
 
 type
-  TFPrincipal = class(TForm)
+  TTDViewsPrincipal = class(TForm)
     pnHeader: TPanel;
     pnMenu: TPanel;
     pnContent: TPanel;
@@ -48,16 +48,16 @@ type
   end;
 
 var
-  FPrincipal: TFPrincipal;
+  TDViewsPrincipal: TTDViewsPrincipal;
 
 implementation
 
 uses
-  Cadastro, Tarefa, Config, Login;
+  TD.Views.Usuario.Login, TD.Views.Task.Listagem, TD.Views.Usuario.Adicionar;
 
 {$R *.dfm}
 
-procedure TFPrincipal.btnSairClick(Sender: TObject);
+procedure TTDViewsPrincipal.btnSairClick(Sender: TObject);
 begin
   if MessageDlg(
     'Você tem certeza que deseja sair?',
@@ -70,46 +70,46 @@ begin
   end;
 end;
 
-procedure TFPrincipal.btnTarefasClick(Sender: TObject);
+procedure TTDViewsPrincipal.btnTarefasClick(Sender: TObject);
 begin
   if Assigned(FConfig) then FreeAndNil(FConfig);
   if not Assigned(FTarefa) then
-    Application.CreateForm(TFTarefa, FTarefa);
+    Application.CreateForm(TTDViewsTaskListagem, TDViewsTaskListagem);
 
   FTarefa.Parent := pnContent;
   FTarefa.Show;
 end;
 
-procedure TFPrincipal.btnUsuariosClick(Sender: TObject);
+procedure TTDViewsPrincipal.btnUsuariosClick(Sender: TObject);
 begin
   if Assigned(FTarefa) then FreeAndNil(FTarefa);
   if not Assigned(FConfig) then
-    Application.CreateForm(TFConfig, FConfig);
+    Application.CreateForm(TTDViewsUsuarioAdicionar, TDViewsUsuarioAdicionar);
 
   FConfig.Parent := pnContent;
   FConfig.Show;
 end;
 
 
-procedure TFPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TTDViewsPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   FSessao.DisposeOf;
 end;
 
-procedure TFPrincipal.FormCreate(Sender: TObject);
+procedure TTDViewsPrincipal.FormCreate(Sender: TObject);
 begin
   FSessao := TSessao.Create;
   keyPreView := true;
 end;
 
-procedure TFPrincipal.FormKeyDown(Sender: TObject; var Key: Word;
+procedure TTDViewsPrincipal.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if (Key = VK_ESCAPE) then
       if MessageDlg('Deseja realmente sair', mtConfirmation , mbYesNo , 0) = mrYes then Close;
 end;
 
-procedure TFPrincipal.FormShow(Sender: TObject);
+procedure TTDViewsPrincipal.FormShow(Sender: TObject);
 begin
   lblUsuario.Caption := FSessao.Nome;
 end;

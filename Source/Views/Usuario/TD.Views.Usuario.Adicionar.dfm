@@ -1,4 +1,4 @@
-object Fcadastro: TFcadastro
+object TDViewsUsuarioAdicionar: TTDViewsUsuarioAdicionar
   Left = 0
   Top = 0
   BorderStyle = bsNone

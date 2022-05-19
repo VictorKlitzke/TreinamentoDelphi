@@ -1,4 +1,4 @@
-unit Cadastro;
+unit TD.Views.Usuario.Adicionar;
 
 interface
 
@@ -8,6 +8,7 @@ uses
   System.SysUtils,
   System.Variants,
   System.Classes,
+  System.UITypes,
   Vcl.Graphics,
   Vcl.Controls,
   Vcl.Forms,
@@ -43,7 +44,7 @@ uses
   bcrypt;
 
 type
-  TFcadastro = class(TForm)
+  TTDViewsUsuarioAdicionar = class(TForm)
     QryCadastro: TFDQuery;
     dtsCadastro: TDataSource;
     QryLogin: TFDQuery;
@@ -78,17 +79,13 @@ type
   end;
 
 var
-  Fcadastro: TFcadastro;
+  TDViewsUsuarioAdicionar: TTDViewsUsuarioAdicionar;
 
 implementation
 
 {$R *.dfm}
 
-procedure TFcadastro.btncadastrarClick(Sender: TObject);
-
-var
-  usuario : String;
-  LMensagem : string;
+procedure TTDViewsUsuarioAdicionar.btncadastrarClick(Sender: TObject);
 begin
   try
     QryCadastro.Post; // CRIAR USUARIO
@@ -102,7 +99,7 @@ begin
 
 end;
 
-procedure TFcadastro.btnCloseClick(Sender: TObject);
+procedure TTDViewsUsuarioAdicionar.btnCloseClick(Sender: TObject);
 begin
   if MessageDlg(
        'Deseja realmente sair',
@@ -112,7 +109,7 @@ begin
   ) = mrYes then ModalResult := mrCancel;
 end;
 
-procedure TFcadastro.edSenhaKeyDown(Sender: TObject; var Key: Word;
+procedure TTDViewsUsuarioAdicionar.edSenhaKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if key = VK_RETURN then
@@ -122,19 +119,19 @@ begin
     end;
 end;
 
-procedure TFcadastro.FormCreate(Sender: TObject);
+procedure TTDViewsUsuarioAdicionar.FormCreate(Sender: TObject);
 begin
   QryCadastro.Open;
   QryCadastro.Insert; // VAI INICIAR MODE INSERÇÃO O CADASTRO NO BANCO DE DADOS
   KeyPreview := true;
 end;
 
-procedure TFcadastro.FormDestroy(Sender: TObject);
+procedure TTDViewsUsuarioAdicionar.FormDestroy(Sender: TObject);
 begin
   QryCadastro.Close;
 end;
 
-procedure TFcadastro.FormKeyDown(Sender: TObject; var Key: Word;
+procedure TTDViewsUsuarioAdicionar.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if key = VK_ESCAPE then
@@ -142,12 +139,12 @@ begin
           Close;
 end;
 
-procedure TFcadastro.FormShow(Sender: TObject);
+procedure TTDViewsUsuarioAdicionar.FormShow(Sender: TObject);
 begin
 edNome.SetFocus;
 end;
 
-procedure TFcadastro.QryCadastroBeforePost(DataSet: TDataSet);
+procedure TTDViewsUsuarioAdicionar.QryCadastroBeforePost(DataSet: TDataSet);
 begin
   DataSet.FieldByName('SENHA').Value := TBCrypt.GenerateHash(DataSet.FieldByName('SENHA').AsString);
   DataSet.Fields.Clear;

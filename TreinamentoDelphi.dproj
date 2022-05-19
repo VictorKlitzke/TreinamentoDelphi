@@ -3,7 +3,7 @@
         <ProjectGuid>{AEC6C70A-2606-47E9-B5D7-390E1F431516}</ProjectGuid>
         <ProjectVersion>18.6</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
-        <MainSource>LoginUsuario.dpr</MainSource>
+        <MainSource>TreinamentoDelphi.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
@@ -57,7 +57,7 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
-        <SanitizedProjectName>LoginUsuario</SanitizedProjectName>
+        <SanitizedProjectName>TreinamentoDelphi</SanitizedProjectName>
         <DCC_UnitSearchPath>modules\.dcp;modules\.dcu;modules;modules\bcrypt\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Locale>1046</VerInfo_Locale>
     </PropertyGroup>
@@ -85,6 +85,10 @@
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <DCC_ExeOutput>.\Bin</DCC_ExeOutput>
+        <DCC_DcuOutput>.\Dcus</DCC_DcuOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -100,25 +104,30 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="Login.pas">
-            <Form>Flogin</Form>
+        <DCCReference Include="Source\Views\Usuario\TD.Views.Usuario.Login.pas">
+            <Form>TDViewsUsuarioLogin</Form>
         </DCCReference>
         <DCCReference Include="ConexaoDados.pas">
             <Form>DataModule1</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Cadastro.pas">
-            <Form>Fcadastro</Form>
+        <DCCReference Include="Source\Views\Usuario\TD.Views.Usuario.Adicionar.pas">
+            <Form>TDViewsUsuarioAdicionar</Form>
         </DCCReference>
-        <DCCReference Include="Tarefa.pas">
-            <Form>FTarefa</Form>
+        <DCCReference Include="Source\Views\Task\TD.Views.Task.Listagem.pas">
+            <Form>TDViewsTaskListagem</Form>
         </DCCReference>
-        <DCCReference Include="Principal.pas">
-            <Form>FPrincipal</Form>
+        <DCCReference Include="Source\Views\TD.Views.Principal.pas">
+            <Form>TDViewsPrincipal</Form>
         </DCCReference>
-        <DCCReference Include="Sessao.pas"/>
-        <DCCReference Include="Addtask.pas">
-            <Form>Form1</Form>
+        <DCCReference Include="Source\Controllers\TD.Controllers.Sessao.pas"/>
+        <DCCReference Include="Source\Views\Task\TD.Views.Task.Adicionar.pas">
+            <Form>TDViewsTaskAdicionar</Form>
+        </DCCReference>
+        <DCCReference Include="Source\Services\TD.Services.Conexao.pas"/>
+        <DCCReference Include="Source\Views\Usuario\TD.Views.Usuario.Listagem.pas">
+            <Form>TDViewsUsuarioListagem</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
@@ -138,19 +147,23 @@
         <BorlandProject>
             <Delphi.Personality>
                 <Source>
-                    <Source Name="MainSource">LoginUsuario.dpr</Source>
+                    <Source Name="MainSource">TreinamentoDelphi.dpr</Source>
                 </Source>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k260.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp260.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k260.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp260.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="Win32\Debug\LoginUsuario.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Win32\Debug\TreinamentoDelphi.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>LoginUsuario.exe</RemoteName>
+                        <RemoteName>TreinamentoDelphi.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Debug\TreinamentoDelphi.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>TreinamentoDelphi.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
