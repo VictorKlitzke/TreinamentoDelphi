@@ -2,6 +2,9 @@ unit TD.Factories.Usuario;
 
 interface
 
+uses
+  BCrypt;
+
 type
   iFactoryUsuario = interface
     ['{ACAD49B9-F8EF-4878-86FB-7B752CA29B4C}']
