@@ -130,6 +130,11 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Source\Services\TD.Services.Query.pas"/>
+        <DCCReference Include="Source\Views\TD.Views.Base.pas">
+            <Form>TDViewsBase</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Source\Factories\TD.Factories.Usuario.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

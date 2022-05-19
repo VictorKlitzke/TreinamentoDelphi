@@ -13,7 +13,9 @@ uses
   TD.Views.Task.Adicionar in 'Source\Views\Task\TD.Views.Task.Adicionar.pas' {TDViewsTaskAdicionar},
   TD.Services.Conexao in 'Source\Services\TD.Services.Conexao.pas',
   TD.Views.Usuario.Listagem in 'Source\Views\Usuario\TD.Views.Usuario.Listagem.pas' {TDViewsUsuarioListagem},
-  TD.Services.Query in 'Source\Services\TD.Services.Query.pas';
+  TD.Services.Query in 'Source\Services\TD.Services.Query.pas',
+  TD.Views.Base in 'Source\Views\TD.Views.Base.pas' {TDViewsBase},
+  TD.Factories.Usuario in 'Source\Factories\TD.Factories.Usuario.pas';
 
 {$R *.res}
 
@@ -25,6 +27,7 @@ begin
   Application.CreateForm(TDataModule1, DataModule1);
   Application.CreateForm(TTDViewsPrincipal, TDViewsPrincipal);
   Application.CreateForm(TTDViewsUsuarioLogin, TDViewsUsuarioLogin);
+  Application.CreateForm(TTDViewsBase, TDViewsBase);
   TDViewsUsuarioLogin.ShowModal;
 
   if TDViewsUsuarioLogin.ModalResult = mrCancel then
