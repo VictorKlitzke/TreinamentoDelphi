@@ -1,7 +1,4 @@
-﻿[DataModule1.DataSource]
-Coordinates=593,1,162,36
-
-[Fcadastro.dtsCadastro]
+﻿[Fcadastro.dtsCadastro]
 Coordinates=12,154,145,36
 
 [FConfig.FDQuery1]
@@ -9,9 +6,6 @@ Coordinates=245,10,122,80
 
 [FConfig.DataSource1]
 Coordinates=407,100,138,36
-
-[QryLogin]
-Coordinates=168,10,67,102
 
 [Label2]
 Coordinates=234,144,53,58
@@ -24,5 +18,5 @@ Coordinates=407,1,140,36
 Coordinates=10,10,148,124
 
 []
-Coordinates=10,144,72,58
+Coordinates=168,10,67,102
 

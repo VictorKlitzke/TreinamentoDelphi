@@ -15,7 +15,9 @@ uses
   TD.Views.Usuario.Listagem in 'Source\Views\Usuario\TD.Views.Usuario.Listagem.pas' {TDViewsUsuarioListagem},
   TD.Services.Query in 'Source\Services\TD.Services.Query.pas',
   TD.Views.Base in 'Source\Views\TD.Views.Base.pas' {TDViewsBase},
-  TD.Factories.Usuario in 'Source\Factories\TD.Factories.Usuario.pas';
+  TD.Factories.Usuario in 'Source\Factories\TD.Factories.Usuario.pas',
+  TD.Models.Usuario in 'Source\Models\TD.Models.Usuario.pas',
+  TD.Factories.Autenticacao in 'Source\Factories\TD.Factories.Autenticacao.pas';
 
 {$R *.res}
 

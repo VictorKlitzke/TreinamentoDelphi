@@ -13,7 +13,6 @@ object TDViewsUsuarioLogin: TTDViewsUsuarioLogin
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
-  OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
@@ -2504,52 +2503,5 @@ object TDViewsUsuarioLogin: TTDViewsUsuarioLogin
     SpeedButtonOptions.Flat = True
     TabOrder = 4
     OnClick = btnCloseClick
-  end
-  object QryLogin: TFDQuery
-    Connection = DataModule1.Connection
-    SQL.Strings = (
-      'SELECT'
-      '  ID,'
-      '  NOME,'
-      '  USUARIO,'
-      '  SENHA'
-      'FROM'
-      '  TB_USUARIOS'
-      'WHERE'
-      '  UPPER(USUARIO) = UPPER(:USUARIO)')
-    Left = 400
-    Top = 64
-    ParamData = <
-      item
-        Name = 'USUARIO'
-        DataType = ftWideString
-        ParamType = ptInput
-        Size = 100
-        Value = Null
-      end>
-    object QryLoginID: TIntegerField
-      FieldName = 'ID'
-      Origin = 'ID'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Required = True
-    end
-    object QryLoginUSUARIO: TWideStringField
-      FieldName = 'USUARIO'
-      Origin = 'USUARIO'
-      Required = True
-      Size = 100
-    end
-    object QryLoginSENHA: TWideStringField
-      FieldName = 'SENHA'
-      Origin = 'SENHA'
-      Required = True
-      Size = 128
-    end
-    object QryLoginNOME: TWideStringField
-      FieldName = 'NOME'
-      Origin = 'NOME'
-      Required = True
-      Size = 50
-    end
   end
 end

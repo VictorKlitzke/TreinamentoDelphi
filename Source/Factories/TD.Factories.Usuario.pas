@@ -27,24 +27,21 @@ type
 implementation
 
 uses
-  TD.Services.Query;
+  TD.Services.Query,
+  TD.Models.Usuario;
 
 { TFactoryUsuario }
 
 function TFactoryUsuario.Adicionar(ANome, AUsuario, ASenha: string): iFactoryUsuario;
 begin
   Result := Self;
-
-  TServiceQuery
+  TUsuario
     .New
-    .SQL('SELECT NOME, USUARIO, SENHA FROM TB_USUARIOS WHERE ID = 0')
-    .Abrir
     .Inserir
-    .Campo('NOME', ANome)
-    .Campo('USUARIO', AUsuario)
-    .Campo('SENHA', TBCrypt.GenerateHash(ASenha))
-    .Salvar
-    .Fechar;
+    .Nome(ANome)
+    .Usuario(AUsuario)
+    .Senha(ASenha)
+    .Salvar;
 end;
 
 constructor TFactoryUsuario.Create;

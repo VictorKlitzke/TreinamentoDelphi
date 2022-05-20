@@ -42,19 +42,29 @@ uses
   Vcl.Menus,
   cxButtons,
   bcrypt,
-  TD.Views.Base;
+  TD.Views.Base, dxLayoutContainer, dxLayoutcxEditAdapters,
+  dxLayoutControlAdapters, cxClasses, dxLayoutControl, dxLayoutLookAndFeels;
 
 type
   TTDViewsUsuarioAdicionar = class(TTDViewsBase)
     btncadastrar: TcxButton;
     btnClose: TcxButton;
     Image1: TImage;
-    Label3: TLabel;
-    Label2: TLabel;
-    Label4: TLabel;
     edNome: TcxTextEdit;
     edLogin: TcxTextEdit;
     edSenha: TcxTextEdit;
+    dxLayoutControl1Group_Root: TdxLayoutGroup;
+    dxLayoutControl1: TdxLayoutControl;
+    dxLayoutGroup1: TdxLayoutGroup;
+    dxLayoutItem1: TdxLayoutItem;
+    dxLayoutItem2: TdxLayoutItem;
+    dxLayoutItem3: TdxLayoutItem;
+    dxLayoutItem4: TdxLayoutItem;
+    dxLayoutItem5: TdxLayoutItem;
+    dxLayoutGroup2: TdxLayoutGroup;
+    dxLayoutItem6: TdxLayoutItem;
+    dxLayoutLookAndFeelList1: TdxLayoutLookAndFeelList;
+    lfCarVitLayout: TdxLayoutWebLookAndFeel;
     procedure btnCloseClick(Sender: TObject);
     procedure btncadastrarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

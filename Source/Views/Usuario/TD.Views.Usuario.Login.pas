@@ -19,18 +19,7 @@ uses
   TD.Views.Usuario.Listagem,
   conexaoDados,
   dxGDIPlusClasses,
-  FireDAC.Stan.Intf,
-  FireDAC.Stan.Option,
-  FireDAC.Stan.Param,
-  FireDAC.Stan.Error,
-  FireDAC.DatS,
-  FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf,
-  FireDAC.Stan.Async,
-  FireDAC.DApt,
   Data.DB,
-  FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client,
   cxGraphics,
   cxControls,
   bcrypt,
@@ -47,7 +36,6 @@ uses
 
 type
   TTDViewsUsuarioLogin = class(TForm)
-    QryLogin: TFDQuery;
     Label2: TLabel;
     Label3: TLabel;
     edUsuario: TcxTextEdit;
@@ -56,10 +44,6 @@ type
     btnLogin: TcxButton;
     btnCadastrar: TcxButton;
     btnClose: TcxButton;
-    QryLoginID: TIntegerField;
-    QryLoginUSUARIO: TWideStringField;
-    QryLoginSENHA: TWideStringField;
-    QryLoginNOME: TWideStringField;
     procedure btnCadastrarClick(Sender: TObject);
     procedure btnLoginClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
@@ -69,15 +53,9 @@ type
       var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
     procedure edSenhaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
-    function getUsuario: Integer;
-    function getNome: string;
-    { Private declarations }
   public
-    property Usuario: Integer read getUsuario;
-    property Nome: string read getNome;
   end;
 
 var
@@ -89,13 +67,16 @@ var
 
 implementation
 
+uses
+  TD.Factories.Autenticacao;
+
 {$R *.dfm}
 
 procedure TTDViewsUsuarioLogin.btnCadastrarClick(Sender: TObject);
 begin
- FCadastro := TTDViewsUsuarioAdicionar.Create(self);
- FCadastro.ShowModal;
- FCadastro.Free;
+  FCadastro := TTDViewsUsuarioAdicionar.Create(self);
+  FCadastro.ShowModal;
+  FCadastro.Free;
 end;
 
 procedure TTDViewsUsuarioLogin.btnCloseClick(Sender: TObject);
@@ -105,36 +86,27 @@ begin
 end;
 
 procedure TTDViewsUsuarioLogin.btnLoginClick(Sender: TObject);
-var
-  LMensagem: string;
-  Hash: Boolean;
 begin
-  LMensagem := 'Usuário ou senha incorretos.';
-
   edUsuario.ValidateEdit();
   edSenha.ValidateEdit();
 
-  QryLogin.Close;
-  QryLogin.ParamByName('USUARIO').AsString := edUsuario.Text;
-  QryLogin.Open;
+  try
+    TFactoryAutenticacao
+      .New
+      .Login(edUsuario.Text, edSenha.Text);
 
-  // USUARIO NÃO ENCONTRADO
-  if QryLogin.RecordCount = 0 then
-  begin
-    raise Exception.Create(LMensagem); // MessageDlg(LMensagem, mtError, [mbOK], 0);
+      ModalResult := mrOk;
+  except
+    on e: Exception do
+      MessageDlg('Falha no login!', mtWarning, [mbOK], 0);
   end;
-
-  // SENHA INCORRETA
-  Hash := TBCrypt.CompareHash(edSenha.Text, QryLogin.FieldByName('SENHA').AsString);
-  if not Hash then
-  begin
-    Exception.Create(LMensagem);
-  end;
-    ModalResult := mrOk;
 end;
 
-procedure TTDViewsUsuarioLogin.edSenhaKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TTDViewsUsuarioLogin.edSenhaKeyDown(
+  Sender: TObject;
+  var Key: Word;
+  Shift: TShiftState
+);
 begin
   if Key = VK_RETURN then
   begin
@@ -164,27 +136,13 @@ begin
   ErrorText := 'O usuário é obrigatório';
 end;
 
-procedure TTDViewsUsuarioLogin.FormCreate(Sender: TObject);
-begin
-  KeyPreview := true;
-end;
-
-procedure TTDViewsUsuarioLogin.FormKeyDown(Sender: TObject; var Key: Word;
+procedure TTDViewsUsuarioLogin.FormKeyDown(
+  Sender: TObject;
+  var Key: Word;
   Shift: TShiftState);
 begin
-    if (Key = VK_ESCAPE) then
-      if edUsuario.Text <> '' then
-        if MessageDlg('Deseja realmente sair', mtConfirmation , mbYesNo , 0) = mrYes then Close;
-end;
-
-function TTDViewsUsuarioLogin.getNome: string;
-begin
-  Result := QryLogin.FieldByName('NOME').AsString;
-end;
-
-function TTDViewsUsuarioLogin.getUsuario: Integer;
-begin
-  Result := QryLogin.FieldByName('ID').AsInteger;
+  if (Key = VK_ESCAPE) then
+    if MessageDlg('Deseja realmente sair', mtConfirmation , mbYesNo , 0) = mrYes then Close;
 end;
 
 end.
