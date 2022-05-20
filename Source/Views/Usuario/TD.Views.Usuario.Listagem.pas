@@ -69,6 +69,11 @@ type
     DtsUsuarios: TDataSource;
     QryusuariosUSUARIO: TWideStringField;
     edUsersDBTableView1USUARIO: TcxGridDBColumn;
+    QryusuariosID: TIntegerField;
+    QryusuariosNOME: TWideStringField;
+    QryusuariosSENHA: TWideStringField;
+    edUsersDBTableView1ID: TcxGridDBColumn;
+    edUsersDBTableView1NOME: TcxGridDBColumn;
     procedure editBuscarChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);

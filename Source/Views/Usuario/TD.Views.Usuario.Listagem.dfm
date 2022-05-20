@@ -3,8 +3,8 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
   Top = 0
   BorderStyle = bsNone
   Caption = 'Config'
-  ClientHeight = 520
-  ClientWidth = 407
+  ClientHeight = 740
+  ClientWidth = 1057
   Color = clCream
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,21 +18,25 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
   PixelsPerInch = 96
   TextHeight = 13
   object PainellUser: TPanel
-    Left = 19
-    Top = 8
-    Width = 343
-    Height = 488
+    Left = 0
+    Top = 0
+    Width = 1057
+    Height = 740
+    Align = alClient
     Color = 9590329
     ParentBackground = False
     TabOrder = 0
-    DesignSize = (
-      343
-      488)
+    ExplicitLeft = 19
+    ExplicitTop = 8
+    ExplicitWidth = 343
+    ExplicitHeight = 488
     object BtnUsuario: TLabel
-      Left = 126
-      Top = 48
-      Width = 91
+      Left = 1
+      Top = 1
+      Width = 1055
       Height = 29
+      Align = alTop
+      Alignment = taCenter
       Caption = 'Usu'#225'rios'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -40,12 +44,16 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 126
+      ExplicitTop = 48
+      ExplicitWidth = 91
     end
     object Label1: TLabel
-      Left = 16
-      Top = 109
-      Width = 91
+      Left = 1
+      Top = 30
+      Width = 1055
       Height = 16
+      Align = alTop
       Caption = 'Buscar Us'#250'arios'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -53,25 +61,36 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 16
+      ExplicitTop = 109
+      ExplicitWidth = 91
     end
     object editBuscar: TEdit
-      Left = 16
-      Top = 131
-      Width = 305
+      Left = 1
+      Top = 46
+      Width = 1055
       Height = 21
+      Align = alTop
       TabOrder = 0
       OnChange = editBuscarChange
+      ExplicitLeft = 16
+      ExplicitTop = 131
+      ExplicitWidth = 305
     end
     object edUsers: TcxGrid
-      Left = 16
-      Top = 186
-      Width = 305
-      Height = 224
+      Left = 1
+      Top = 67
+      Width = 1055
+      Height = 639
       Touch.ParentTabletOptions = False
       Touch.TabletOptions = [toPressAndHold]
-      Anchors = []
+      Align = alClient
       BorderStyle = cxcbsNone
       TabOrder = 1
+      ExplicitLeft = 16
+      ExplicitTop = 186
+      ExplicitWidth = 305
+      ExplicitHeight = 224
       object edUsersDBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         FindPanel.DisplayMode = fpdmManual
@@ -80,10 +99,19 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>
         DataController.Summary.SummaryGroups = <>
+        OptionsView.ColumnAutoWidth = True
         OptionsView.GroupByBox = False
+        object edUsersDBTableView1ID: TcxGridDBColumn
+          Caption = '#'
+          DataBinding.FieldName = 'ID'
+        end
         object edUsersDBTableView1USUARIO: TcxGridDBColumn
+          Caption = 'Usu'#225'rio'
           DataBinding.FieldName = 'USUARIO'
-          IsCaptionAssigned = True
+        end
+        object edUsersDBTableView1NOME: TcxGridDBColumn
+          Caption = 'Nome'
+          DataBinding.FieldName = 'NOME'
         end
       end
       object edUsersLevel1: TcxGridLevel
@@ -91,10 +119,11 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
       end
     end
     object BtnExcluir: TcxButton
-      Left = 126
-      Top = 416
-      Width = 97
+      Left = 1
+      Top = 706
+      Width = 1055
       Height = 33
+      Align = alBottom
       Caption = 'Excluir'
       Colors.DefaultText = clWhite
       Colors.HotText = clWhite
@@ -135,13 +164,16 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
       SpeedButtonOptions.Flat = True
       TabOrder = 2
       OnClick = BtnExcluirClick
+      ExplicitLeft = 126
+      ExplicitTop = 416
+      ExplicitWidth = 97
     end
   end
   object Qryusuarios: TFDQuery
     Connection = DataModule1.Connection
     Transaction = DataModule1.Transaction
     SQL.Strings = (
-      'SELECT USUARIO FROM TB_USUARIOS TU')
+      'SELECT * FROM TB_USUARIOS TU')
     Left = 312
     Top = 72
     object QryusuariosUSUARIO: TWideStringField
@@ -149,6 +181,24 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
       Origin = 'USUARIO'
       Required = True
       Size = 100
+    end
+    object QryusuariosID: TIntegerField
+      FieldName = 'ID'
+      Origin = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QryusuariosNOME: TWideStringField
+      FieldName = 'NOME'
+      Origin = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object QryusuariosSENHA: TWideStringField
+      FieldName = 'SENHA'
+      Origin = 'SENHA'
+      Required = True
+      Size = 139
     end
   end
   object DtsUsuarios: TDataSource
