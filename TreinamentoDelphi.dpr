@@ -18,7 +18,8 @@ uses
   TD.Factories.Usuario in 'Source\Factories\TD.Factories.Usuario.pas',
   TD.Models.Usuario in 'Source\Models\TD.Models.Usuario.pas',
   TD.Factories.Autenticacao in 'Source\Factories\TD.Factories.Autenticacao.pas',
-  TD.Models.Tarefa in 'Source\Models\TD.Models.Tarefa.pas';
+  TD.Models.Tarefa in 'Source\Models\TD.Models.Tarefa.pas',
+  TD.Controllers.Task in 'Source\Controllers\TD.Controllers.Task.pas';
 
 {$R *.res}
 
