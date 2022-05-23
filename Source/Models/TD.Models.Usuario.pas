@@ -1,4 +1,4 @@
-unit TD.Models.Usuario;
+unit TD.Models.Tarefa;
 
 interface
 
@@ -8,7 +8,7 @@ uses
 type
   iUsuario = interface
     ['{AE2B68B5-54CD-43B8-8F3E-F531E7A2C335}']
-    //CONFIGURAÇOES
+    //CONFIGURAï¿½OES
     function CampoChave(AValue: string): iUsuario;
 
     // GETs
@@ -23,7 +23,7 @@ type
     function Usuario(AValue: string): iUsuario; overload;
     function Senha(AValue: string): iUsuario; overload;
 
-    // AÇÕES
+    // Aï¿½ï¿½ES
     function Inserir: iUsuario;
     function Editar: iUsuario;
     function Apagar: iUsuario;
@@ -43,7 +43,7 @@ type
     destructor Destroy; override;
     class function New: iUsuario;
 
-    // CONFIGURAÇOES
+    // CONFIGURAï¿½OES
     function CampoChave(AValue: string): iUsuario;
 
     // GETs
@@ -58,7 +58,7 @@ type
     function Usuario(AValue: string): iUsuario; overload;
     function Senha(AValue: string): iUsuario; overload;
 
-    // AÇÕES
+    // Aï¿½ï¿½ES
     function Inserir: iUsuario;
     function Editar: iUsuario;
     function Apagar: iUsuario;
