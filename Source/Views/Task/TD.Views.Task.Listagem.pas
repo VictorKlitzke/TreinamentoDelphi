@@ -66,7 +66,7 @@ type
     cxgrdbtblvwGrid1DBTableView1STATUS: TcxGridDBColumn;
     cxgrdlvlGrid1Level1: TcxGridLevel;
     btnExcluir: TcxButton;
-    btncadastrar: TcxButton;
+    btnAddTask: TcxButton;
     procedure FormShow(Sender: TObject);
     procedure btnAddTaskClick(Sender: TObject);
     procedure pnContentClick(Sender: TObject);
