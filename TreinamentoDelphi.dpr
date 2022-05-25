@@ -19,7 +19,8 @@ uses
   TD.Models.Usuario in 'Source\Models\TD.Models.Usuario.pas',
   TD.Factories.Autenticacao in 'Source\Factories\TD.Factories.Autenticacao.pas',
   TD.Models.Tarefa in 'Source\Models\TD.Models.Tarefa.pas',
-  TD.Controllers.Task in 'Source\Controllers\TD.Controllers.Task.pas';
+  TD.Controllers.Task in 'Source\Controllers\TD.Controllers.Task.pas',
+  TD.Factories.Task in 'Source\Factories\TD.Factories.Task.pas';
 
 {$R *.res}
 

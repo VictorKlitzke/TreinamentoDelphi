@@ -87,9 +87,9 @@ constructor TTarefa.Create;
 begin
   FTarefaQuery := TServiceQuery
     .New
-    .Gerador('GEN_TB_TAREFA_ID')
+    .Gerador('GEN_TB_TAREFAS_ID')
     .CampoChave('ID')
-    .Tabela('TB_TAREFA');
+    .Tabela('TB_TAREFAS');
 end;
 
 function TTarefa.Descricao(AValue: string): iTarefa;
@@ -137,6 +137,7 @@ function TTarefa.Inserir: iTarefa;
 begin
   Result := Self;
   FTarefaQuery.Inserir;
+  Status(0);
 end;
 
 class function TTarefa.New: iTarefa;
@@ -163,7 +164,7 @@ end;
 
 function TTarefa.Tarefa: string;
 begin
-  Result := FTarefaQuery.Campo('TAREFA').AsInteger;
+  Result := FTarefaQuery.Campo('TAREFA').AsString;
 end;
 
 function TTarefa.Tarefa(AValue: string): iTarefa;

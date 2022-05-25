@@ -26,10 +26,6 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
     Color = 9590329
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 19
-    ExplicitTop = 8
-    ExplicitWidth = 343
-    ExplicitHeight = 488
     object BtnUsuario: TLabel
       Left = 1
       Top = 1
@@ -44,8 +40,6 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      ExplicitLeft = 126
-      ExplicitTop = 48
       ExplicitWidth = 91
     end
     object Label1: TLabel
@@ -61,8 +55,6 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      ExplicitLeft = 16
-      ExplicitTop = 109
       ExplicitWidth = 91
     end
     object editBuscar: TEdit
@@ -73,9 +65,6 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
       Align = alTop
       TabOrder = 0
       OnChange = editBuscarChange
-      ExplicitLeft = 16
-      ExplicitTop = 131
-      ExplicitWidth = 305
     end
     object edUsers: TcxGrid
       Left = 1
@@ -87,10 +76,6 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
       Align = alClient
       BorderStyle = cxcbsNone
       TabOrder = 1
-      ExplicitLeft = 16
-      ExplicitTop = 186
-      ExplicitWidth = 305
-      ExplicitHeight = 224
       object edUsersDBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         FindPanel.DisplayMode = fpdmManual
@@ -164,9 +149,6 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
       SpeedButtonOptions.Flat = True
       TabOrder = 2
       OnClick = BtnExcluirClick
-      ExplicitLeft = 126
-      ExplicitTop = 416
-      ExplicitWidth = 97
     end
   end
   object Qryusuarios: TFDQuery
