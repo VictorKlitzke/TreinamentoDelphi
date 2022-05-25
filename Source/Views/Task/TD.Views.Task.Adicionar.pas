@@ -1,4 +1,4 @@
-unit TD.Views.Task.Adicionar;
+﻿unit TD.Views.Task.Adicionar;
 
 interface
 
@@ -29,34 +29,26 @@ uses
   cxButtons,
   cxContainer,
   cxEdit,
-  cxTextEdit;
+  cxTextEdit,
+  cxMemo,
+  TD.Views.Base;
 
 type
-  TTDViewsTaskAdicionar = class(TForm)
+  TTDViewsTaskAdicionar = class(TTDViewsBase)
     pnl1: TPanel;
     btnClose: TcxButton;
     lbl1: TLabel;
     lbledit: TLabel;
     edtTarefa: TcxTextEdit;
     BtnAddTask: TcxButton;
-    edtDescricao: TcxTextEdit;
+    edtDescricao: TcxMemo;
     procedure BtnAddTaskClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure FormKeyDown(Sender: TObject;
-    var Key: Word; Shift: TShiftState);
-    procedure edtTarefaPropertiesValidate(Sender: TObject;
-      var DisplayValue: Variant;
-      var ErrorText: TCaption;
-      var Error: Boolean);
-    procedure edtDescricaoPropertiesValidate(Sender: TObject;
-      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
-
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
-     procedure validarTask(Sender: TObject; var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+
   public
-    { Public declarations }
+
   end;
 
 var
@@ -71,16 +63,16 @@ uses
 
 procedure TTDViewsTaskAdicionar.BtnAddTaskClick(Sender: TObject);
 begin
- inherited;
+  inherited;
   edtTarefa.ValidateEdit();
-  edtDescricao.ValidateEdit();;
+  edtDescricao.ValidateEdit();
 
   try
     TFactoryTask
       .New
       .AddTask(
         edtTarefa.Text,
-        edtDescricao.Text
+        edtDescricao.Lines.Text
       );
 
     MessageDlg('Tarefa cadastrada com sucesso' , mtInformation , [mbOk] , 0);
@@ -94,56 +86,18 @@ begin
   end;
 end;
 
-procedure TTDViewsTaskAdicionar.FormCreate(Sender: TObject);
-begin
-  //inherited
-  //edtTarefa.Properties.OnValidate := validarTask;
-end;
-
 procedure TTDViewsTaskAdicionar.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if key = VK_SPACE then
-  if MessageDlg('Deseja realmente sair' , mtConfirmation , mbYesNo , 1) = mrYes then Close;
-end;
-
-procedure TTDViewsTaskAdicionar.edtTarefaPropertiesValidate(Sender: TObject;
-  var DisplayValue: Variant;
-  var ErrorText: TCaption;
-  var Error: Boolean);
-begin
-  Error := DisplayValue = '';
-  ErrorText := 'Titulo tarefa obrigat�rio';
-end;
-
-procedure TTDViewsTaskAdicionar.FormShow(Sender: TObject);
-begin
-  pnl1.Top :=  Trunc((ClientHeight/2) - (pnl1.Height/2));
-  pnl1.Left:= Trunc((ClientWidth/2) - (pnl1.Width/2));
-end;
-
-procedure TTDViewsTaskAdicionar.validarTask(
-  Sender: TObject;
-  var DisplayValue: Variant;
-  var ErrorText: TCaption;
-  var Error: Boolean
-);
-begin
-   edtTarefa.SetFocus;
-   Error := DisplayValue = '';
-   errorText := 'O campo � obrigat�rio';
+  if Key = VK_ESCAPE then
+    if MessageDlg('Deseja realmente sair' , mtConfirmation , mbYesNo , 1) = mrYes then
+      Close;
 end;
 
 procedure TTDViewsTaskAdicionar.btnCloseClick(Sender: TObject);
 begin
-  if MessageDlg('Deseja realmente sair' , mtConfirmation , mbYesNo , 1) = mrYes then Close;
-end;
-
-procedure TTDViewsTaskAdicionar.edtDescricaoPropertiesValidate(Sender: TObject;
-  var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
-begin
-  Error := DisplayValue = '';
-  ErrorText := 'Descri��o da tarefa obrigat�rio';
+  if MessageDlg('Deseja realmente sair' , mtConfirmation , mbYesNo , 1) = mrYes then
+    Close;
 end;
 
 end.

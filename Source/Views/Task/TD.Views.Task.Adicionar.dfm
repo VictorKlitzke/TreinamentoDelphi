@@ -1,38 +1,26 @@
-object TDViewsTaskAdicionar: TTDViewsTaskAdicionar
-  Left = 0
-  Top = 0
+inherited TDViewsTaskAdicionar: TTDViewsTaskAdicionar
   BorderStyle = bsNone
   Caption = 'TDViewsTaskAdicionar'
   ClientHeight = 441
   ClientWidth = 774
   Color = clInactiveBorder
   Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
   Font.Name = 'Tahoma'
-  Font.Style = []
-  OldCreateOrder = False
-  Position = poDesktopCenter
-  PrintScale = poNone
-  Visible = True
-  WindowState = wsMaximized
-  OnCreate = FormCreate
   OnKeyDown = FormKeyDown
-  OnShow = FormShow
+  ExplicitWidth = 774
+  ExplicitHeight = 441
   PixelsPerInch = 96
   TextHeight = 13
   object pnl1: TPanel
-    Left = -3
+    Left = 0
     Top = 0
-    Width = 777
+    Width = 774
     Height = 441
+    Align = alClient
     BevelOuter = bvNone
     Color = 9590329
     ParentBackground = False
     TabOrder = 0
-    DesignSize = (
-      777
-      441)
     object lbl1: TLabel
       Left = 37
       Top = 102
@@ -81,21 +69,22 @@ object TDViewsTaskAdicionar: TTDViewsTaskAdicionar
         3A32312B30303A3030B115B8850000000049454E44AE426082}
       SpeedButtonOptions.CanBeFocused = False
       SpeedButtonOptions.Flat = True
-      TabOrder = 0
+      TabOrder = 3
       OnClick = btnCloseClick
     end
     object edtTarefa: TcxTextEdit
+      Tag = 1
       Left = 37
       Top = 75
-      Properties.OnValidate = edtTarefaPropertiesValidate
-      TabOrder = 1
+      Properties.ValidationOptions = [evoRaiseException, evoShowErrorIcon]
+      TabOrder = 0
       Width = 692
     end
     object BtnAddTask: TcxButton
       Left = 0
-      Top = 416
-      Width = 777
-      Height = 25
+      Top = 383
+      Width = 774
+      Height = 58
       Align = alBottom
       Caption = 'Cadastrar'
       Colors.Default = 9590329
@@ -130,12 +119,13 @@ object TDViewsTaskAdicionar: TTDViewsTaskAdicionar
       TabOrder = 2
       OnClick = BtnAddTaskClick
     end
-    object edtDescricao: TcxTextEdit
+    object edtDescricao: TcxMemo
+      Tag = 1
       Left = 37
       Top = 123
-      Anchors = [akLeft, akTop, akBottom]
-      Properties.OnValidate = edtDescricaoPropertiesValidate
-      TabOrder = 3
+      Properties.ValidationOptions = [evoRaiseException, evoShowErrorIcon]
+      TabOrder = 1
+      Height = 254
       Width = 692
     end
   end

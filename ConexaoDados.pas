@@ -7,7 +7,7 @@ uses
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
   FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Comp.Client,
-  FireDAC.Phys.IBBase, Data.DB;
+  FireDAC.Phys.IBBase, Data.DB, DASQLMonitor, UniSQLMonitor;
 
 type
   TDataModule1 = class(TDataModule)
@@ -15,6 +15,7 @@ type
     DataSource: TDataSource;
     FDPhysFBDriverLink: TFDPhysFBDriverLink;
     Transaction: TFDTransaction;
+    UniSQLMonitor1: TUniSQLMonitor;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

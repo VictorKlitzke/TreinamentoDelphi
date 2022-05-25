@@ -108,8 +108,7 @@ begin
   end;
 end;
 
-procedure TTDViewsPrincipal.FormKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TTDViewsPrincipal.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if (Key = VK_ESCAPE) then
     if MessageDlg('Deseja realmente sair', mtConfirmation , mbYesNo , 0) = mrYes then Close;

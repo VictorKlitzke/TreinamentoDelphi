@@ -13,7 +13,7 @@ object TDViewsTaskListagem: TTDViewsTaskListagem
   Font.Style = []
   OldCreateOrder = False
   WindowState = wsMaximized
-  OnShow = FormShow
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object lbl1: TLabel
@@ -39,8 +39,7 @@ object TDViewsTaskListagem: TTDViewsTaskListagem
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    OnClick = pnContentClick
-    object cxGrid1: TcxGrid
+    object gTarefas: TcxGrid
       Left = 0
       Top = 0
       Width = 1208
@@ -48,28 +47,19 @@ object TDViewsTaskListagem: TTDViewsTaskListagem
       Align = alClient
       TabOrder = 0
       LevelTabs.Slants.Positions = [spLeft, spRight]
-      object cxgrdbtblvwGrid1DBTableView1: TcxGridDBTableView
+      object gTarefasView: TcxGridDBTableView
+        OnDblClick = gTarefasViewDblClick
         Navigator.Buttons.CustomButtons = <>
-        DataController.DataSource = DtsTarefa
+        DataController.DataSource = dsTarefas
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>
         DataController.Summary.SummaryGroups = <>
+        OptionsSelection.CellSelect = False
+        OptionsView.ColumnAutoWidth = True
         OptionsView.GroupByBox = False
-        object cxgrdbtblvwGrid1DBTableView1TAREFA: TcxGridDBColumn
-          DataBinding.FieldName = 'TAREFA'
-          Width = 332
-        end
-        object cxgrdbtblvwGrid1DBTableView1DESCRICAO: TcxGridDBColumn
-          DataBinding.FieldName = 'DESCRICAO'
-          Width = 1098
-        end
-        object cxgrdbtblvwGrid1DBTableView1STATUS: TcxGridDBColumn
-          DataBinding.FieldName = 'STATUS'
-          Width = 225
-        end
       end
-      object cxgrdlvlGrid1Level1: TcxGridLevel
-        GridView = cxgrdbtblvwGrid1DBTableView1
+      object gTarefasLevel: TcxGridLevel
+        GridView = gTarefasView
       end
     end
     object btnAddTask: TcxButton
@@ -145,7 +135,6 @@ object TDViewsTaskListagem: TTDViewsTaskListagem
     Height = 21
     Align = alTop
     TabOrder = 1
-    OnChange = edtBuscarChange
   end
   object btnExcluir: TcxButton
     Left = 1208
@@ -200,34 +189,9 @@ object TDViewsTaskListagem: TTDViewsTaskListagem
     SpeedButtonOptions.CanBeFocused = False
     SpeedButtonOptions.Flat = True
     TabOrder = 2
-    OnClick = btnExcluirClick
   end
-  object DtsTarefa: TDataSource
-    DataSet = QryTarefas
-    Left = 976
-    Top = 144
-  end
-  object QryTarefas: TFDQuery
-    Connection = DataModule1.Connection
-    SQL.Strings = (
-      'SELECT'
-      '  TF.ID_USUARIO,'
-      '  TF.TAREFA,'
-      '  TF.DESCRICAO,'
-      '  TF.STATUS,'
-      '  TU.USUARIO'
-      'FROM TB_TAREFAS TF'
-      'join TB_USUARIOS TU ON TF.ID_USUARIO = TU.ID'
-      'where'
-      'TU.ID = :USUARIO')
-    Left = 760
-    Top = 208
-    ParamData = <
-      item
-        Name = 'USUARIO'
-        DataType = ftInteger
-        ParamType = ptInput
-        Value = Null
-      end>
+  object dsTarefas: TDataSource
+    Left = 840
+    Top = 536
   end
 end
