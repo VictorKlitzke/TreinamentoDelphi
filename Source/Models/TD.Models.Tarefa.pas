@@ -59,7 +59,7 @@ type
     function Status(AValue: Integer): iTarefa; overload;
     function Usuario(AValue: Integer): iTarefa; overload;
 
-    // A��ES
+    // AÇÕES
     function Inserir: iTarefa;
     function Editar: iTarefa;
     function Apagar: iTarefa;
@@ -117,6 +117,8 @@ end;
 
 function TTarefa.Filtrar(ACampo: string; AValor: Variant): iTarefa;
 begin
+  Result := Self;
+
   FTarefaQuery
     .Filtrar(ACampo, AValor)
     .Abrir;
@@ -175,13 +177,13 @@ end;
 
 function TTarefa.Usuario: Integer;
 begin
-  Result := FTarefaQuery.Campo('USUARIO').AsInteger;
+  Result := FTarefaQuery.Campo('ID_USUARIO').AsInteger;
 end;
 
 function TTarefa.Usuario(AValue: Integer): iTarefa;
 begin
   Result := Self;
-  FTarefaQuery.Campo('USUARIO', AValue);
+  FTarefaQuery.Campo('ID_USUARIO', AValue);
 end;
 
 end.

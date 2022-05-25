@@ -5,7 +5,8 @@ interface
 uses
   System.SysUtils,
   InterBaseUniProvider,
-  Uni;
+  Uni,
+  UniSQLMonitor;
 
 type
   TConexaoError = class(Exception);
@@ -21,6 +22,7 @@ type
   private
     FConexao: TUniConnection;
     FProvider: TInterBaseUniProvider;
+    FMonitor: TUniSQLMonitor;
   public
     constructor Create;
     destructor Destroy; override;
@@ -58,6 +60,8 @@ constructor TServiceConexao.Create;
 begin
   FProvider := TInterBaseUniProvider.Create(nil);
   FConexao := TUniConnection.Create(nil);
+  FMonitor := TUniSQLMonitor.Create(nil);
+
   with FConexao do
   begin
     LoginPrompt := False;
@@ -76,6 +80,7 @@ destructor TServiceConexao.Destroy;
 begin
   FConexao.DisposeOf;
   FProvider.DisposeOf;
+  FMonitor.DisposeOf;
   inherited;
 end;
 

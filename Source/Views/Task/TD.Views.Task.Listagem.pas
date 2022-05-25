@@ -50,33 +50,29 @@ uses
   FireDAC.Comp.DataSet,
   FireDAC.Comp.Client,
   Vcl.Menus,
-  cxButtons;
+  cxButtons,
+  TD.Factories.Task;
 
 type
   TTDViewsTaskListagem = class(TForm)
-    DtsTarefa: TDataSource;
-    QryTarefas: TFDQuery;
+    dsTarefas: TDataSource;
     pnContent: TPanel;
     edtBuscar: TEdit;
     lbl1: TLabel;
-    cxGrid1: TcxGrid;
-    cxgrdbtblvwGrid1DBTableView1: TcxGridDBTableView;
-    cxgrdbtblvwGrid1DBTableView1TAREFA: TcxGridDBColumn;
-    cxgrdbtblvwGrid1DBTableView1DESCRICAO: TcxGridDBColumn;
-    cxgrdbtblvwGrid1DBTableView1STATUS: TcxGridDBColumn;
-    cxgrdlvlGrid1Level1: TcxGridLevel;
+    gTarefas: TcxGrid;
+    gTarefasView: TcxGridDBTableView;
+    gTarefasLevel: TcxGridLevel;
     btnExcluir: TcxButton;
     btnAddTask: TcxButton;
-    procedure FormShow(Sender: TObject);
     procedure btnAddTaskClick(Sender: TObject);
-    procedure pnContentClick(Sender: TObject);
-    procedure edtBuscarChange(Sender: TObject);
-    procedure btnExcluirClick(Sender: TObject);
     procedure btncadastrarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure gTarefasViewDblClick(Sender: TObject);
 
   private
-    { Private declarations }
+    FTaskFactory: iFactoryTask;
   public
+    procedure CarregarDados;
 
   end;
 
@@ -90,88 +86,75 @@ uses
   ConexaoDados,
   TD.Controllers.Sessao,
   TD.Views.Task.Adicionar,
-  TD.Views.Principal,
-  TD.Factories.Task;
+  TD.Views.Principal;
 
 {$R *.dfm}
 
 procedure TTDViewsTaskListagem.btnAddTaskClick(Sender: TObject);
 begin
-  if Assigned (TDViewsTaskAdicionar) then FreeAndNil(TDViewsTaskAdicionar);
-  if not Assigned(TDViewsTaskAdicionar) then
-    Application.CreateForm(TTDViewsTaskAdicionar , TDViewsTaskAdicionar);
+  try
+    if not Assigned(TDViewsTaskAdicionar) then
+      Application.CreateForm(TTDViewsTaskAdicionar , TDViewsTaskAdicionar);
 
-    TDViewsTaskAdicionar.Parent := pnContent;
-    TDViewsTaskAdicionar.Show;
+    TDViewsTaskAdicionar.ShowModal;
+
+    CarregarDados;
+  finally
+    FreeAndNil(TDViewsTaskAdicionar);
+  end;
 end;
 
 procedure TTDViewsTaskListagem.btncadastrarClick(Sender: TObject);
 begin
-if Assigned (TDViewsTaskAdicionar) then FreeAndNil(TDViewsTaskAdicionar);
+  if Assigned (TDViewsTaskAdicionar) then FreeAndNil(TDViewsTaskAdicionar);
+
   if not Assigned(TDViewsTaskAdicionar) then
     Application.CreateForm(TTDViewsTaskAdicionar , TDViewsTaskAdicionar);
 
-    TDViewsTaskAdicionar.Parent := pnContent;
-    TDViewsTaskAdicionar.Show;
+  TDViewsTaskAdicionar.Parent := pnContent;
+  TDViewsTaskAdicionar.Show;
 end;
 
-procedure TTDViewsTaskListagem.btnExcluirClick(Sender: TObject);
+procedure TTDViewsTaskListagem.CarregarDados;
 begin
-  with DtsTarefa do
-    if edtBuscar.Text = '' then
-      begin
-        if edtBuscar.Text = '' then
-           begin
-            ShowMessage('Nenhuma tarefa selecionada');
-           end
-           else
-           begin
-             if DataSet.RecordCount = 0 then
-              begin
-                ShowMessage('Tarefa Inexistente');
-              end
-              else
-              begin
-                if MessageDlg('Deseja realmente excluir essa tarefa' , mtConfirmation , mbYesNo , 0) = mrYes then
-                  begin
-                    DataSet.Delete;
-                    ShowMessage('Tarefa Exculida com sucesso');
-                    DataSet.Fields.Clear;
-                    ModalResult := mrCancel;
-                  end;
-              end;
-           end;
-      end;
-end;
+  FTaskFactory := TFactoryTask
+    .New
+    .DataSource(dsTarefas)
+    .ListTask(1);
 
-procedure TTDViewsTaskListagem.edtBuscarChange(Sender: TObject);
-begin
-  with QryTarefas do
+  with gTarefasView do
   begin
-    Close;
-    SQL.Clear;
-    SQL.Add('SELECT * FROM TB_TAREFAS WHERE UPPER(TAREFA) = UPPER(:TAREFA)');
-    ParamByName('TAREFA').AsString := edtBuscar.Text;
-    Open;
+    ClearItems;
+    DataController.CreateAllItems();
+    ApplyBestFit();
   end;
 end;
 
-procedure TTDViewsTaskListagem.FormShow(Sender: TObject);
+procedure TTDViewsTaskListagem.FormCreate(Sender: TObject);
 begin
-  with QryTarefas do
-  begin
-    Close;
-    SQL.Clear;
-    SQL.Add('SELECT * FROM TB_TAREFAS WHERE UPPER(TAREFA) = UPPER(:TAREFA)');
-    ParamByName('TAREFA').AsString := edtBuscar.Text;
-    Open;
-  end;
+  CarregarDados;
 end;
 
-procedure TTDViewsTaskListagem.pnContentClick(Sender: TObject);
+procedure TTDViewsTaskListagem.gTarefasViewDblClick(Sender: TObject);
 begin
-  cxGrid1.Top :=  Trunc((ClientHeight/2) - (cxGrid1.Height/2));
-  cxGrid1.Left:= Trunc((ClientWidth/2) - (cxGrid1.Width/2));
+  if MessageDlg('Tem certeza que quer finalizar essa tarefa?', mtConfirmation, mbYesNo, 0) = mrYes then
+  begin
+    if dsTarefas.DataSet.FieldByName('STATUS').AsInteger <> 0 then
+    begin
+      MessageDlg('Tarefa finalizada denovo!', mtInformation, [mbOK], 0);
+      Exit;
+    end;
+
+    try
+      FTaskFactory
+        .FinishTask(dsTarefas.DataSet.FieldByName('ID').AsInteger);
+      MessageDlg('Tarefa finalizada com sucesso!', mtInformation, [mbOK], 0);
+    except
+
+    end;
+
+    CarregarDados;
+  end;
 end;
 
 end.

@@ -4,10 +4,12 @@ interface
 
 uses
   System.Classes,
+  System.Generics.Collections,
   Uni,
   Data.DB;
 
 type
+
   iServiceQuery = interface
     ['{82BF054D-FE9C-4A6F-9289-94285D34B2F0}']
     function CampoChave(AValue: string): iServiceQuery;
@@ -31,6 +33,8 @@ type
     function Parametro(ANome: String; AValue: Variant): iServiceQuery;
     function Filtrar(ACampo: string; AValor: Variant): iServiceQuery;
     function TemRegistros: Boolean;
+    function DataSet: TDataSet;
+    function Apelido(ACampo, AValor: string): iServiceQuery;
   end;
 
   TServiceQuery = class(TInterfacedObject, iServiceQuery)
@@ -39,6 +43,7 @@ type
     FTabela: string;
     FCampoChave: string;
 
+    FApelidos: TDictionary<string, string>;
     procedure MontarSQL;
     procedure AntesAbrir(Dataset: TDataSet);
   public
@@ -64,6 +69,8 @@ type
     function Parametro(ANome: String; AValue: Variant): iServiceQuery;
     function Filtrar(ACampo: string; AValor: Variant): iServiceQuery;
     function TemRegistros: Boolean;
+    function DataSet: TDataSet;
+    function Apelido(ACampo, AValor: string): iServiceQuery;
   end;
 
 implementation
@@ -83,6 +90,7 @@ procedure TServiceQuery.AntesAbrir(Dataset: TDataSet);
 var
   i: Integer;
   LField: TField;
+  LApelido: string;
 begin
   Dataset.FieldDefs.Update;
 
@@ -100,12 +108,32 @@ begin
   end;
 
   for LField in Dataset.Fields do
+    LField.Visible := False;
+
+  for LApelido in FApelidos.Keys do
+  begin
+    LField := Dataset.FindField(LApelido);
+
+    if Assigned(LField) then
+    begin
+      LField.Visible := True;
+      LField.DisplayLabel := FApelidos[LApelido];
+    end;
+  end;
+
+  for LField in Dataset.Fields do
   begin
     case LField.DataType of
       ftSmallint, ftInteger: TFloatField(LField).DisplayFormat := '#,##0';
       ftFloat, ftCurrency: TFloatField(LField).DisplayFormat := '#,##0.00';
     end;
   end;
+end;
+
+function TServiceQuery.Apelido(ACampo, AValor: string): iServiceQuery;
+begin
+  Result := Self;
+  FApelidos.Add(ACampo, AValor);
 end;
 
 function TServiceQuery.Campo(ANome: String; AValor: Variant): iServiceQuery;
@@ -135,6 +163,7 @@ end;
 constructor TServiceQuery.Create;
 begin
   FQuery := TUniQuery.Create(nil);
+  FApelidos := TDictionary<string, string>.Create;
 
   with FQuery do
   begin
@@ -144,6 +173,11 @@ begin
     CachedUpdates := True;
     BeforeOpen := AntesAbrir;
   end;
+end;
+
+function TServiceQuery.DataSet: TDataSet;
+begin
+  Result := FQuery;
 end;
 
 function TServiceQuery.Deletar: iServiceQuery;
@@ -159,6 +193,7 @@ end;
 destructor TServiceQuery.Destroy;
 begin
   FQuery.DisposeOf;
+  FApelidos.DisposeOf;
   inherited;
 end;
 

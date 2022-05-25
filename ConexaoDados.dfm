@@ -29,4 +29,8 @@ object DataModule1: TDataModule1
     Left = 224
     Top = 136
   end
+  object UniSQLMonitor1: TUniSQLMonitor
+    Left = 464
+    Top = 361
+  end
 end
