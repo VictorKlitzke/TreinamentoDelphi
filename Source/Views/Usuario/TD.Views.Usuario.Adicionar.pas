@@ -23,10 +23,12 @@ uses
   FireDAC.Phys.Intf,
   FireDAC.DApt.Intf,
   FireDAC.Stan.Async,
-  FireDAC.DApt, Data.DB,
+  FireDAC.DApt,
+  Data.DB,
   FireDAC.Comp.DataSet,
   FireDAC.Comp.Client,
-  cxGraphics, cxControls,
+  cxGraphics,
+  cxControls,
   cxLookAndFeels,
   cxLookAndFeelPainters,
   cxContainer,
@@ -42,8 +44,13 @@ uses
   Vcl.Menus,
   cxButtons,
   bcrypt,
-  TD.Views.Base, dxLayoutContainer, dxLayoutcxEditAdapters,
-  dxLayoutControlAdapters, cxClasses, dxLayoutControl, dxLayoutLookAndFeels;
+  TD.Views.Base,
+  dxLayoutContainer,
+  dxLayoutcxEditAdapters,
+  dxLayoutControlAdapters,
+  cxClasses,
+  dxLayoutControl,
+  dxLayoutLookAndFeels;
 
 type
   TTDViewsUsuarioAdicionar = class(TTDViewsBase)

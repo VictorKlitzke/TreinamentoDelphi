@@ -48,12 +48,19 @@ type
     procedure btnLoginClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure edUsuarioPropertiesValidate(Sender: TObject;
-      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+      var DisplayValue: Variant;
+      var ErrorText: TCaption;
+      var Error: Boolean);
     procedure edSenhaPropertiesValidate(Sender: TObject;
-      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
-    procedure edSenhaKeyDown(Sender: TObject; var Key: Word;
+      var DisplayValue: Variant;
+      var ErrorText: TCaption;
+      var Error: Boolean);
+    procedure edSenhaKeyDown(Sender: TObject;
+      var Key: Word;
       Shift: TShiftState);
-    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormKeyDown(Sender: TObject;
+    var Key: Word; Shift: TShiftState);
+
   private
   public
   end;
@@ -61,7 +68,7 @@ type
 var
   TDViewsUsuarioLogin: TTDViewsUsuarioLogin;
   FCadastro: TTDViewsUsuarioAdicionar;
-  FConfig: TTDViewsTaskListagem;
+  FConfig: TTDViewsUsuarioListagem;
   FTarefa: TTDViewsTaskListagem;
   DM: TDataModule1;
 

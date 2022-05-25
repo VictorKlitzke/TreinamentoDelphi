@@ -38,7 +38,6 @@ end;
 
 destructor TControllerTask.Destroy;
 begin
-
     inherited
 end;
 

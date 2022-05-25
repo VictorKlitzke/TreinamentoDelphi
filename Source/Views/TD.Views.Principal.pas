@@ -33,8 +33,8 @@ type
     pnContent: TPanel;
     Image1: TImage;
     btnSair: TcxButton;
-    btnUsuarios: TcxButton;
     lblUsuario: TLabel;
+    cxButton1: TcxButton;
     procedure btnSairClick(Sender: TObject);
     procedure btnUsuariosClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -52,7 +52,10 @@ var
 implementation
 
 uses
-  TD.Views.Usuario.Login, TD.Views.Task.Listagem, TD.Views.Usuario.Adicionar;
+  TD.Views.Usuario.Login,
+  TD.Views.Task.Listagem,
+  TD.Views.Usuario.Listagem,
+  TD.Views.Usuario.Adicionar;
 
 {$R *.dfm}
 
@@ -71,22 +74,22 @@ end;
 
 procedure TTDViewsPrincipal.btnTarefasClick(Sender: TObject);
 begin
-  if Assigned(FConfig) then FreeAndNil(FConfig);
-  if not Assigned(FTarefa) then
+  if Assigned(TDViewsTaskListagem) then FreeAndNil(TDViewsTaskListagem);
+  if not Assigned(TDViewsTaskListagem) then
     Application.CreateForm(TTDViewsTaskListagem, TDViewsTaskListagem);
 
-  FTarefa.Parent := pnContent;
-  FTarefa.Show;
+    TDViewsTaskListagem.Parent := pnContent;
+    TDViewsTaskListagem.Show;
 end;
 
 procedure TTDViewsPrincipal.btnUsuariosClick(Sender: TObject);
 begin
-  if Assigned(FTarefa) then FreeAndNil(FTarefa);
-  if not Assigned(FConfig) then
-    Application.CreateForm(TTDViewsUsuarioAdicionar, TDViewsUsuarioAdicionar);
+  if Assigned(TDViewsUsuarioListagem) then FreeAndNil(TDViewsUsuarioListagem);
+  if not Assigned(TDViewsUsuarioListagem) then
+    Application.CreateForm(TTDViewsUsuarioListagem, TDViewsUsuarioListagem);
 
-  FConfig.Parent := pnContent;
-  FConfig.Show;
+  TDViewsUsuarioListagem.Parent := pnContent;
+  TDViewsUsuarioListagem.Show;
 end;
 
 

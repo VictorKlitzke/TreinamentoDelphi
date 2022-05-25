@@ -18,10 +18,6 @@ inherited TDViewsUsuarioAdicionar: TTDViewsUsuarioAdicionar
     TabOrder = 0
     AutoSize = True
     LayoutLookAndFeel = lfCarVitLayout
-    ExplicitLeft = 248
-    ExplicitTop = 116
-    ExplicitWidth = 401
-    ExplicitHeight = 293
     object Image1: TImage
       Left = 36
       Top = 47

@@ -11,8 +11,10 @@ uses
   System.UITypes,
   Vcl.Graphics,
   Vcl.Controls,
-  Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls,cxGraphics,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.StdCtrls,
+  cxGraphics,
   cxControls,
   cxLookAndFeels,
   cxLookAndFeelPainters,
@@ -25,10 +27,12 @@ uses
   conexaoDados,
   FireDAC.Stan.Intf,
   FireDAC.Stan.Option,
-  FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.Stan.Param,
+  FireDAC.Stan.Error,
   FireDAC.DatS,
   FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt.Intf,
+  FireDAC.Stan.Async,
   FireDAC.DApt,
   Data.DB,
   FireDAC.Comp.DataSet,
@@ -137,10 +141,8 @@ end;
 
 procedure TTDViewsUsuarioListagem.FormShow(Sender: TObject);
 begin
-
 PainellUser.Top :=  Trunc((ClientHeight/2) - (PainellUser.Height/2));
 PainellUser.Left:= Trunc((ClientWidth/2) - (PainellUser.Width/2));
-
 end;
 
 end.
