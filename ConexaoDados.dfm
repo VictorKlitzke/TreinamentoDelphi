@@ -6,11 +6,10 @@ object DataModule1: TDataModule1
   Width = 1144
   object Connection: TFDConnection
     Params.Strings = (
-      'Database=C:\dados.FDB'
+      'Database=D:\dados.FDB'
       'Password=masterkey'
       'User_Name=SYSDBA'
       'DriverID=FB')
-    Connected = True
     LoginPrompt = False
     Transaction = Transaction
     Left = 224

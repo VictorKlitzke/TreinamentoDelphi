@@ -22,7 +22,7 @@ object TDViewsTaskAdicionar: TTDViewsTaskAdicionar
   PixelsPerInch = 96
   TextHeight = 13
   object pnl1: TPanel
-    Left = 0
+    Left = -3
     Top = 0
     Width = 777
     Height = 441
@@ -30,6 +30,9 @@ object TDViewsTaskAdicionar: TTDViewsTaskAdicionar
     Color = 9590329
     ParentBackground = False
     TabOrder = 0
+    DesignSize = (
+      777
+      441)
     object lbl1: TLabel
       Left = 37
       Top = 102
@@ -46,7 +49,7 @@ object TDViewsTaskAdicionar: TTDViewsTaskAdicionar
     object lbledit: TLabel
       Left = 37
       Top = 41
-      Width = 73
+      Width = 70
       Height = 15
       Caption = 'Titulo Tarefa'
       Font.Charset = ANSI_CHARSET
@@ -88,32 +91,7 @@ object TDViewsTaskAdicionar: TTDViewsTaskAdicionar
       TabOrder = 1
       Width = 692
     end
-    object edtDescricao: TEdit
-      Left = 37
-      Top = 123
-      Width = 692
-      Height = 233
-      Align = alCustom
-      Alignment = taRightJustify
-      BevelInner = bvNone
-      BevelOuter = bvNone
-      BiDiMode = bdRightToLeft
-      BorderStyle = bsNone
-      Ctl3D = True
-      DoubleBuffered = False
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentBiDiMode = False
-      ParentCtl3D = False
-      ParentDoubleBuffered = False
-      ParentFont = False
-      TabOrder = 2
-      OnKeyDown = edtDescricaoKeyDown
-    end
-    object btnCadastrar: TcxButton
+    object BtnAddTask: TcxButton
       Left = 0
       Top = 416
       Width = 777
@@ -149,10 +127,16 @@ object TDViewsTaskAdicionar: TTDViewsTaskAdicionar
         00000049454E44AE426082}
       SpeedButtonOptions.CanBeFocused = False
       SpeedButtonOptions.Flat = True
+      TabOrder = 2
+      OnClick = BtnAddTaskClick
+    end
+    object edtDescricao: TcxTextEdit
+      Left = 37
+      Top = 123
+      Anchors = [akLeft, akTop, akBottom]
+      Properties.OnValidate = edtDescricaoPropertiesValidate
       TabOrder = 3
-      OnClick = BtnCadastrarClick
-      ExplicitLeft = 343
-      ExplicitWidth = 115
+      Width = 692
     end
   end
 end

@@ -67,7 +67,7 @@ begin
     Password := 'masterkey';
     ProviderName := 'InterBase';
     Port := 3050;
-    Database := 'c:\dados.fdb';
+    Database := 'D:\dados.fdb';
     SpecificOptions.Values['ClientLibrary'] := 'fbclient.dll';
   end;
 end;

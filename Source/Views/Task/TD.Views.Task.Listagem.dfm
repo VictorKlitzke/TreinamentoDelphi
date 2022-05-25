@@ -29,8 +29,7 @@ object TDViewsTaskListagem: TTDViewsTaskListagem
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 16
-    ExplicitWidth = 97
+    ExplicitWidth = 88
   end
   object pnContent: TPanel
     Left = 0
@@ -41,10 +40,6 @@ object TDViewsTaskListagem: TTDViewsTaskListagem
     BevelOuter = bvNone
     TabOrder = 0
     OnClick = pnContentClick
-    ExplicitLeft = 8
-    ExplicitTop = 8
-    ExplicitWidth = 1181
-    ExplicitHeight = 663
     object cxGrid1: TcxGrid
       Left = 0
       Top = 0
@@ -53,8 +48,6 @@ object TDViewsTaskListagem: TTDViewsTaskListagem
       Align = alClient
       TabOrder = 0
       LevelTabs.Slants.Positions = [spLeft, spRight]
-      ExplicitLeft = -6
-      ExplicitTop = -6
       object cxgrdbtblvwGrid1DBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = DtsTarefa
@@ -208,7 +201,6 @@ object TDViewsTaskListagem: TTDViewsTaskListagem
     SpeedButtonOptions.Flat = True
     TabOrder = 2
     OnClick = btnExcluirClick
-    ExplicitHeight = 589
   end
   object DtsTarefa: TDataSource
     DataSet = QryTarefas

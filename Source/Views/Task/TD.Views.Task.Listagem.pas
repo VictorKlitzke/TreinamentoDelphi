@@ -72,6 +72,7 @@ type
     procedure pnContentClick(Sender: TObject);
     procedure edtBuscarChange(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
+    procedure btncadastrarClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -89,13 +90,24 @@ uses
   ConexaoDados,
   TD.Controllers.Sessao,
   TD.Views.Task.Adicionar,
-  TD.Views.Principal;
+  TD.Views.Principal,
+  TD.Factories.Task;
 
 {$R *.dfm}
 
 procedure TTDViewsTaskListagem.btnAddTaskClick(Sender: TObject);
 begin
   if Assigned (TDViewsTaskAdicionar) then FreeAndNil(TDViewsTaskAdicionar);
+  if not Assigned(TDViewsTaskAdicionar) then
+    Application.CreateForm(TTDViewsTaskAdicionar , TDViewsTaskAdicionar);
+
+    TDViewsTaskAdicionar.Parent := pnContent;
+    TDViewsTaskAdicionar.Show;
+end;
+
+procedure TTDViewsTaskListagem.btncadastrarClick(Sender: TObject);
+begin
+if Assigned (TDViewsTaskAdicionar) then FreeAndNil(TDViewsTaskAdicionar);
   if not Assigned(TDViewsTaskAdicionar) then
     Application.CreateForm(TTDViewsTaskAdicionar , TDViewsTaskAdicionar);
 
@@ -135,20 +147,25 @@ end;
 procedure TTDViewsTaskListagem.edtBuscarChange(Sender: TObject);
 begin
   with QryTarefas do
-    begin
-      Close;
-      SQL.Clear;
-      SQL.Add('SELECT * FROM TB_TAREFAS WHERE UPPER(TAREFA) = UPPER(:TAREFA)');
-      ParamByName('TAREFA').AsString := edtBuscar.Text;
-      Open();
-    end;
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('SELECT * FROM TB_TAREFAS WHERE UPPER(TAREFA) = UPPER(:TAREFA)');
+    ParamByName('TAREFA').AsString := edtBuscar.Text;
+    Open;
+  end;
 end;
 
 procedure TTDViewsTaskListagem.FormShow(Sender: TObject);
 begin
-//  QryTarefas.Close;
-//  QryTarefas.ParamByName('USUARIO').AsInteger := TDViewsPrincipal.FSessao.Usuario;
-//  QryTarefas.Open;
+  with QryTarefas do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('SELECT * FROM TB_TAREFAS WHERE UPPER(TAREFA) = UPPER(:TAREFA)');
+    ParamByName('TAREFA').AsString := edtBuscar.Text;
+    Open;
+  end;
 end;
 
 procedure TTDViewsTaskListagem.pnContentClick(Sender: TObject);

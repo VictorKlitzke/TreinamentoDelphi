@@ -96,12 +96,10 @@ implementation
 {$R *.dfm}
 
 procedure TTDViewsUsuarioListagem.editBuscarChange(Sender: TObject);
-
 begin
-
-with Qryusuarios do
+  with Qryusuarios do
   begin
-    //BUSCANDO USUARIOS JÁ EXISTENTE
+    //BUSCANDO USUARIOS Jï¿½ EXISTENTE
     Close;
     Sql.Clear;
     SQL.Add('SELECT * FROM TB_USUARIOS WHERE UPPER(USUARIO) = UPPER(:USUARIO)');
@@ -116,20 +114,20 @@ begin
   begin
     if editBuscar.Text = '' then
     begin
-      ShowMessage('Nenhum usuário selecionado');
+      ShowMessage('Nenhum usuï¿½rio selecionado');
     end
     else
     begin
       if DataSet.RecordCount = 0 then
       begin
-        ShowMessage('Usuário inexistente');
+        ShowMessage('Usuï¿½rio inexistente');
       end
       else
       begin
-        if MessageDlg('Deseja realmente excluir esse usuário', mtConfirmation, mbYesNo, 1) = mrYes then
+        if MessageDlg('Deseja realmente excluir esse usuï¿½rio', mtConfirmation, mbYesNo, 1) = mrYes then
         begin
           DataSet.Delete;
-          ShowMessage('Usuário excluido com sucesso');
+          ShowMessage('Usuï¿½rio excluido com sucesso');
           Dataset.Fields.Clear;
           ModalResult := mrCancel;
         end;
