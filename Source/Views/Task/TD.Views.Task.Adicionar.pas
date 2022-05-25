@@ -113,7 +113,7 @@ procedure TTDViewsTaskAdicionar.edtTarefaPropertiesValidate(Sender: TObject;
   var Error: Boolean);
 begin
   Error := DisplayValue = '';
-  ErrorText := 'Titulo tarefa obrigatório';
+  ErrorText := 'Titulo tarefa obrigatï¿½rio';
 end;
 
 procedure TTDViewsTaskAdicionar.FormShow(Sender: TObject);
@@ -131,7 +131,7 @@ procedure TTDViewsTaskAdicionar.validarTask(
 begin
    edtTarefa.SetFocus;
    Error := DisplayValue = '';
-   errorText := 'O campo é obrigatório';
+   errorText := 'O campo ï¿½ obrigatï¿½rio';
 end;
 
 procedure TTDViewsTaskAdicionar.btnCloseClick(Sender: TObject);
@@ -143,7 +143,7 @@ procedure TTDViewsTaskAdicionar.edtDescricaoPropertiesValidate(Sender: TObject;
   var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
 begin
   Error := DisplayValue = '';
-  ErrorText := 'Descrição da tarefa obrigatório';
+  ErrorText := 'Descriï¿½ï¿½o da tarefa obrigatï¿½rio';
 end;
 
 end.

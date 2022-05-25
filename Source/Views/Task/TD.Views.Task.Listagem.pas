@@ -90,7 +90,8 @@ uses
   ConexaoDados,
   TD.Controllers.Sessao,
   TD.Views.Task.Adicionar,
-  TD.Views.Principal;
+  TD.Views.Principal,
+  TD.Factories.Task;
 
 {$R *.dfm}
 
@@ -146,20 +147,25 @@ end;
 procedure TTDViewsTaskListagem.edtBuscarChange(Sender: TObject);
 begin
   with QryTarefas do
-    begin
-      Close;
-      SQL.Clear;
-      SQL.Add('SELECT * FROM TB_TAREFAS WHERE UPPER(TAREFA) = UPPER(:TAREFA)');
-      ParamByName('TAREFA').AsString := edtBuscar.Text;
-      Open();
-    end;
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('SELECT * FROM TB_TAREFAS WHERE UPPER(TAREFA) = UPPER(:TAREFA)');
+    ParamByName('TAREFA').AsString := edtBuscar.Text;
+    Open;
+  end;
 end;
 
 procedure TTDViewsTaskListagem.FormShow(Sender: TObject);
 begin
-//  QryTarefas.Close;
-//  QryTarefas.ParamByName('USUARIO').AsInteger := TDViewsPrincipal.FSessao.Usuario;
-//  QryTarefas.Open;
+  with QryTarefas do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('SELECT * FROM TB_TAREFAS WHERE UPPER(TAREFA) = UPPER(:TAREFA)');
+    ParamByName('TAREFA').AsString := edtBuscar.Text;
+    Open;
+  end;
 end;
 
 procedure TTDViewsTaskListagem.pnContentClick(Sender: TObject);

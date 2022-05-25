@@ -8,11 +8,11 @@ uses
 type
   iFactoryTask = interface
     ['{1592C510-8A28-408D-BD1A-F6430ADE3590}']
-    function AddTask(ATarefa,ADescricao : string):iFactoryTask;
+    function AddTask(ATarefa,ADescricao : string): iFactoryTask;
     function ListTask(AUsuario): iFactoryTask;
   end;
 
-  TFactoryTask = class(TInterfacedObject,iFactoryTask)
+  TFactoryTask = class(TInterfacedObject, iFactoryTask)
     private
 
     public
@@ -20,7 +20,7 @@ type
       destructor Destroy; override;
 
       class function New: iFactoryTask;
-      function AddTask(ATarefa,ADescricao : string):iFactoryTask;
+      function AddTask(ATarefa,ADescricao : string): iFactoryTask;
       function ListTask(AUsuario): iFactoryTask;
   end;
 
@@ -61,7 +61,6 @@ begin
   Result := Self;
   TTarefa
     .New
-    .
     .Filtrar('ID_USUARIO', AUsuario)
 end;
 

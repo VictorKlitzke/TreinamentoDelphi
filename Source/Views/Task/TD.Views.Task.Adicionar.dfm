@@ -30,6 +30,9 @@ object TDViewsTaskAdicionar: TTDViewsTaskAdicionar
     Color = 9590329
     ParentBackground = False
     TabOrder = 0
+    DesignSize = (
+      777
+      441)
     object lbl1: TLabel
       Left = 37
       Top = 102
@@ -129,7 +132,8 @@ object TDViewsTaskAdicionar: TTDViewsTaskAdicionar
     end
     object edtDescricao: TcxTextEdit
       Left = 37
-      Top = 243
+      Top = 123
+      Anchors = [akLeft, akTop, akBottom]
       Properties.OnValidate = edtDescricaoPropertiesValidate
       TabOrder = 3
       Width = 692
