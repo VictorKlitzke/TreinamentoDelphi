@@ -73,25 +73,25 @@ procedure TTDViewsTaskAdicionar.BtnAddTaskClick(Sender: TObject);
 begin
  inherited;
   edtTarefa.ValidateEdit();
-  edtDescricao.Text;
+  edtDescricao.ValidateEdit();;
 
-    try
-      TFactoryTask
-        .New
-        .AddTask(
-          edtTarefa.Text,
-          edtDescricao.Text
-        );
+  try
+    TFactoryTask
+      .New
+      .AddTask(
+        edtTarefa.Text,
+        edtDescricao.Text
+      );
 
-      MessageDlg('Tarefa cadastrada com sucesso' , mtInformation , [mbOk] , 0);
-      Close;
-    except
-      on e: Exception do
-      begin
-        MessageDlg('Ops! , Falha ao fazer cadastro da tarefa.' + #13 + e.message , mtWarning , [mbOk] , 0);
-        edtTarefa.SetFocus;
-      end;
+    MessageDlg('Tarefa cadastrada com sucesso' , mtInformation , [mbOk] , 0);
+    Close;
+  except
+    on e: Exception do
+    begin
+      MessageDlg('Ops! , Falha ao fazer cadastro da tarefa.' + #13 + e.message , mtWarning , [mbOk] , 0);
+      edtTarefa.SetFocus;
     end;
+  end;
 end;
 
 procedure TTDViewsTaskAdicionar.FormCreate(Sender: TObject);
