@@ -73,6 +73,7 @@ type
     procedure edtBuscarChange(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
     procedure btncadastrarClick(Sender: TObject);
+
   private
     { Private declarations }
   public
@@ -96,6 +97,16 @@ uses
 procedure TTDViewsTaskListagem.btnAddTaskClick(Sender: TObject);
 begin
   if Assigned (TDViewsTaskAdicionar) then FreeAndNil(TDViewsTaskAdicionar);
+  if not Assigned(TDViewsTaskAdicionar) then
+    Application.CreateForm(TTDViewsTaskAdicionar , TDViewsTaskAdicionar);
+
+    TDViewsTaskAdicionar.Parent := pnContent;
+    TDViewsTaskAdicionar.Show;
+end;
+
+procedure TTDViewsTaskListagem.btncadastrarClick(Sender: TObject);
+begin
+if Assigned (TDViewsTaskAdicionar) then FreeAndNil(TDViewsTaskAdicionar);
   if not Assigned(TDViewsTaskAdicionar) then
     Application.CreateForm(TTDViewsTaskAdicionar , TDViewsTaskAdicionar);
 

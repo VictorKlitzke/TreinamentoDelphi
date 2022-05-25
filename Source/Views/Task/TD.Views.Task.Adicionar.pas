@@ -38,9 +38,9 @@ type
     lbl1: TLabel;
     lbledit: TLabel;
     edtTarefa: TcxTextEdit;
-    edtDescricao: TEdit;
-    btnCadastrar: TcxButton;
-    procedure BtnCadastrarClick(Sender: TObject);
+    BtnAddTask: TcxButton;
+    edtDescricao: TcxTextEdit;
+    procedure BtnAddTaskClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -50,8 +50,8 @@ type
       var DisplayValue: Variant;
       var ErrorText: TCaption;
       var Error: Boolean);
-    procedure edtDescricaoKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    procedure edtDescricaoPropertiesValidate(Sender: TObject;
+      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
 
   private
      procedure validarTask(Sender: TObject; var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
@@ -69,7 +69,7 @@ uses
 
 {$R *.dfm}
 
-procedure TTDViewsTaskAdicionar.BtnCadastrarClick(Sender: TObject);
+procedure TTDViewsTaskAdicionar.BtnAddTaskClick(Sender: TObject);
 begin
  inherited;
   edtTarefa.ValidateEdit();
@@ -139,12 +139,11 @@ begin
   if MessageDlg('Deseja realmente sair' , mtConfirmation , mbYesNo , 1) = mrYes then Close;
 end;
 
-procedure TTDViewsTaskAdicionar.edtDescricaoKeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
+procedure TTDViewsTaskAdicionar.edtDescricaoPropertiesValidate(Sender: TObject;
+  var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
 begin
-  if Key = VK_RETURN then
-    if edtDescricao.Text <> '' then
-      BtnCadastrar.Click
+  Error := DisplayValue = '';
+  ErrorText := 'Descrição da tarefa obrigatório';
 end;
 
 end.
