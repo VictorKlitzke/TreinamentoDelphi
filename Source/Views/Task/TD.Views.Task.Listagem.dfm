@@ -49,13 +49,12 @@ object TDViewsTaskListagem: TTDViewsTaskListagem
       Left = 0
       Top = 0
       Width = 1208
-      Height = 592
+      Height = 584
       Align = alClient
       TabOrder = 0
       LevelTabs.Slants.Positions = [spLeft, spRight]
-      ExplicitLeft = -136
-      ExplicitTop = 6
-      ExplicitHeight = 589
+      ExplicitLeft = -6
+      ExplicitTop = -6
       object cxgrdbtblvwGrid1DBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = DtsTarefa
@@ -69,22 +68,22 @@ object TDViewsTaskListagem: TTDViewsTaskListagem
         end
         object cxgrdbtblvwGrid1DBTableView1DESCRICAO: TcxGridDBColumn
           DataBinding.FieldName = 'DESCRICAO'
-          Width = 1150
+          Width = 1098
         end
         object cxgrdbtblvwGrid1DBTableView1STATUS: TcxGridDBColumn
           DataBinding.FieldName = 'STATUS'
-          Width = 125
+          Width = 225
         end
       end
       object cxgrdlvlGrid1Level1: TcxGridLevel
         GridView = cxgrdbtblvwGrid1DBTableView1
       end
     end
-    object btncadastrar: TcxButton
+    object btnAddTask: TcxButton
       Left = 0
-      Top = 592
+      Top = 584
       Width = 1208
-      Height = 36
+      Height = 44
       Align = alBottom
       Colors.Default = 9590329
       Colors.HotText = clWhite
@@ -143,7 +142,7 @@ object TDViewsTaskListagem: TTDViewsTaskListagem
       SpeedButtonOptions.CanBeFocused = False
       SpeedButtonOptions.Flat = True
       TabOrder = 1
-      OnClick = btncadastrarClick
+      OnClick = btnAddTaskClick
     end
   end
   object edtBuscar: TEdit
