@@ -5,7 +5,8 @@ interface
 uses
   Data.DB,
   TD.Services.Query,
-  BCrypt;
+  BCrypt,
+  TD.Controllers.Sessao;
 
 type
   TFactoryTaskLog = procedure(Value: string) of object;
@@ -15,43 +16,46 @@ type
     function AddTask(ATarefa,ADescricao : string): iFactoryTask;
     function DataSource(var ADatasource: TDataSource): iFactoryTask;
     function FinishTask(ATarefa: Integer): iFactoryTask;
-    function ListTask(AUsuario: Integer): iFactoryTask;
+
+    function ListTask: iFactoryTask;
+
     function Log(AValue: TFactoryTaskLog): iFactoryTask;
   end;
 
   TFactoryTask = class(TInterfacedObject, iFactoryTask)
-    private
-      FTarefas: iServiceQuery;
-      FLog: TFactoryTaskLog;
-    public
-      constructor Create;
-      destructor Destroy; override;
+  private
+    FSessao: iControllerSessao;
+    FTarefas: iServiceQuery;
+    FLog: TFactoryTaskLog;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New: iFactoryTask;
 
-      class function New: iFactoryTask;
-      function AddTask(ATarefa,ADescricao : string): iFactoryTask;
-      function ListTask(AUsuario: Integer): iFactoryTask;
-      function FinishTask(ATarefa: Integer): iFactoryTask;
-      function DataSource(var ADatasource: TDataSource): iFactoryTask;
-      function Log(AValue: TFactoryTaskLog): iFactoryTask;
+    function AddTask(ATarefa,ADescricao : string): iFactoryTask;
+    function FinishTask(ATarefa: Integer): iFactoryTask;
+    function DataSource(var ADatasource: TDataSource): iFactoryTask;
+    function Log(AValue: TFactoryTaskLog): iFactoryTask;
+
+    function ListTask: iFactoryTask;
   end;
 
 
 implementation
-
+  { TFactoryTask }
 uses
   TD.Models.Tarefa;
-
-  { TFactoryTask }
 
 function TFactoryTask.AddTask(Atarefa, ADescricao: string): iFactoryTask;
 begin
   Result := Self;
+
   TTarefa
     .New
     .Inserir
     .Tarefa(ATarefa)
     .Descricao(ADescricao)
-    .Usuario(1)
+    .Usuario(FSessao.Id)
     .Salvar;
 
   if Assigned(FLog) then
@@ -60,6 +64,7 @@ end;
 
 constructor TFactoryTask.Create;
 begin
+  FSessao := TControllerSessao.New;
   FTarefas := TServiceQuery
     .New
     .Apelido('ID', '#')
@@ -102,17 +107,18 @@ begin
 
   TTarefa
     .New
-    .Filtrar('ID', ATarefa)
     .Editar
     .Status(1)
-    .Salvar;
+    .Salvar
+    .Filtrar('ID' , ATarefa);
 end;
 
-function TFactoryTask.ListTask(AUsuario: Integer): iFactoryTask;
+function TFactoryTask.ListTask: iFactoryTask;
 begin
   Result := Self;
+
   FTarefas
-    .Parametro('USUARIO', AUsuario)
+    .Parametro('USUARIO', FSessao.Id)
     .Abrir;
 end;
 
