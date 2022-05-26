@@ -107,10 +107,10 @@ begin
 
   TTarefa
     .New
+    .Filtrar('ID' , ATarefa)
     .Editar
     .Status(1)
-    .Salvar
-    .Filtrar('ID' , ATarefa);
+    .Salvar;
 end;
 
 function TFactoryTask.ListTask: iFactoryTask;
