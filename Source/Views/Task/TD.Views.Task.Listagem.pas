@@ -148,7 +148,7 @@ begin
         .FinishTask(dsTarefas.DataSet.FieldByName('ID').AsInteger);
       MessageDlg('Tarefa finalizada com sucesso!', mtInformation, [mbOK], 0);
     except
-      MessageDlg('Erro ao finalizar tarefas.', mtError, [mbOK], 0);
+
     end;
 
     CarregarDados;
