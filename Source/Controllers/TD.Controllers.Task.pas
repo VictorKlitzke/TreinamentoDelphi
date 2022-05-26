@@ -3,10 +3,12 @@ unit TD.Controllers.Task;
 interface
 
 uses
-  System.SysUtils;
+  System.SysUtils,
+  BCrypt,
+  TD.Services.Query;
 
 type
-  TUsuarioSessao = record
+  TUTaskSessao = record
     Id : Integer;
     Tarefa : string;
     Descricao : string;

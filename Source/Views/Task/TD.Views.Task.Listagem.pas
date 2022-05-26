@@ -68,7 +68,6 @@ type
     procedure btncadastrarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure gTarefasViewDblClick(Sender: TObject);
-
   private
     FTaskFactory: iFactoryTask;
   public
@@ -84,7 +83,6 @@ implementation
 
 uses
   ConexaoDados,
-  TD.Controllers.Sessao,
   TD.Views.Task.Adicionar,
   TD.Views.Principal;
 
@@ -120,7 +118,7 @@ begin
   FTaskFactory := TFactoryTask
     .New
     .DataSource(dsTarefas)
-    .ListTask(1);
+    .ListTask;
 
   with gTarefasView do
   begin
@@ -150,7 +148,7 @@ begin
         .FinishTask(dsTarefas.DataSet.FieldByName('ID').AsInteger);
       MessageDlg('Tarefa finalizada com sucesso!', mtInformation, [mbOK], 0);
     except
-
+      MessageDlg('Erro ao finalizar tarefas.', mtError, [mbOK], 0);
     end;
 
     CarregarDados;
