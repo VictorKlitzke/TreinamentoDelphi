@@ -1,4 +1,4 @@
-unit TD.Views.Usuario.Listagem;
+﻿unit TD.Views.Usuario.Listagem;
 
 interface
 
@@ -24,7 +24,6 @@ uses
   dxSkinsDefaultPainters,
   cxTextEdit,
   cxDBEdit,
-  conexaoDados,
   FireDAC.Stan.Intf,
   FireDAC.Stan.Option,
   FireDAC.Stan.Param,
@@ -57,7 +56,9 @@ uses
   cxMaskEdit,
   cxButtonEdit,
   Vcl.Menus,
-  cxButtons;
+  cxButtons,
+  TD.Factories.Usuario,
+  TD.Views.Usuario.Editar;
 
 type
   TTDViewsUsuarioListagem = class(TForm)
@@ -66,75 +67,103 @@ type
     Label1: TLabel;
     editBuscar: TEdit;
     edUsers: TcxGrid;
-    edUsersDBTableView1: TcxGridDBTableView;
+    edUsuariosViews: TcxGridDBTableView;
     edUsersLevel1: TcxGridLevel;
-    BtnExcluir: TcxButton;
-    Qryusuarios: TFDQuery;
-    DtsUsuarios: TDataSource;
-    QryusuariosUSUARIO: TWideStringField;
-    edUsersDBTableView1USUARIO: TcxGridDBColumn;
-    QryusuariosID: TIntegerField;
-    QryusuariosNOME: TWideStringField;
-    QryusuariosSENHA: TWideStringField;
-    edUsersDBTableView1ID: TcxGridDBColumn;
-    edUsersDBTableView1NOME: TcxGridDBColumn;
-    procedure editBuscarChange(Sender: TObject);
+    BtnEdit: TcxButton;
+    dsUsuarios: TDataSource;
     procedure FormShow(Sender: TObject);
-    procedure BtnExcluirClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure edUsuariosViewsCellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState;
+      var AHandled: Boolean);
+    procedure BtnEditClick(Sender: TObject);
   private
-    { Private declarations }
+    FUsuarioFactory: iFactoryUsuario;
   public
-    { Public declarations }
+   procedure CarregarDados;
   end;
 
 var
   TDViewsUsuarioListagem: TTDViewsUsuarioListagem;
-  DM: TDataModule1;
+  TDViewsUsuarioEditar: TTDViewsUsuarioEditar;
 
 implementation
 
+uses
+  ConexaoDados,
+  TD.Views.Principal,
+  TD.Views.Usuario.Adicionar;
+
 {$R *.dfm}
 
-procedure TTDViewsUsuarioListagem.editBuscarChange(Sender: TObject);
+procedure TTDViewsUsuarioListagem.BtnEditClick(Sender: TObject);
 begin
-  with Qryusuarios do
-  begin
-    //BUSCANDO USUARIOS J� EXISTENTE
-    Close;
-    Sql.Clear;
-    SQL.Add('SELECT * FROM TB_USUARIOS WHERE UPPER(USUARIO) = UPPER(:USUARIO)');
-    ParamByName('USUARIO').AsString := editBuscar.Text;
-    Open;
-  end;
+  MessageDlg('Clica duas vezes no usuário otário!!', mtConfirmation, [mbOK], 1);
 end;
 
-procedure TTDViewsUsuarioListagem.BtnExcluirClick(Sender: TObject);
+procedure TTDViewsUsuarioListagem.CarregarDados;
 begin
-  with DtsUsuarios do
-  begin
-    if editBuscar.Text = '' then
-    begin
-      ShowMessage('Nenhum usu�rio selecionado');
-    end
-    else
-    begin
-      if DataSet.RecordCount = 0 then
+  FUsuarioFactory := TFactoryUsuario
+    .New
+    .DataSource(dsUsuarios)
+    .ListUsuario;
+
+    with edUsuariosViews do
       begin
-        ShowMessage('Usu�rio inexistente');
-      end
-      else
-      begin
-        if MessageDlg('Deseja realmente excluir esse usu�rio', mtConfirmation, mbYesNo, 1) = mrYes then
-        begin
-          DataSet.Delete;
-          ShowMessage('Usu�rio excluido com sucesso');
-          Dataset.Fields.Clear;
-          ModalResult := mrCancel;
-        end;
+        ClearItems;
+        DataController.CreateAllItems();
+        ApplyBestFit();
       end;
-    end;
-    DataSet.Fields.Clear;
-  end;
+
+end;
+
+procedure TTDViewsUsuarioListagem.edUsuariosViewsCellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState;
+  var AHandled: Boolean
+  );
+var
+  VUEditar: TTDViewsUsuarioEditar;
+begin
+  VUEditar := TTDViewsUsuarioEditar.Create(self);
+  VUEditar.Usuario(dsUsuarios.DataSet.FieldByName('ID').AsInteger);
+  VUEditar.ShowModal;
+  FreeAndNil(VUEditar);
+end;
+
+//procedure TTDViewsUsuarioListagem.BtnExcluirClick(Sender: TObject);
+//begin
+//  with dsUsuarios do
+//  begin
+//    if editBuscar.Text = '' then
+//    begin
+//      ShowMessage('Nenhum usuario selecionado');
+//    end
+//    else
+//    begin
+//      if DataSet.RecordCount = 0 then
+//      begin
+//        ShowMessage('Usuario inexistente');
+//      end
+//      else
+//      begin
+//        if MessageDlg('Deseja realmente excluir esse usuario', mtConfirmation, mbYesNo, 1) = mrYes then
+//        begin
+//          DataSet.Delete;
+//          ShowMessage('Usuario excluido com sucesso');
+//          Dataset.Fields.Clear;
+//          ModalResult := mrCancel;
+//        end;
+//      end;
+//    end;
+//    DataSet.Fields.Clear;
+//  end;
+//end;
+
+procedure TTDViewsUsuarioListagem.FormCreate(Sender: TObject);
+begin
+  CarregarDados;
 end;
 
 procedure TTDViewsUsuarioListagem.FormShow(Sender: TObject);

@@ -76,7 +76,10 @@ type
     procedure btncadastrarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
-    procedure validarLogin(Sender: TObject; var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+    procedure validarLogin(Sender: TObject;
+    var DisplayValue: Variant;
+    var ErrorText: TCaption;
+    var Error: Boolean);
   public
     { Public declarations }
   end;
