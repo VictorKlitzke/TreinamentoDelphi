@@ -3,8 +3,8 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
   Top = 0
   BorderStyle = bsNone
   Caption = 'TDViewsUsuarioEditar'
-  ClientHeight = 229
-  ClientWidth = 410
+  ClientHeight = 182
+  ClientWidth = 311
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,16 +20,18 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
   object pnContent: TPanel
     Left = 0
     Top = 0
-    Width = 410
-    Height = 229
+    Width = 311
+    Height = 182
     Align = alClient
     Color = 9590329
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 338
+    ExplicitHeight = 193
     object Label1: TLabel
       Left = 1
       Top = 1
-      Width = 408
+      Width = 309
       Height = 21
       Align = alTop
       Alignment = taCenter
@@ -43,8 +45,8 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
       ExplicitWidth = 108
     end
     object btnClose: TcxButton
-      Left = 375
-      Top = 0
+      Left = 275
+      Top = 2
       Width = 35
       Height = 25
       Colors.Default = 9590329
@@ -70,25 +72,25 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
       OnClick = btnCloseClick
     end
     object edtUsuario: TMaskEdit
-      Left = 32
-      Top = 71
-      Width = 281
+      Left = 24
+      Top = 55
+      Width = 185
       Height = 21
       TabOrder = 1
       Text = ''
     end
     object edtSenha: TMaskEdit
-      Left = 32
-      Top = 154
-      Width = 281
+      Left = 24
+      Top = 138
+      Width = 185
       Height = 21
       TabOrder = 2
       Text = ''
       Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoParentPassthrough]
     end
     object btnExcluir: TcxButton
-      Left = 344
-      Top = 145
+      Left = 240
+      Top = 129
       Width = 49
       Height = 39
       Colors.Default = 9590329
@@ -128,8 +130,8 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
       TabOrder = 3
     end
     object btnsalvar: TcxButton
-      Left = 344
-      Top = 62
+      Left = 240
+      Top = 46
       Width = 49
       Height = 39
       Colors.Default = 9590329

@@ -42,8 +42,8 @@ type
     procedure btnsalvarClick(Sender: TObject);
   private
      TUsuarioModel: iUsuario;
-     FUsuarioFactory: iFactoryUsuario;
   public
+    FUsuarioFactory: TFactoryUsuario;
     function Usuario(UID: string): Integer;
   end;
 
@@ -84,7 +84,8 @@ function TTDViewsUsuarioEditar.Usuario(UID: string): Integer;
 var
   UsuarioData: iUsuario;
 begin
-  UsuarioData := TUsuarioModel.Filtrar('ID', UID);
+  UsuarioData := TUsuarioModel.Filtrar('USUARIO', UID);
+//  FUsuarioFactory.AtualizarUsuario('USUARIO' , UID);
   MessageDlg(UsuarioData.Nome, mtInformation, [mbOK], 0);
 end;
 
