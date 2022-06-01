@@ -62,12 +62,12 @@ type
     gTarefas: TcxGrid;
     gTarefasView: TcxGridDBTableView;
     gTarefasLevel: TcxGridLevel;
-    btnExcluir: TcxButton;
     btnAddTask: TcxButton;
     procedure btnAddTaskClick(Sender: TObject);
     procedure btncadastrarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure gTarefasViewDblClick(Sender: TObject);
+    procedure edtBuscarChange(Sender: TObject);
   private
     FTaskFactory: iFactoryTask;
   public
@@ -126,6 +126,14 @@ begin
     DataController.CreateAllItems();
     ApplyBestFit();
   end;
+end;
+
+procedure TTDViewsTaskListagem.edtBuscarChange(Sender: TObject);
+begin
+  FTaskFactory := TFactoryTask
+    .New
+    .DataSource(dsTarefas)
+    .FiltrarTask(edtBuscar.Text);
 end;
 
 procedure TTDViewsTaskListagem.FormCreate(Sender: TObject);

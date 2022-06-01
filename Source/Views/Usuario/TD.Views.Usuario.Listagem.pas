@@ -78,6 +78,7 @@ type
       AShift: TShiftState;
       var AHandled: Boolean);
     procedure BtnEditClick(Sender: TObject);
+    procedure editBuscarChange(Sender: TObject);
   private
     FUsuarioFactory: iFactoryUsuario;
   public
@@ -99,7 +100,7 @@ uses
 
 procedure TTDViewsUsuarioListagem.BtnEditClick(Sender: TObject);
 begin
-  MessageDlg('Clica duas vezes no usuário otário!!', mtConfirmation, [mbOK], 1);
+  MessageDlg('Clicar duas vezes no usuário!!!!', mtConfirmation, [mbOK], 1);
 end;
 
 procedure TTDViewsUsuarioListagem.CarregarDados;
@@ -118,18 +119,25 @@ begin
 
 end;
 
+procedure TTDViewsUsuarioListagem.editBuscarChange(Sender: TObject);
+begin
+  FUsuarioFactory := TFactoryUsuario
+    .New
+    .DataSource(dsUsuarios)
+    .FiltarUsuario(editBuscar.Text);
+end;
+
 procedure TTDViewsUsuarioListagem.edUsuariosViewsCellDblClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState;
   var AHandled: Boolean
   );
-var
-  VUEditar: TTDViewsUsuarioEditar;
+
 begin
-  VUEditar := TTDViewsUsuarioEditar.Create(self);
-  VUEditar.Usuario(dsUsuarios.DataSet.FieldByName('ID').AsInteger);
-  VUEditar.ShowModal;
-  FreeAndNil(VUEditar);
+  TDViewsUsuarioEditar := TTDViewsUsuarioEditar.Create(self);
+  TDViewsUsuarioEditar.Usuario(dsUsuarios.DataSet.FieldByName('USUARIO').AsString);
+  TDViewsUsuarioEditar.ShowModal;
+  FreeAndNil(TDViewsUsuarioEditar);
 end;
 
 //procedure TTDViewsUsuarioListagem.BtnExcluirClick(Sender: TObject);

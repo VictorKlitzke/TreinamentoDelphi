@@ -65,6 +65,7 @@ object TDViewsUsuarioListagem: TTDViewsUsuarioListagem
       Height = 21
       Align = alTop
       TabOrder = 0
+      OnChange = editBuscarChange
     end
     object edUsers: TcxGrid
       Left = 1

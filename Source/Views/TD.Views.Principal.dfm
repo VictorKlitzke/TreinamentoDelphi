@@ -2394,6 +2394,7 @@ object TDViewsPrincipal: TTDViewsPrincipal
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
+      OnDblClick = lblUsuarioDblClick
       ExplicitLeft = 969
       ExplicitWidth = 8
       ExplicitHeight = 40

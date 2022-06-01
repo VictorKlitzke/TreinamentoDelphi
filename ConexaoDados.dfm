@@ -6,7 +6,7 @@ object DataModule1: TDataModule1
   Width = 1144
   object Connection: TFDConnection
     Params.Strings = (
-      'Database=D:\dados.FDB'
+      'Database=C:\dados.FDB'
       'Password=masterkey'
       'User_Name=SYSDBA'
       'DriverID=FB')
@@ -30,7 +30,7 @@ object DataModule1: TDataModule1
     Top = 136
   end
   object UniSQLMonitor1: TUniSQLMonitor
-    Left = 464
-    Top = 361
+    Left = 224
+    Top = 257
   end
 end

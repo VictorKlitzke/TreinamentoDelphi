@@ -15,7 +15,9 @@ type
     function Existe(AUsuario: string): Boolean;
     function Adicionar(ANome, AUsuario, ASenha: string): iFactoryUsuario;
     function DataSource(var ADatasource: TDataSource): iFactoryUsuario;
+    function AtualizarUsuario(AUsuario: string): iFactoryusuario;
     function DeleteUsuario(AUsuario: Integer): iFactoryUsuario;
+    function FiltarUsuario(AUsuario: string): iFactoryUsuario;
 
     function ListUsuario: iFactoryUsuario;
   end;
@@ -32,7 +34,9 @@ type
     function Existe(AUsuario: string): Boolean;
     function Adicionar(ANome, AUsuario, ASenha: string): iFactoryUsuario;
     function DeleteUsuario(AUsuario: Integer): iFactoryUsuario;
+    function AtualizarUsuario(AUsuario: string): iFactoryusuario;
     function DataSource(var ADatasource: TDataSource): iFactoryUsuario;
+    function FiltarUsuario(AUsuario: string): iFactoryUsuario;
 
     function ListUsuario: iFactoryUsuario;
   end;
@@ -50,6 +54,16 @@ begin
     .Nome(ANome)
     .Usuario(AUsuario)
     .Senha(ASenha)
+    .Salvar;
+end;
+
+function TFactoryUsuario.AtualizarUsuario(AUsuario: string): iFactoryusuario;
+begin
+  Result := Self;
+  TUsuario
+    .New
+    .Filtrar('ID' , AUsuario)
+    .Editar
     .Salvar;
 end;
 
@@ -96,6 +110,14 @@ begin
     .Abrir
     .Campo('QTD')
     .AsInteger <> 0
+end;
+
+function TFactoryUsuario.FiltarUsuario(AUsuario: string): iFactoryUsuario;
+begin
+  Result := Self;
+  FUsuarios
+    .Filtrar('USUARIO' , AUsuario)
+    .Abrir;
 end;
 
 function TFactoryUsuario.DeleteUsuario(AUsuario: Integer): iFactoryUsuario;

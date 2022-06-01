@@ -58,7 +58,7 @@
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
         <SanitizedProjectName>TreinamentoDelphi</SanitizedProjectName>
-        <DCC_UnitSearchPath>$(DCC_UnitSearchPath);modules\.dcp;modules\.dcu;modules;modules\bcrypt\src</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>modules\.dcp;modules\.dcu;modules;modules\bcrypt\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Locale>1046</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
@@ -140,6 +140,10 @@
         <DCCReference Include="Source\Models\TD.Models.Tarefa.pas"/>
         <DCCReference Include="Source\Controllers\TD.Controllers.Task.pas"/>
         <DCCReference Include="Source\Factories\TD.Factories.Task.pas"/>
+        <DCCReference Include="Source\Views\Usuario\TD.Views.Usuario.Editar.pas">
+            <Form>TDViewsUsuarioEditar</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

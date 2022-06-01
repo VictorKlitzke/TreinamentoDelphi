@@ -24,7 +24,8 @@ uses
   Vcl.Mask,
   TD.Models.Usuario,
   Uni,
-  TD.Views.Base;
+  TD.Views.Base,
+  TD.Factories.Usuario;
 
 type
   TTDViewsUsuarioEditar = class(TTDViewsBase)
@@ -36,12 +37,14 @@ type
     btnsalvar: TcxButton;
     Label1: TLabel;
     procedure btnCloseClick(Sender: TObject);
-    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormKeyDown(Sender: TObject;
+      var Key: Word; Shift: TShiftState);
     procedure btnsalvarClick(Sender: TObject);
   private
      TUsuarioModel: iUsuario;
+     FUsuarioFactory: iFactoryUsuario;
   public
-    function Usuario(UID: Integer): Integer;
+    function Usuario(UID: string): Integer;
   end;
 
 implementation
@@ -61,7 +64,7 @@ begin
   edtSenha.ValidateEdit();
 
   try
-    // Factory Update
+    // Factory
   except
 
     MessageDlg('Parabéns. Usuário atualizado com sucesso', mtInformation, [mbOK], 0);
@@ -77,7 +80,7 @@ begin
       Close;
 end;
 
-function TTDViewsUsuarioEditar.Usuario(UID: Integer): Integer;
+function TTDViewsUsuarioEditar.Usuario(UID: string): Integer;
 var
   UsuarioData: iUsuario;
 begin

@@ -45,6 +45,8 @@ type
     procedure BtnAddTaskClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edtDescricaoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
 
   public
@@ -90,14 +92,28 @@ procedure TTDViewsTaskAdicionar.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_ESCAPE then
-    if MessageDlg('Deseja realmente sair' , mtConfirmation , mbYesNo , 1) = mrYes then
+    begin
+      if MessageDlg('Deseja realmente sair' , mtConfirmation , mbYesNo , 1) = mrYes then
       Close;
+    end;
 end;
 
 procedure TTDViewsTaskAdicionar.btnCloseClick(Sender: TObject);
 begin
   if MessageDlg('Deseja realmente sair' , mtConfirmation , mbYesNo , 1) = mrYes then
     Close;
+end;
+
+procedure TTDViewsTaskAdicionar.edtDescricaoKeyDown(Sender: TObject;
+  var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if Key = VK_RETURN then
+    begin
+      if edtDescricao.Text <> '' then
+        BtnAddTask.Click;
+    end;
 end;
 
 end.

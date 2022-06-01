@@ -125,6 +125,7 @@ inherited TDViewsTaskAdicionar: TTDViewsTaskAdicionar
       Top = 123
       Properties.ValidationOptions = [evoRaiseException, evoShowErrorIcon]
       TabOrder = 1
+      OnKeyDown = edtDescricaoKeyDown
       Height = 254
       Width = 692
     end
