@@ -25,23 +25,26 @@ uses
   TD.Models.Usuario,
   Uni,
   TD.Views.Base,
-  TD.Factories.Usuario;
+  TD.Factories.Usuario, cxControls, cxContainer, cxEdit, cxTextEdit, cxDBEdit;
 
 type
   TTDViewsUsuarioEditar = class(TTDViewsBase)
     pnContent: TPanel;
     btnClose: TcxButton;
-    edtUsuario: TMaskEdit;
-    edtSenha: TMaskEdit;
     btnExcluir: TcxButton;
     btnsalvar: TcxButton;
     Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    edtUsuario: TcxDBTextEdit;
+    edtSenha: TcxDBTextEdit;
     procedure btnCloseClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject;
       var Key: Word; Shift: TShiftState);
     procedure btnsalvarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
-     TUsuarioModel: iUsuario;
+     FUsuarioModel: iUsuario;
   public
     FUsuarioFactory: TFactoryUsuario;
     function Usuario(UID: string): Integer;
@@ -72,6 +75,12 @@ begin
   end;
 end;
 
+procedure TTDViewsUsuarioEditar.FormCreate(Sender: TObject);
+begin
+  inherited;
+  FUsuarioModel := TUsuario.New
+end;
+
 procedure TTDViewsUsuarioEditar.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -84,7 +93,8 @@ function TTDViewsUsuarioEditar.Usuario(UID: string): Integer;
 var
   UsuarioData: iUsuario;
 begin
-  UsuarioData := TUsuarioModel.Filtrar('USUARIO', UID);
+
+  UsuarioData := FUsuarioModel.Filtrar('USUARIO', UID);
 //  FUsuarioFactory.AtualizarUsuario('USUARIO' , UID);
   MessageDlg(UsuarioData.Nome, mtInformation, [mbOK], 0);
 end;

@@ -134,8 +134,11 @@ procedure TTDViewsUsuarioListagem.edUsuariosViewsCellDblClick(
   );
 
 begin
-  TDViewsUsuarioEditar := TTDViewsUsuarioEditar.Create(self);
-  TDViewsUsuarioEditar.FUsuarioFactory.AtualizarUsuario('USUARIO');
+  if not Assigned(TDViewsUsuarioEditar) then
+    Application.CreateForm(TTDViewsUsuarioEditar , TDViewsUsuarioEditar);
+
+
+  TDViewsUsuarioEditar.Usuario(dsUsuarios.DataSet.FieldByName('USUARIO').AsString);
   TDViewsUsuarioEditar.ShowModal;
   FreeAndNil(TDViewsUsuarioEditar);
 end;

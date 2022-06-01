@@ -26,8 +26,7 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
     Color = 9590329
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 338
-    ExplicitHeight = 193
+    ExplicitTop = 8
     object Label1: TLabel
       Left = 1
       Top = 1
@@ -43,6 +42,20 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
       Font.Style = [fsBold]
       ParentFont = False
       ExplicitWidth = 108
+    end
+    object Label2: TLabel
+      Left = 24
+      Top = 119
+      Width = 31
+      Height = 13
+      Caption = 'Label2'
+    end
+    object Label3: TLabel
+      Left = 24
+      Top = 36
+      Width = 31
+      Height = 13
+      Caption = 'Label2'
     end
     object btnClose: TcxButton
       Left = 275
@@ -70,23 +83,6 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
       SpeedButtonOptions.Flat = True
       TabOrder = 0
       OnClick = btnCloseClick
-    end
-    object edtUsuario: TMaskEdit
-      Left = 24
-      Top = 55
-      Width = 185
-      Height = 21
-      TabOrder = 1
-      Text = ''
-    end
-    object edtSenha: TMaskEdit
-      Left = 24
-      Top = 138
-      Width = 185
-      Height = 21
-      TabOrder = 2
-      Text = ''
-      Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoParentPassthrough]
     end
     object btnExcluir: TcxButton
       Left = 240
@@ -127,7 +123,7 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
         AE426082}
       SpeedButtonOptions.CanBeFocused = False
       SpeedButtonOptions.Flat = True
-      TabOrder = 3
+      TabOrder = 1
     end
     object btnsalvar: TcxButton
       Left = 240
@@ -168,8 +164,20 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
         55F770E5BFE0ACFE022DBE000A772005820000000049454E44AE426082}
       SpeedButtonOptions.CanBeFocused = False
       SpeedButtonOptions.Flat = True
-      TabOrder = 4
+      TabOrder = 2
       OnClick = btnsalvarClick
+    end
+    object edtUsuario: TcxDBTextEdit
+      Left = 24
+      Top = 64
+      TabOrder = 3
+      Width = 185
+    end
+    object edtSenha: TcxDBTextEdit
+      Left = 24
+      Top = 147
+      TabOrder = 4
+      Width = 185
     end
   end
 end
