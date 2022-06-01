@@ -3,6 +3,7 @@
 interface
 
 uses
+  Data.DB,
   TD.Services.Query;
 
 type
@@ -29,6 +30,7 @@ type
     function Apagar: iUsuario;
     function Salvar: iUsuario;
     function Filtrar(ACampo: string; AValor: Variant): iUsuario;
+    function DataSource(var ADataSource: TDataSource): iUsuario;
 
     // Operadores
     function TemRegistros: Boolean;
@@ -64,6 +66,7 @@ type
     function Apagar: iUsuario;
     function Salvar: iUsuario;
     function Filtrar(ACampo: string; AValor: Variant): iUsuario;
+    function DataSource(var ADataSource: TDataSource): iUsuario;
 
     // Operadores
     function TemRegistros: Boolean;
@@ -95,6 +98,12 @@ begin
     .Gerador('GEN_TB_USUARIOS_ID')
     .CampoChave('ID')
     .Tabela('TB_USUARIOS');
+end;
+
+function TUsuario.DataSource(var ADataSource: TDataSource): iUsuario;
+begin
+  Result := Self;
+  ADataSource.DataSet := FUsuarioQuery.DataSet;
 end;
 
 destructor TUsuario.Destroy;

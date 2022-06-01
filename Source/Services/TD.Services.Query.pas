@@ -200,6 +200,7 @@ end;
 function TServiceQuery.Editar: iServiceQuery;
 begin
   Result := Self;
+
   FQuery.Edit;
 end;
 

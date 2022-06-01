@@ -28,7 +28,7 @@ implementation
 
 uses
   BCrypt,
-  TD.Models.Usuario;
+  TD.Models.Usuario, TD.Controllers.Sessao;
 
 { TFactoryAutenticacao }
 
@@ -58,6 +58,8 @@ begin
 
   if not TBCrypt.CompareHash(ASenha, LModel.Senha) then
     raise AutenticacaoError.Create('Senha inválida');
+
+  TControllerSessao.New.Entrar(LModel.ID , LModel.Nome);
 end;
 
 class function TFactoryAutenticacao.New: iFactoryAutenticacao;

@@ -112,6 +112,7 @@ end;
 function TTarefa.Editar: iTarefa;
 begin
   Result := Self;
+
   FTarefaQuery.Editar;
 end;
 

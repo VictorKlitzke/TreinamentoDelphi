@@ -40,6 +40,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnTarefasClick(Sender: TObject);
+    procedure lblUsuarioDblClick(Sender: TObject);
   private
     FConexao: iServiceConexao;
   public
@@ -112,6 +113,11 @@ procedure TTDViewsPrincipal.FormKeyDown(Sender: TObject; var Key: Word; Shift: T
 begin
   if (Key = VK_ESCAPE) then
     if MessageDlg('Deseja realmente sair', mtConfirmation , mbYesNo , 0) = mrYes then Close;
+end;
+
+procedure TTDViewsPrincipal.lblUsuarioDblClick(Sender: TObject);
+begin
+  ShowMessage(TControllerSessao.New.Nome);
 end;
 
 end.

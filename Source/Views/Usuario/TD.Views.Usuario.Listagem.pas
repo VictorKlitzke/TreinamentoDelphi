@@ -1,4 +1,4 @@
-unit TD.Views.Usuario.Listagem;
+﻿unit TD.Views.Usuario.Listagem;
 
 interface
 
@@ -24,7 +24,6 @@ uses
   dxSkinsDefaultPainters,
   cxTextEdit,
   cxDBEdit,
-  conexaoDados,
   FireDAC.Stan.Intf,
   FireDAC.Stan.Option,
   FireDAC.Stan.Param,
@@ -57,84 +56,114 @@ uses
   cxMaskEdit,
   cxButtonEdit,
   Vcl.Menus,
-  cxButtons;
+  cxButtons,
+  TD.Factories.Usuario,
+  TD.Views.Usuario.Editar;
 
 type
   TTDViewsUsuarioListagem = class(TForm)
     PainellUser: TPanel;
     BtnUsuario: TLabel;
-    Label1: TLabel;
     editBuscar: TEdit;
     edUsers: TcxGrid;
-    edUsersDBTableView1: TcxGridDBTableView;
+    edUsuariosViews: TcxGridDBTableView;
     edUsersLevel1: TcxGridLevel;
-    BtnExcluir: TcxButton;
-    Qryusuarios: TFDQuery;
-    DtsUsuarios: TDataSource;
-    QryusuariosUSUARIO: TWideStringField;
-    edUsersDBTableView1USUARIO: TcxGridDBColumn;
-    QryusuariosID: TIntegerField;
-    QryusuariosNOME: TWideStringField;
-    QryusuariosSENHA: TWideStringField;
-    edUsersDBTableView1ID: TcxGridDBColumn;
-    edUsersDBTableView1NOME: TcxGridDBColumn;
-    procedure editBuscarChange(Sender: TObject);
+    btnAtualizar: TcxButton;
+    Panel2: TPanel;
+    Label1: TLabel;
+    dsUsuarios: TDataSource;
     procedure FormShow(Sender: TObject);
-    procedure BtnExcluirClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure edUsuariosViewsCellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState;
+      var AHandled: Boolean);
+    procedure BtnEditClick(Sender: TObject);
+    procedure editBuscarChange(Sender: TObject);
+    procedure btnAtualizarClick(Sender: TObject);
   private
-    { Private declarations }
+    FUsuarioFactory: iFactoryUsuario;
   public
-    { Public declarations }
+   procedure CarregarDados;
   end;
 
 var
   TDViewsUsuarioListagem: TTDViewsUsuarioListagem;
-  DM: TDataModule1;
+  TDViewsUsuarioEditar: TTDViewsUsuarioEditar;
 
 implementation
 
+uses
+  ConexaoDados,
+  TD.Views.Principal,
+  TD.Views.Usuario.Adicionar;
+
 {$R *.dfm}
+
+procedure TTDViewsUsuarioListagem.btnAtualizarClick(Sender: TObject);
+begin
+  CarregarDados;
+end;
+
+procedure TTDViewsUsuarioListagem.BtnEditClick(Sender: TObject);
+begin
+  MessageDlg('Clicar duas vezes no usuário!!!!', mtConfirmation, [mbOK], 1);
+end;
+
+procedure TTDViewsUsuarioListagem.CarregarDados;
+begin
+  FUsuarioFactory := TFactoryUsuario
+    .New
+    .DataSource(dsUsuarios)
+    .ListUsuario;
+
+    with edUsuariosViews do
+      begin
+        ClearItems;
+        DataController.CreateAllItems();
+        ApplyBestFit();
+      end;
+
+end;
 
 procedure TTDViewsUsuarioListagem.editBuscarChange(Sender: TObject);
 begin
-  with Qryusuarios do
-  begin
-    //BUSCANDO USUARIOS J� EXISTENTE
-    Close;
-    Sql.Clear;
-    SQL.Add('SELECT * FROM TB_USUARIOS WHERE UPPER(USUARIO) = UPPER(:USUARIO)');
-    ParamByName('USUARIO').AsString := editBuscar.Text;
-    Open;
-  end;
-end;
-
-procedure TTDViewsUsuarioListagem.BtnExcluirClick(Sender: TObject);
-begin
-  with DtsUsuarios do
-  begin
     if editBuscar.Text = '' then
-    begin
-      ShowMessage('Nenhum usu�rio selecionado');
-    end
-    else
-    begin
-      if DataSet.RecordCount = 0 then
       begin
-        ShowMessage('Usu�rio inexistente');
+       FUsuarioFactory := TFactoryUsuario
+        .New
+        .DataSource(dsUsuarios)
+        .ListUsuario;
       end
       else
       begin
-        if MessageDlg('Deseja realmente excluir esse usu�rio', mtConfirmation, mbYesNo, 1) = mrYes then
-        begin
-          DataSet.Delete;
-          ShowMessage('Usu�rio excluido com sucesso');
-          Dataset.Fields.Clear;
-          ModalResult := mrCancel;
-        end;
+         FUsuarioFactory := TFactoryUsuario
+          .New
+          .DataSource(dsUsuarios)
+          .FiltarUsuario(editBuscar.Text);
       end;
-    end;
-    DataSet.Fields.Clear;
-  end;
+end;
+
+procedure TTDViewsUsuarioListagem.edUsuariosViewsCellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState;
+  var AHandled: Boolean
+  );
+
+begin
+  if not Assigned(TDViewsUsuarioEditar) then
+    Application.CreateForm(TTDViewsUsuarioEditar , TDViewsUsuarioEditar);
+
+  TDViewsUsuarioEditar.Usuario(dsUsuarios.DataSet.FieldByName('ID').AsInteger);
+  TDViewsUsuarioEditar.ShowModal;
+  FreeAndNil(TDViewsUsuarioEditar);
+
+  CarregarDados;
+end;
+
+procedure TTDViewsUsuarioListagem.FormCreate(Sender: TObject);
+begin
+  CarregarDados;
 end;
 
 procedure TTDViewsUsuarioListagem.FormShow(Sender: TObject);
@@ -142,6 +171,7 @@ begin
 PainellUser.Top :=  Trunc((ClientHeight/2) - (PainellUser.Height/2));
 PainellUser.Left:= Trunc((ClientWidth/2) - (PainellUser.Width/2));
 end;
+
 
 end.
 

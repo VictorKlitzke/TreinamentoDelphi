@@ -20,7 +20,8 @@ uses
   TD.Factories.Autenticacao in 'Source\Factories\TD.Factories.Autenticacao.pas',
   TD.Models.Tarefa in 'Source\Models\TD.Models.Tarefa.pas',
   TD.Controllers.Task in 'Source\Controllers\TD.Controllers.Task.pas',
-  TD.Factories.Task in 'Source\Factories\TD.Factories.Task.pas';
+  TD.Factories.Task in 'Source\Factories\TD.Factories.Task.pas',
+  TD.Views.Usuario.Editar in 'Source\Views\Usuario\TD.Views.Usuario.Editar.pas' {TDViewsUsuarioEditar};
 
 {$R *.res}
 
@@ -33,6 +34,7 @@ begin
   Application.CreateForm(TTDViewsPrincipal, TDViewsPrincipal);
   Application.CreateForm(TTDViewsUsuarioLogin, TDViewsUsuarioLogin);
   Application.CreateForm(TTDViewsBase, TDViewsBase);
+  Application.CreateForm(TTDViewsUsuarioEditar, TDViewsUsuarioEditar);
   TDViewsUsuarioLogin.ShowModal;
 
   if TDViewsUsuarioLogin.ModalResult = mrCancel then

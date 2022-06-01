@@ -16,6 +16,7 @@ type
     function AddTask(ATarefa,ADescricao : string): iFactoryTask;
     function DataSource(var ADatasource: TDataSource): iFactoryTask;
     function FinishTask(ATarefa: Integer): iFactoryTask;
+    function FiltrarTask(ATarefa: string): iFactoryTask;
 
     function ListTask: iFactoryTask;
 
@@ -36,6 +37,7 @@ type
     function FinishTask(ATarefa: Integer): iFactoryTask;
     function DataSource(var ADatasource: TDataSource): iFactoryTask;
     function Log(AValue: TFactoryTaskLog): iFactoryTask;
+    function FiltrarTask(ATarefa: string): iFactoryTask;
 
     function ListTask: iFactoryTask;
   end;
@@ -100,6 +102,14 @@ begin
   inherited;
 end;
 
+
+function TFactoryTask.FiltrarTask(ATarefa: string): iFactoryTask;
+begin
+  Result := Self;
+  FTarefas
+    .Filtrar('TAREFA' , ATarefa)
+    .Abrir;
+end;
 
 function TFactoryTask.FinishTask(ATarefa: Integer): iFactoryTask;
 begin
