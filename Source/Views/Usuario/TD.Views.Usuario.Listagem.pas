@@ -64,12 +64,13 @@ type
   TTDViewsUsuarioListagem = class(TForm)
     PainellUser: TPanel;
     BtnUsuario: TLabel;
-    Label1: TLabel;
     editBuscar: TEdit;
     edUsers: TcxGrid;
     edUsuariosViews: TcxGridDBTableView;
     edUsersLevel1: TcxGridLevel;
-    BtnEdit: TcxButton;
+    btnAtualizar: TcxButton;
+    Panel2: TPanel;
+    Label1: TLabel;
     dsUsuarios: TDataSource;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -79,6 +80,7 @@ type
       var AHandled: Boolean);
     procedure BtnEditClick(Sender: TObject);
     procedure editBuscarChange(Sender: TObject);
+    procedure btnAtualizarClick(Sender: TObject);
   private
     FUsuarioFactory: iFactoryUsuario;
   public
@@ -97,6 +99,11 @@ uses
   TD.Views.Usuario.Adicionar;
 
 {$R *.dfm}
+
+procedure TTDViewsUsuarioListagem.btnAtualizarClick(Sender: TObject);
+begin
+  CarregarDados;
+end;
 
 procedure TTDViewsUsuarioListagem.BtnEditClick(Sender: TObject);
 begin
@@ -121,10 +128,20 @@ end;
 
 procedure TTDViewsUsuarioListagem.editBuscarChange(Sender: TObject);
 begin
-  FUsuarioFactory := TFactoryUsuario
-    .New
-    .DataSource(dsUsuarios)
-    .FiltarUsuario(editBuscar.Text);
+    if editBuscar.Text = '' then
+      begin
+       FUsuarioFactory := TFactoryUsuario
+        .New
+        .DataSource(dsUsuarios)
+        .ListUsuario;
+      end
+      else
+      begin
+         FUsuarioFactory := TFactoryUsuario
+          .New
+          .DataSource(dsUsuarios)
+          .FiltarUsuario(editBuscar.Text);
+      end;
 end;
 
 procedure TTDViewsUsuarioListagem.edUsuariosViewsCellDblClick(
@@ -137,40 +154,12 @@ begin
   if not Assigned(TDViewsUsuarioEditar) then
     Application.CreateForm(TTDViewsUsuarioEditar , TDViewsUsuarioEditar);
 
-
-  TDViewsUsuarioEditar.Usuario(dsUsuarios.DataSet.FieldByName('USUARIO').AsString);
+  TDViewsUsuarioEditar.Usuario(dsUsuarios.DataSet.FieldByName('ID').AsInteger);
   TDViewsUsuarioEditar.ShowModal;
   FreeAndNil(TDViewsUsuarioEditar);
-end;
 
-//procedure TTDViewsUsuarioListagem.BtnExcluirClick(Sender: TObject);
-//begin
-//  with dsUsuarios do
-//  begin
-//    if editBuscar.Text = '' then
-//    begin
-//      ShowMessage('Nenhum usuario selecionado');
-//    end
-//    else
-//    begin
-//      if DataSet.RecordCount = 0 then
-//      begin
-//        ShowMessage('Usuario inexistente');
-//      end
-//      else
-//      begin
-//        if MessageDlg('Deseja realmente excluir esse usuario', mtConfirmation, mbYesNo, 1) = mrYes then
-//        begin
-//          DataSet.Delete;
-//          ShowMessage('Usuario excluido com sucesso');
-//          Dataset.Fields.Clear;
-//          ModalResult := mrCancel;
-//        end;
-//      end;
-//    end;
-//    DataSet.Fields.Clear;
-//  end;
-//end;
+  CarregarDados;
+end;
 
 procedure TTDViewsUsuarioListagem.FormCreate(Sender: TObject);
 begin
@@ -182,6 +171,7 @@ begin
 PainellUser.Top :=  Trunc((ClientHeight/2) - (PainellUser.Height/2));
 PainellUser.Left:= Trunc((ClientWidth/2) - (PainellUser.Width/2));
 end;
+
 
 end.
 

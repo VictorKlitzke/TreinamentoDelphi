@@ -25,7 +25,12 @@ uses
   TD.Models.Usuario,
   Uni,
   TD.Views.Base,
-  TD.Factories.Usuario, cxControls, cxContainer, cxEdit, cxTextEdit, cxDBEdit;
+  TD.Factories.Usuario,
+  cxControls,
+  cxContainer,
+  cxEdit,
+  cxTextEdit,
+  cxDBEdit, Data.DB;
 
 type
   TTDViewsUsuarioEditar = class(TTDViewsBase)
@@ -38,16 +43,18 @@ type
     Label3: TLabel;
     edtUsuario: TcxDBTextEdit;
     edtSenha: TcxDBTextEdit;
+    dsDados: TDataSource;
     procedure btnCloseClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject;
       var Key: Word; Shift: TShiftState);
     procedure btnsalvarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
   private
      FUsuarioModel: iUsuario;
   public
     FUsuarioFactory: TFactoryUsuario;
-    function Usuario(UID: string): Integer;
+    function Usuario(UID: integer): Integer;
   end;
 
 implementation
@@ -60,6 +67,17 @@ begin
     Close;
 end;
 
+procedure TTDViewsUsuarioEditar.btnExcluirClick(Sender: TObject);
+begin
+  inherited;
+  try
+    FUsuarioModel.Apagar;
+  finally
+    MessageDlg('Dor, usuário deletado com sucesso', mtInformation, [mbOK], 0);
+    Close;
+  end;
+end;
+
 procedure TTDViewsUsuarioEditar.btnsalvarClick(Sender: TObject);
 begin
   inherited;
@@ -67,10 +85,9 @@ begin
   edtSenha.ValidateEdit();
 
   try
-    // Factory
-  except
-
-    MessageDlg('Parabéns. Usuário atualizado com sucesso', mtInformation, [mbOK], 0);
+    FUsuarioModel.Salvar;
+  finally
+    MessageDlg('Show, usuário atualizado com sucesso', mtInformation, [mbOK], 0);
     Close;
   end;
 end;
@@ -78,7 +95,7 @@ end;
 procedure TTDViewsUsuarioEditar.FormCreate(Sender: TObject);
 begin
   inherited;
-  FUsuarioModel := TUsuario.New
+  FUsuarioModel := TUsuario.New.DataSource(dsDados);
 end;
 
 procedure TTDViewsUsuarioEditar.FormKeyDown(Sender: TObject; var Key: Word;
@@ -89,14 +106,11 @@ begin
       Close;
 end;
 
-function TTDViewsUsuarioEditar.Usuario(UID: string): Integer;
-var
-  UsuarioData: iUsuario;
+function TTDViewsUsuarioEditar.Usuario(UID: integer): Integer;
 begin
-
-  UsuarioData := FUsuarioModel.Filtrar('USUARIO', UID);
-//  FUsuarioFactory.AtualizarUsuario('USUARIO' , UID);
-  MessageDlg(UsuarioData.Nome, mtInformation, [mbOK], 0);
+  FUsuarioModel.Filtrar('ID', UID).Editar;
 end;
 
 end.
+
+

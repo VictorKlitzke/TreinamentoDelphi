@@ -16,11 +16,8 @@ Coordinates=489,1,176,36
 [edBuscar]
 Coordinates=155,10,69,58
 
-[Label1]
-Coordinates=92,10,53,58
-
 []
-Coordinates=128,154,91,36
+Coordinates=92,10,53,58
 Visible=True
 
 [edExcluirClick]

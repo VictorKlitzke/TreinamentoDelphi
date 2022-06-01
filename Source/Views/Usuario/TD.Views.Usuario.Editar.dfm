@@ -26,7 +26,6 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
     Color = 9590329
     ParentBackground = False
     TabOrder = 0
-    ExplicitTop = 8
     object Label1: TLabel
       Left = 1
       Top = 1
@@ -46,16 +45,28 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
     object Label2: TLabel
       Left = 24
       Top = 119
-      Width = 31
-      Height = 13
-      Caption = 'Label2'
+      Width = 35
+      Height = 34
+      Caption = 'Senha'#13#10
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWhite
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
     end
     object Label3: TLabel
       Left = 24
       Top = 36
-      Width = 31
-      Height = 13
-      Caption = 'Label2'
+      Width = 45
+      Height = 17
+      Caption = 'Usuario'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWhite
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
     end
     object btnClose: TcxButton
       Left = 275
@@ -124,6 +135,7 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
       SpeedButtonOptions.CanBeFocused = False
       SpeedButtonOptions.Flat = True
       TabOrder = 1
+      OnClick = btnExcluirClick
     end
     object btnsalvar: TcxButton
       Left = 240
@@ -170,14 +182,22 @@ object TDViewsUsuarioEditar: TTDViewsUsuarioEditar
     object edtUsuario: TcxDBTextEdit
       Left = 24
       Top = 64
+      DataBinding.DataField = 'USUARIO'
+      DataBinding.DataSource = dsDados
       TabOrder = 3
       Width = 185
     end
     object edtSenha: TcxDBTextEdit
       Left = 24
       Top = 147
+      DataBinding.DataField = 'SENHA'
+      DataBinding.DataSource = dsDados
       TabOrder = 4
       Width = 185
     end
+  end
+  object dsDados: TDataSource
+    Left = 200
+    Top = 104
   end
 end
